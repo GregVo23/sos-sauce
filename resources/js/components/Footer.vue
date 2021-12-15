@@ -46,10 +46,10 @@
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
               <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                Company
+                Plats
               </h3>
               <ul role="list" class="mt-4 space-y-4">
-                <li v-for="item in navigation.company" :key="item.name">
+                <li v-for="item in navigation.plats" :key="item.name">
                   <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
                     {{ item.name }}
                   </a>
@@ -92,12 +92,8 @@ const navigation = {
   ingredients: [
     { name: 'Ingredients', href: '/ingredients' },
   ],
-  company: [
-    { name: 'About', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Partners', href: '#' },
+  plats: [
+    { name: 'Plats', href: '/meals' },
   ],
   legal: [
     { name: 'Claim', href: '#' },

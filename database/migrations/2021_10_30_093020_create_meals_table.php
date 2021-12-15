@@ -17,14 +17,16 @@ class CreateMealsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
+            $table->string('description');
+            $table->string('slug')->nullable();
             $table->string('picture');
             $table->enum('difficulty',['1','2','3','4','5']);
             $table->integer('time');
             $table->integer('review');
             $table->enum('taste',['sucré','salé','amer',]);
             $table->enum('temperature',['chaud','froid','tiède',]);
-            $table->foreignId('recipe_meal_id');
-            $table->foreignId('preperation_id');
+            $table->foreignId('recipe_meal_id')->nullable();
+            $table->foreignId('preperation_id')->nullable();
             $table->foreignId('user_id');
 
             $table->foreign('user_id')
