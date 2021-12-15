@@ -22091,9 +22091,9 @@ var _hoisted_5 = {
 };
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  "class": "h-10",
-  src: "https://tailwindui.com/img/logos/workflow-mark-gray-300.svg",
-  alt: "Company name"
+  "class": "h-24",
+  src: "http://localhost:8000/images/logo/sos-sauce.png",
+  alt: "logo sos sauce"
 }, null, -1
 /* HOISTED */
 );
@@ -22275,9 +22275,9 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  "class": "block h-8 w-auto",
-  src: "https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600",
-  alt: "Workflow"
+  "class": "block h-24 w-auto",
+  src: "http://localhost:8000/images/logo/sos-sauce.png",
+  alt: "SOS sauce logo"
 })])])], -1
 /* HOISTED */
 );
