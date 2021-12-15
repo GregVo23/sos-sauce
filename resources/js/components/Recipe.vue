@@ -35,6 +35,7 @@
       </div>
     </div>
   </div>
+  <Footer></Footer>
 </template>
 
 <script>
@@ -75,9 +76,10 @@ const products = [
 ]
 
 import Header from './Header.vue';
+import Footer from './Footer.vue';
 export default {
     
-  components: { Header },
+  components: { Header, Footer },
 
   setup() {
     return {

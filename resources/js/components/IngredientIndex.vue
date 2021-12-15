@@ -1,4 +1,5 @@
 <template>
+    <Header></Header>
     <h1>Ingredients</h1>
     <div v-for="ingredient in ingredients" :key="ingredient.name">
         <p>{{ ingredient.name }}</p>
@@ -6,14 +7,16 @@
     <router-link
         to="/login"
     >Test</router-link>
-    
-
+    <Footer></Footer>
 </template>
 
 <script>
 import axios from "axios";
+import Header from './Header.vue';
+import Footer from './Footer.vue';
 
 export default {
+  components: { Header, Footer },
     data() {
         return {
             ingredients: {}

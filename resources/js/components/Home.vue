@@ -13,14 +13,16 @@
             <p class="mt-6 text-xl text-indigo-100 max-w-3xl">Mattis amet hendrerit dolor, quisque lorem pharetra. Pellentesque lacus nisi urna, arcu sociis eu. Orci vel lectus nisl eget eget ut consectetur. Sit justo viverra non adipisicing elit distinctio.</p>
         </div>
     </section>
+    <Footer></Footer>
 </template>
 
 <script>
 import axios from "axios";
 import Header from './Header.vue';
+import Footer from './Footer.vue';
 
 export default {
-    components: { Header },
+    components: { Header, Footer },
     data() {
         return {
             name: "Image de recette",
