@@ -1,5 +1,5 @@
 <template>
-    <Header></Header>
+    <Header @ChangeMode="ChangeMode($event)"></Header>
     <section class="h-screen relative">
         <div class="absolute inset-0">
             <img class="w-full h-full object-cover" :src="image" :alt="name" />
@@ -13,7 +13,7 @@
             <p class="mt-6 text-xl text-indigo-100 max-w-3xl">Mattis amet hendrerit dolor, quisque lorem pharetra. Pellentesque lacus nisi urna, arcu sociis eu. Orci vel lectus nisl eget eget ut consectetur. Sit justo viverra non adipisicing elit distinctio.</p>
         </div>
     </section>
-    <Footer></Footer>
+    <Footer :mode="this.dark"></Footer>
 </template>
 
 <script>
@@ -26,6 +26,7 @@ export default {
     data() {
         return {
             name: "Image de recette",
+            dark:false,
             image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80",
             images: [
                 {
@@ -39,6 +40,7 @@ export default {
             ]
         }
     },
+    props:['mode'],
     methods: {
         slider(){
             setInterval(() => {
@@ -46,10 +48,16 @@ export default {
                 this.image = this.images[i].image;
                 this.name = this.images[i].nom;
             },2000)
+        },
+        ChangeMode() {
+          this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         }
     },
     created() {
         this.slider();
+    },
+    mounted() {
+        this.ChangeMode();
     }
 }
 </script>

@@ -17,7 +17,7 @@
 <template>
   <!-- When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars -->
   <Popover as="template" v-slot="{ open }">
-    <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible']">
+    <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible', 'py-2']">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">

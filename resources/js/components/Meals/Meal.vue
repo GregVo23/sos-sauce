@@ -16,7 +16,7 @@
             <h2 :class="[dark ? 'text-white' : 'text-gray-800' ,'mt-6 text-xl font-bold']">Ingrédients</h2>
         </div>
     </div>
-    <Footer></Footer>
+    <Footer :mode="this.dark"></Footer>
 </template>
 
 <script>
@@ -32,6 +32,7 @@ export default {
             dark: false,
         }
     },
+    props: ['mode'],
     /*
     setup() {
         const getIngredients = async () => {

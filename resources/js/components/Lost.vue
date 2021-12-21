@@ -17,7 +17,7 @@
 
 
   </div>
-  <Footer></Footer>
+  <Footer :mode="this.dark"></Footer>
 </template>
 
 <script>
@@ -33,6 +33,7 @@ export default {
             dark: false,
         }
     },
+    props:['mode'],
     /*
     setup() {
         const getIngredients = async () => {

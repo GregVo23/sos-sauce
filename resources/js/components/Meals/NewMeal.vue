@@ -70,7 +70,7 @@
       </div>
     </div>
   </div>
-  <Footer></Footer>
+  <Footer :mode="this.dark"></Footer>
 </template>
 
 <script>
@@ -96,6 +96,7 @@ export default {
       agreed,
     }
   },
+  props:['mode'],
   methods: {
       ChangeMode() {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
