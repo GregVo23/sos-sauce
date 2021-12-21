@@ -22,11 +22,13 @@ class Preperation extends Model
 
     public $timestamps = false;
 
-    public function meal () {
+    public function meal()
+    {
         return $this->belongsTo(Meal::class);
     }
 
-    public function sauce () {
+    public function sauce()
+    {
         return $this->belongsTo(Sauce::class);
     }
 }

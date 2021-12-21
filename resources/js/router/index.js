@@ -5,6 +5,8 @@ import Home from "../components/Home.vue";
 import Recipe from "../components/Recipe.vue";
 import MealsIndex from "../components/Meals/MealsIndex.vue";
 import Meal from "../components/Meals/Meal.vue";
+import NewMeal from "../components/Meals/NewMeal.vue";
+import Lost from "../components/Lost.vue";
 
 const routes = [
     {
@@ -33,13 +35,23 @@ const routes = [
         component: MealsIndex
     },
     {
+        path: '/ajout',
+        name: 'ajout',
+        component: NewMeal
+    },
+    {
         path: '/meal/:slug',
         name: 'meal',
         component: Meal
     },
     {
+        path: '/404',
+        name: '404',
+        component: Lost
+    },
+    {
         path: '/*', 
-        redirect: '/dashboard' 
+        redirect: '/404' 
     }
 ];
 

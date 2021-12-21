@@ -1,15 +1,25 @@
 <template>
-    <Header></Header>
-    <h1>Meals</h1>
-    <div v-for="meal in meals" :key="meal.id">
-        <ul>
-            <a :href="'meal/' + meal.slug"><li>{{ meal.name }}</li></a>
-        </ul>
+<Header @ChangeMode="ChangeMode($event)"></Header>
+  <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
+    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 class="sr-only text-red">Meals</h2>
+
+      <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <a v-for="meal in meals" :key="meal.id" :href="'http://www.localhost:8000/meal/' + meal.slug" class="group">
+          <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+            <img :src="'http://www.localhost:8000/images/meals/' + meal.picture" :alt="meal.name" class="w-full h-64 object-center object-cover group-hover:opacity-75" />
+          </div>
+          <h3 :class="[dark ? 'text-white group-hover:text-red-400' : 'text-gray-700 group-hover:text-red-600','mt-4 text-sm']">
+            {{ meal.name }}
+          </h3>
+          <p :class="[dark ? 'text-white group-hover:text-red-200' : 'text-gray-900 group-hover:text-red-600','mt-1 text-lg font-medium']">
+            {{ meal.description }}
+          </p>
+        </a>
+      </div>
     </div>
-    <router-link
-        to="/login"
-    >Test</router-link>
-    <Footer></Footer>
+  </div>
+  <Footer></Footer>
 </template>
 
 <script>
@@ -21,7 +31,8 @@ export default {
   components: { Header, Footer },
     data() {
         return {
-            meals: {}
+            meals: {},
+            dark: false,
         }
     },
     /*
@@ -47,9 +58,16 @@ export default {
             )
             .catch((error) => console.log("error", error));
         },
+        ChangeMode() {
+          this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
+          console.log(this.dark);
+        }
     },
     created() {
         this.loadData();
-  },
+    },
+    mounted() {
+        this.ChangeMode();
+    }
 }
 </script>

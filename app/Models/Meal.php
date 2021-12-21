@@ -20,7 +20,6 @@ class Meal extends Model
         'taste',
         'temperature',
         'recipe_meal_id',
-        'preperation_id',
         'user_id',
     ];
 
@@ -28,11 +27,17 @@ class Meal extends Model
 
     public $timestamps = true;
 
-    public function preperation () {
-        return $this->hasOne(Preperation::class);
+    public function preperations()
+    {
+        return $this->hasMany(Preperation::class);
     }
 
-    public function user () {
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function ingredients()
+    {
     }
 }
