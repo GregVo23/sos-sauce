@@ -2,7 +2,7 @@
     <Header @ChangeMode="ChangeMode($event)"></Header>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white','flex pt-6']">
         <div class="w-1/2">
-            <img :src="'http://www.localhost:8000/images/meals/' + meal.picture" :alt="meal.name" class="w-full h-full object-center object-cover group-hover:opacity-75" />
+            <img :src="'http://www.localhost:8000/storage/meals/' + meal.picture" :alt="meal.name" class="w-full h-full object-center object-cover group-hover:opacity-75" />
         </div>
         <div class="w-1/2 p-8">
             <a href="http://www.localhost:8000/meals">

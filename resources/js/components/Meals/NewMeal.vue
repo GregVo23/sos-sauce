@@ -1,5 +1,5 @@
 <template>
-<Header @ChangeMode="ChangeMode($event)"></Header>
+<Header @ChangeMode="changeMode($event)"></Header>
   <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24']">
     <div class="relative max-w-xl mx-auto">
       <div class="text-center">
@@ -8,13 +8,17 @@
         </h2>
       </div>
       <div class="mt-12">
-        <form action="#" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+        <form @submit="formSubmit" enctype="multipart/form-data" action="./meal" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
           <div class="sm:col-span-2">
             <label for="name" :class="[dark ? 'text-white' : 'text-gray-700','block text-sm font-medium']">Nom du plat</label>
             <div class="mt-1">
-              <input type="text" name="name" id="name" autocomplete="organization" class="py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md" />
+              <input v-model="name" type="text" name="name" id="name" autocomplete="organization" class="py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md" />
             </div>
           </div>
+
+<p>name {{name}}</p>
+<p>description {{description}}</p>
+<p>agreed {{agreed}}</p>
 
               <div class="sm:col-span-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                 <div class="space-y-1 text-center">
@@ -22,9 +26,9 @@
                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                   <div :class="[dark ? 'text-white' : 'text-gray-600','flex text-sm']">
-                    <label for="file-upload" :class="[dark ? 'bg-gray-600' : 'bg-white', 'relative cursor-pointer  rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500']">
+                    <label for="picture" :class="[dark ? 'bg-gray-600' : 'bg-white', 'relative cursor-pointer  rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500']">
                       <span>Charger une photo</span>
-                      <input id="file-upload" name="file-upload" type="file" class="sr-only" />
+                      <input @change="updatePhoto" id="picture" name="picture" type="file" accept="image/*" class="sr-only" />
                     </label>
                     <p :class="[dark ? 'text-white' : 'text-gray-500','pl-1']">ou glisser / déposer</p>
                   </div>
@@ -37,7 +41,7 @@
           <div class="sm:col-span-2">
             <label for="description" :class="[dark ? 'text-white' : 'text-gray-700' ,'block text-sm font-medium']">Description</label>
             <div class="mt-1">
-              <textarea id="description" name="description" rows="4" class="py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md" />
+              <textarea v-model="description" id="description" name="description" rows="4" class="py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md" />
             </div>
           </div>
           <div class="sm:col-span-2">
@@ -85,8 +89,12 @@ export default {
   },
   data() {
       let dark = "false";
+      let name = "";
+      let description = "";
+      let pictureName = "";
+      let picture = {};
       return {
-          dark
+          dark, name, description, picture, pictureName
       }
   },
   setup() {
@@ -98,12 +106,54 @@ export default {
   },
   props:['mode'],
   methods: {
-      ChangeMode() {
+      changeMode() {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
+      },
+      checkForm() {
+
+      },
+      storeMeal() {
+
+      },
+      updatePhoto(e) {
+
+        console.log("on est que la");
+        //if (!e.length) return;
+
+        // Store the file data
+        console.log("on est la");
+        this.picture = e.target.files[0];
+        this.pictureName = e.target.files[0].name;
+      },
+      formSubmit(e) {
+          e.preventDefault();
+
+          let formData = new FormData();
+
+          formData.append('name', this.name ? this.name : "");
+          formData.append('description', this.description ? this.description : "");
+          formData.append('agreed', this.agreed ? this.agreed : "");
+          formData.append("picture", this.picture ? this.picture : "");
+          formData.append('pictureName', this.pictureName ? this.pictureName : "");
+
+          const config = {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+              //.content,
+            },
+          };
+
+          axios
+            .post('/api/meal', formData, config)
+            .then(
+                console.log("super")
+            )
+            .catch((error) => console.log("error", error));
       }
   },
   mounted() {
-      this.ChangeMode();
+      this.changeMode();
   }
 }
 </script>

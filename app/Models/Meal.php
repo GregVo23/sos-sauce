@@ -37,7 +37,8 @@ class Meal extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function ingredients()
+    public function favoriteUser()
     {
+        return $this->belongsToMany(User::class);
     }
 }

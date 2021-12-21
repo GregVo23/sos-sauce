@@ -19,27 +19,27 @@ class CreateMealsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('slug')->nullable();
-            $table->string('picture');
-            $table->enum('difficulty',['1','2','3','4','5']);
-            $table->integer('time');
-            $table->integer('review');
-            $table->enum('taste',['sucré','salé','amer',]);
-            $table->enum('temperature',['chaud','froid','tiède',]);
+            $table->string('picture')->default("http://localhost:8000/images/logo/sos-sauce.png");
+            $table->enum('difficulty', ['1', '2', '3', '4', '5'])->nullable();
+            $table->integer('time')->nullable();
+            $table->integer('review')->nullable();
+            $table->enum('taste', ['sucré', 'salé', 'amer',])->default('salé');
+            $table->enum('temperature', ['chaud', 'froid', 'tiède',])->default('chaud');
             $table->foreignId('recipe_meal_id')->nullable();
             $table->foreignId('preperation_id')->nullable();
             $table->foreignId('user_id');
 
             $table->foreign('user_id')
-            ->references('id')->on('users')
-            ->onDelete('restrict')->onUpdate('cascade');
+                ->references('id')->on('users')
+                ->onDelete('restrict')->onUpdate('cascade');
 
             $table->foreign('preperation_id')
-            ->references('id')->on('preperations')
-            ->onDelete('restrict')->onUpdate('cascade');
+                ->references('id')->on('preperations')
+                ->onDelete('restrict')->onUpdate('cascade');
 
             $table->foreign('recipe_meal_id')
-            ->references('id')->on('recipe_meals')
-            ->onDelete('restrict')->onUpdate('cascade');
+                ->references('id')->on('recipe_meals')
+                ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
