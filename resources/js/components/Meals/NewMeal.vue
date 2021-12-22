@@ -112,7 +112,7 @@ export default {
       let description = null;
       let pictureName = null;
       let picture = {};
-      const injuries = ["con", "salope", "merde", "pute", "shit", "fuck", "suck"];
+      const injuries = ["con", "salope", "merde", "pute", "shit", "fuck", "suck", "vomir"];
       return {
           dark, 
           name, 
@@ -146,10 +146,11 @@ export default {
         return true;
       },
       checkForm() {
-        this.checkName();
-        this.checkDescription();
-        this.checkPicture();
-        this.checkRules();
+        if (this.checkName() && this.checkDescription() && this.checkPicture() && this.checkRules()) {
+          return true;
+        } else {
+          return false;
+        }
       },
       checkName() {
         if (this.name == "" || this.name == null) {
@@ -159,6 +160,7 @@ export default {
         } else {
           this.messageName = null;
         }
+        return (this.messageName == null ? true : false);
       },
       checkDescription() {
         if (this.description == null) {
@@ -166,14 +168,16 @@ export default {
         } else if(this.description.length < 10){
           this.messageDescription = "Faites un effort, cette description est trop courte ...";
         } else if(this.description.length < 20){
-          this.messageDescription = "Vous y êtes presque, encore " + (30-this.description.length) + " caractères !";
+          this.messageDescription = "Vous y êtes presque, encore " + (20-this.description.length) + " caractères !";
         } else {
           this.messageDescription = null;
           this.validText(this.description, this.injuries);
         }
+        return (this.messageDescription == null ? true : false);
       },
       checkPicture() {
         //picture
+        return true;
       },
       checkRules() {
         if (this.agreed == false) {
@@ -181,6 +185,7 @@ export default {
         } else {
           this.messageRule = null;
         }
+        return (this.messageRule == null ? true : false);
       },
       removeImage() {
         this.picture = "";
@@ -212,9 +217,11 @@ export default {
           axios
             .post('/api/meal', formData, config)
             .then(
-                console.log("super")
+                window.location.assign("http://www.localhost:8000/meals?message=success")
             )
             .catch((error) => console.log("error", error));
+          } else {
+            console.log("Probleme avec le formulaire");
           }
       }
   },

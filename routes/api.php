@@ -25,3 +25,4 @@ Route::get('/ingredients', [IngredientController::class, 'index']);
 Route::get('/meals', [MealController::class, 'index']);
 Route::get('/meal/{slug}', [MealController::class, 'show']);
 Route::post('/meal', [MealController::class, 'store']);
+Route::delete('/meal/{slug}', [MealController::class, 'destroy']);

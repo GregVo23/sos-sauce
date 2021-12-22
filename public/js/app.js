@@ -22453,6 +22453,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     ChangeMode: function ChangeMode() {
       this.dark = window.sessionStorage.getItem("dark") == "true" ? true : false;
+    },
+    deleteMeal: function deleteMeal(meal) {
+      if (confirm("Etes vous sur de supprimer " + meal.name + " ?")) {
+        console.log("deleted" + meal.name);
+        var config = {
+          headers: {//'Content-Type': 'multipart/form-data',
+            //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+            //.content,
+          }
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/meal/' + meal.slug, config).then(window.location.assign("http://www.localhost:8000/meals"))["catch"](function (error) {
+          return console.log("error", error);
+        });
+      }
     }
   },
   created: function created() {
@@ -22572,7 +22586,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     var description = null;
     var pictureName = null;
     var picture = {};
-    var injuries = ["con", "salope", "merde", "pute", "shit", "fuck", "suck"];
+    var injuries = ["con", "salope", "merde", "pute", "shit", "fuck", "suck", "vomir"];
     return {
       dark: dark,
       name: name,
@@ -22617,10 +22631,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       return true;
     },
     checkForm: function checkForm() {
-      this.checkName();
-      this.checkDescription();
-      this.checkPicture();
-      this.checkRules();
+      if (this.checkName() && this.checkDescription() && this.checkPicture() && this.checkRules()) {
+        return true;
+      } else {
+        return false;
+      }
     },
     checkName: function checkName() {
       if (this.name == "" || this.name == null) {
@@ -22630,6 +22645,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else {
         this.messageName = null;
       }
+
+      return this.messageName == null ? true : false;
     },
     checkDescription: function checkDescription() {
       if (this.description == null) {
@@ -22637,13 +22654,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else if (this.description.length < 10) {
         this.messageDescription = "Faites un effort, cette description est trop courte ...";
       } else if (this.description.length < 20) {
-        this.messageDescription = "Vous y êtes presque, encore " + (30 - this.description.length) + " caractères !";
+        this.messageDescription = "Vous y êtes presque, encore " + (20 - this.description.length) + " caractères !";
       } else {
         this.messageDescription = null;
         this.validText(this.description, this.injuries);
       }
+
+      return this.messageDescription == null ? true : false;
     },
-    checkPicture: function checkPicture() {//picture
+    checkPicture: function checkPicture() {
+      //picture
+      return true;
     },
     checkRules: function checkRules() {
       if (this.agreed == false) {
@@ -22651,6 +22672,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       } else {
         this.messageRule = null;
       }
+
+      return this.messageRule == null ? true : false;
     },
     removeImage: function removeImage() {
       this.picture = "";
@@ -22677,9 +22700,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
           }
         };
-        axios.post('/api/meal', formData, config).then(console.log("super"))["catch"](function (error) {
+        axios.post('/api/meal', formData, config).then(window.location.assign("http://www.localhost:8000/meals?message=success"))["catch"](function (error) {
           return console.log("error", error);
         });
+      } else {
+        console.log("Probleme avec le formulaire");
       }
     }
   },
@@ -23531,10 +23556,13 @@ var _hoisted_3 = {
   "class": "w-1/2 p-8"
 };
 var _hoisted_4 = {
+  "class": "flex justify-between"
+};
+var _hoisted_5 = {
   href: "http://www.localhost:8000/meals"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
   "stroke-linecap": "round",
   "stroke-linejoin": "round",
   "stroke-width": "2",
@@ -23543,7 +23571,29 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = [_hoisted_6];
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_9 = [_hoisted_8];
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "stroke-width": "2",
+  d: "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_11 = [_hoisted_10];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Header");
 
@@ -23561,15 +23611,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "w-full h-full object-center object-cover group-hover:opacity-75"
   }, null, 8
   /* PROPS */
-  , _hoisted_2)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+  , _hoisted_2)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'h-24 w-24 hover:fill-current hover:text-red-600']),
     fill: "none",
     viewBox: "0 0 24 24",
     stroke: "currentColor"
-  }, _hoisted_6, 2
+  }, _hoisted_7, 2
   /* CLASS */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'h-24 w-24 hover:fill-current hover:text-red-600']),
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, _hoisted_9, 2
+  /* CLASS */
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.deleteMeal($data.meal);
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'h-24 w-24 hover:fill-current hover:text-red-600']),
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor"
+  }, _hoisted_11, 2
+  /* CLASS */
+  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'text-3xl font-bold py-6'])
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meal.name), 3
   /* TEXT, CLASS */
