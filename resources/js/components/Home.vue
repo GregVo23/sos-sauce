@@ -1,17 +1,20 @@
 <template>
     <Header @ChangeMode="ChangeMode($event)"></Header>
     <section class="h-screen relative">
-        <div class="absolute inset-0">
-            <img class="w-full h-full object-cover" :src="image" :alt="name" />
+        
+        <div class="absolute w-full h-full bg-black">
+            <img class="w-full h-full object-cover opacity-75" :src="image" :alt="name" />
         </div>
-        <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+
+        <div class="absolute top-1/3 left-1/2 transform -translate-x-1/2">
+            <h1 class="text-8xl font-extrabold tracking-tight text-white text-center">
                 <router-link
                     to="/login"
                     >{{ name }}
                 </router-link></h1>
-            <p class="mt-6 text-xl text-indigo-100 max-w-3xl">Mattis amet hendrerit dolor, quisque lorem pharetra. Pellentesque lacus nisi urna, arcu sociis eu. Orci vel lectus nisl eget eget ut consectetur. Sit justo viverra non adipisicing elit distinctio.</p>
+            <p class="mt-6 mx-auto text-2xl text-white text-center">{{ description }}</p>
         </div>
+
     </section>
     <Footer :mode="this.dark"></Footer>
 </template>
@@ -25,28 +28,31 @@ export default {
     components: { Header, Footer },
     data() {
         return {
-            name: "Image de recette",
+            name: "Maitre saucier",
+            image: "http://www.localhost:8000/storage/meals/intro.jpeg",
+            description: "Accompagner vos plats de sauces aux milles saveurs !",
             dark:false,
-            image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80",
-            images: [
-                {
-                    nom: "Superbe recette",
-                    image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-                },
-                                {
-                    nom: "Pas mal",
-                    image: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
-                },
-            ]
+            meals:{}
         }
     },
     props:['mode'],
     methods: {
+        loadData(){
+            axios
+            .get('/api/meals')
+            .then(
+                ({ data }) => (
+                    (this.meals = data.data)
+                )
+            )
+            .catch((error) => console.log("error", error));
+        },
         slider(){
             setInterval(() => {
-                let i = Math.round(Math.random(0, this.images.length));
-                this.image = this.images[i].image;
-                this.name = this.images[i].nom;
+                let i = Math.round(Math.random(0, this.meals.length));
+                this.image = "http://www.localhost:8000/storage/meals/" + this.meals[i].picture;
+                this.name = this.meals[i].name;
+                this.description = this.meals[i].description;
             },2000)
         },
         ChangeMode() {
@@ -54,9 +60,10 @@ export default {
         }
     },
     created() {
-        this.slider();
+        this.loadData();
     },
     mounted() {
+        this.slider();
         this.ChangeMode();
     }
 }

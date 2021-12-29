@@ -22209,27 +22209,33 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      name: "Image de recette",
+      name: "Maitre saucier",
+      image: "http://www.localhost:8000/storage/meals/intro.jpeg",
+      description: "Accompagner vos plats de sauces aux milles saveurs !",
       dark: false,
-      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80",
-      images: [{
-        nom: "Superbe recette",
-        image: "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-      }, {
-        nom: "Pas mal",
-        image: "https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80"
-      }]
+      meals: {}
     };
   },
   props: ['mode'],
   methods: {
-    slider: function slider() {
+    loadData: function loadData() {
       var _this = this;
 
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/meals').then(function (_ref) {
+        var data = _ref.data;
+        return _this.meals = data.data;
+      })["catch"](function (error) {
+        return console.log("error", error);
+      });
+    },
+    slider: function slider() {
+      var _this2 = this;
+
       setInterval(function () {
-        var i = Math.round(Math.random(0, _this.images.length));
-        _this.image = _this.images[i].image;
-        _this.name = _this.images[i].nom;
+        var i = Math.round(Math.random(0, _this2.meals.length));
+        _this2.image = "http://www.localhost:8000/storage/meals/" + _this2.meals[i].picture;
+        _this2.name = _this2.meals[i].name;
+        _this2.description = _this2.meals[i].description;
       }, 2000);
     },
     ChangeMode: function ChangeMode() {
@@ -22237,9 +22243,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.slider();
+    this.loadData();
   },
   mounted: function mounted() {
+    this.slider();
     this.ChangeMode();
   }
 });
@@ -23367,22 +23374,18 @@ var _hoisted_1 = {
   "class": "h-screen relative"
 };
 var _hoisted_2 = {
-  "class": "absolute inset-0"
+  "class": "absolute w-full h-full bg-black"
 };
 var _hoisted_3 = ["src", "alt"];
 var _hoisted_4 = {
-  "class": "relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8"
+  "class": "absolute top-1/3 left-1/2 transform -translate-x-1/2"
 };
 var _hoisted_5 = {
-  "class": "text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl"
+  "class": "text-8xl font-extrabold tracking-tight text-white text-center"
 };
-
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "mt-6 text-xl text-indigo-100 max-w-3xl"
-}, "Mattis amet hendrerit dolor, quisque lorem pharetra. Pellentesque lacus nisi urna, arcu sociis eu. Orci vel lectus nisl eget eget ut consectetur. Sit justo viverra non adipisicing elit distinctio.", -1
-/* HOISTED */
-);
-
+var _hoisted_6 = {
+  "class": "mt-6 mx-auto text-2xl text-white text-center"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Header");
 
@@ -23395,7 +23398,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.ChangeMode($event);
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    "class": "w-full h-full object-cover",
+    "class": "w-full h-full object-cover opacity-75",
     src: $data.image,
     alt: $data.name
   }, null, 8
@@ -23411,7 +23414,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), _hoisted_6])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.description), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
   }, null, 8
   /* PROPS */
