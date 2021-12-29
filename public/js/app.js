@@ -22212,6 +22212,7 @@ __webpack_require__.r(__webpack_exports__);
       name: "Maitre saucier",
       image: "http://www.localhost:8000/storage/meals/intro.jpeg",
       description: "Accompagner vos plats de sauces aux milles saveurs !",
+      slug: "/",
       dark: false,
       meals: {}
     };
@@ -22232,10 +22233,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       setInterval(function () {
-        var i = Math.round(Math.random(0, _this2.meals.length));
+        var i = Math.round(Math.random(0, _this2.meals.length) * 10);
         _this2.image = "http://www.localhost:8000/storage/meals/" + _this2.meals[i].picture;
         _this2.name = _this2.meals[i].name;
         _this2.description = _this2.meals[i].description;
+        _this2.slug = "/meal/" + _this2.meals[i].slug;
       }, 2000);
     },
     ChangeMode: function ChangeMode() {
@@ -23398,13 +23400,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.ChangeMode($event);
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    "class": "w-full h-full object-cover opacity-75",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'opacity-50' : 'opacity-75', 'w-full h-full object-cover']),
     src: $data.image,
     alt: $data.name
-  }, null, 8
-  /* PROPS */
+  }, null, 10
+  /* CLASS, PROPS */
   , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/login"
+    to: $data.slug
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.name), 1
@@ -23414,7 +23416,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.description), 1
+  }, 8
+  /* PROPS */
+  , ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.description), 1
   /* TEXT */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
