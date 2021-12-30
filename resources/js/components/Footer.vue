@@ -6,7 +6,7 @@
       <div class="xl:grid xl:grid-cols-3 xl:gap-8">
         <div class="space-y-8 xl:col-span-1">
           <img class="h-24" src="http://localhost:8000/images/logo/sos-sauce.png" alt="logo sos sauce" />
-          <p class="text-gray-500 text-base pr-6">
+          <p :class="[this.mode ? 'text-white' : 'text-gray-500','text-base pr-6']">
             Accompagnez chaque bouchée d'une nouvelle saveur grace à SOS-SAUCE. {{ this.mode }}
           </p>
           <div class="flex space-x-6">
@@ -19,24 +19,24 @@
         <div class="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+              <h3 :class="[this.mode ? 'text-white' : 'text-gray-400','text-sm font-semibold tracking-wider uppercase']">
                 Recettes
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.recettes" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
+                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
                   </a>
                 </li>
               </ul>
             </div>
             <div class="mt-12 md:mt-0">
-              <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+              <h3 :class="[this.mode ? 'text-white' : 'text-gray-400','text-sm font-semibold tracking-wider uppercase']">
                 Ingredients
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.ingredients" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
+                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
                   </a>
                 </li>
@@ -45,24 +45,24 @@
           </div>
           <div class="md:grid md:grid-cols-2 md:gap-8">
             <div>
-              <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+              <h3 :class="[this.mode ? 'text-white' : 'text-gray-400','text-sm font-semibold tracking-wider uppercase']">
                 Plats
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.plats" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
+                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
                   </a>
                 </li>
               </ul>
             </div>
             <div class="mt-12 md:mt-0">
-              <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
+              <h3 :class="[this.mode ? 'text-white' : 'text-gray-400','text-sm font-semibold tracking-wider uppercase']">
                 Legal
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.legal" :key="item.name">
-                  <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
+                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
                   </a>
                 </li>

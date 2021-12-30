@@ -1,5 +1,6 @@
 <template>
     <Header @ChangeMode="ChangeMode($event)"></Header>
+    <Modal @Refuse="Cancel($event)" @Accept="Delete($event)" :open="this.open" :message="this.message" :title="this.title" :type="this.type" :mode="this.dark" ></Modal>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white','flex pt-6']">
         <div class="w-1/2">
             <img :src="'http://www.localhost:8000/storage/meals/' + meal.picture" :alt="meal.name" class="w-full h-full object-center object-cover group-hover:opacity-75" />
@@ -11,7 +12,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
                 </svg>
             </a>
-            <a>
+            <a @click="updateMeal(meal)">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-24 w-24 hover:fill-current hover:text-red-600']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
@@ -35,13 +36,18 @@
 import axios from "axios";
 import Header from '../Header.vue';
 import Footer from '../Footer.vue';
+import Modal from '../Modal.vue';
 
 export default {
-  components: { Header, Footer },
+  components: { Header, Footer, Modal },
     data() {
         return {
             meal: {},
             dark: false,
+            message: "",
+            title: "",
+            type: "",
+            open: false,
         }
     },
     props: ['mode'],
@@ -71,9 +77,21 @@ export default {
         ChangeMode() {
             this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         },
+        notification(message, title, type) {
+            this.message = message;
+            this.title = title;
+            this.type = type;
+            this.open == true ? this.open = false : this.open = true;
+        },
+        updateMeal(meal){
+            this.notification("le message est", "le titre est ", "le type est");
+        },
         deleteMeal(meal) {
-            if(confirm("Etes vous sur de supprimer " + meal.name + " ?")) {
-                console.log("deleted" + meal.name);
+            this.notification("Cette action est irréversible, soyez certain de vouloir effacer le plat suivant : " + meal.name + ".", "Etes vous sur de supprimer : " + meal.name + " ?", "delete");
+        },
+        Delete() {
+            if (true) {  //Vérification supplémentaire ?
+                this.open = false;
                 const config = {
                 headers: {
                 //'Content-Type': 'multipart/form-data',
@@ -83,13 +101,16 @@ export default {
             };
 
             axios
-                .delete('/api/meal/' + meal.slug, config)
+                .delete('/api/meal/' + this.meal.slug, config)
                 .then(
                     window.location.assign("http://www.localhost:8000/meals")
                 )
                 .catch((error) => console.log("error", error));
             
             }
+        },
+        Cancel() {
+            this.open = false;
         }
     },
     created() {
