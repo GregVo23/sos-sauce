@@ -35,7 +35,7 @@
                   <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
                     <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </div>
-                  <input id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
+                  <input @keyup="filteredList()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
                 </div>
               </div>
             </div>
@@ -146,6 +146,7 @@ const userNavigation = [
   { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
+let letters = "";
 
 export default {
   components: {
@@ -163,7 +164,7 @@ export default {
     XIcon,
   },
   props:[
-    "dark"
+    "dark","letters"
   ],
   setup() {
     const dark = ref(false)
@@ -172,6 +173,7 @@ export default {
       navigation,
       userNavigation,
       dark,
+      letters,
     }
   },
   methods: {
@@ -182,10 +184,33 @@ export default {
     changeMode() {
         this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         console.log(this.dark);
+    },
+    filteredList() {
+      if (this.letters != "" && this.letters.length > 0){
+        console.log(this.letters);
+        if (this.$route.path == "/meals"){
+          this.$emit('filter', this.letters);
+          //window.sessionStorage.removeItem("search");
+        } else {
+          // Afficher une liste
+          if (this.letters.length > 2) {
+            window.sessionStorage.setItem("search", this.letters);
+            window.location.href = "/meals";
+          }
+        }
+      }
     }
   },
   mounted() {
     this.changeMode();
+
+    if (window.sessionStorage.getItem("search").length > 0) {
+      let searching = window.sessionStorage.getItem("search");
+      this.letters = searching;
+      document.querySelector("#search").value = searching;
+      this.filteredList();
+    }
+  
   }
 }
 </script>
