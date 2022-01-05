@@ -183,16 +183,12 @@ export default {
     },
     changeMode() {
         this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
-        console.log(this.dark);
     },
     filteredList() {
       if (this.letters != "" && this.letters.length > 0){
-        console.log(this.letters);
         if (this.$route.path == "/meals"){
           this.$emit('filter', this.letters);
-          //window.sessionStorage.removeItem("search");
         } else {
-          // Afficher une liste
           if (this.letters.length > 2) {
             window.sessionStorage.setItem("search", this.letters);
             window.location.href = "/meals";
@@ -204,10 +200,12 @@ export default {
   mounted() {
     this.changeMode();
 
-    if (window.sessionStorage.getItem("search").length > 0) {
+    if (window.sessionStorage.getItem("search") != null) {
       let searching = window.sessionStorage.getItem("search");
+      let inputSearch = document.querySelector("#search");
       this.letters = searching;
-      document.querySelector("#search").value = searching;
+      inputSearch.value = searching;
+      inputSearch.focus();
       this.filteredList();
     }
   

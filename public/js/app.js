@@ -23845,16 +23845,12 @@ var letters = "";
     },
     changeMode: function changeMode() {
       this.dark = window.sessionStorage.getItem("dark") == "true" ? true : false;
-      console.log(this.dark);
     },
     filteredList: function filteredList() {
       if (this.letters != "" && this.letters.length > 0) {
-        console.log(this.letters);
-
         if (this.$route.path == "/meals") {
-          this.$emit('filter', this.letters); //window.sessionStorage.removeItem("search");
+          this.$emit('filter', this.letters);
         } else {
-          // Afficher une liste
           if (this.letters.length > 2) {
             window.sessionStorage.setItem("search", this.letters);
             window.location.href = "/meals";
@@ -23866,10 +23862,12 @@ var letters = "";
   mounted: function mounted() {
     this.changeMode();
 
-    if (window.sessionStorage.getItem("search").length > 0) {
+    if (window.sessionStorage.getItem("search") != null) {
       var searching = window.sessionStorage.getItem("search");
+      var inputSearch = document.querySelector("#search");
       this.letters = searching;
-      document.querySelector("#search").value = searching;
+      inputSearch.value = searching;
+      inputSearch.focus();
       this.filteredList();
     }
   }
@@ -24263,17 +24261,15 @@ __webpack_require__.r(__webpack_exports__);
     ChangeMode: function ChangeMode() {
       this.dark = window.sessionStorage.getItem("dark") == "true" ? true : false;
     },
-    Search: function Search($event) {
-      this.filter = $event;
-      console.log(this.filter);
+    Search: function Search() {
+      var $event = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      this.filter = $event != null ? $event : window.sessionStorage.getItem("search");
 
       if (this.filter.length > 2) {
-        //filter liste
         this.meals = [];
 
         for (var i = 0; i < this.list.length; i++) {
           if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) == 0) {
-            console.log(this.list[i].name);
             this.meals.push(this.list[i]);
           }
         }
@@ -24288,6 +24284,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.ChangeMode();
+  },
+  updated: function updated() {
+    if (window.sessionStorage.getItem("search") != null) {
+      this.filter = window.sessionStorage.getItem("search");
+
+      if (this.filter.length > 1) {
+        this.meals = [];
+
+        for (var i = 0; i < this.list.length; i++) {
+          if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) == 0) {
+            this.meals.push(this.list[i]);
+          }
+        }
+      }
+    }
   }
 });
 
@@ -26255,10 +26266,11 @@ var routes = [{
   path: '/*',
   redirect: '/404'
 }];
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createRouter)({
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createWebHistory)(),
   routes: routes
-}));
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),
 

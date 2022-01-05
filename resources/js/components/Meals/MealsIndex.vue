@@ -69,15 +69,12 @@ export default {
         ChangeMode() {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         },
-        Search($event) {
-          this.filter = $event;
-          console.log(this.filter);
+        Search($event = null) {
+          this.filter = ($event != null) ? $event : window.sessionStorage.getItem("search");
           if (this.filter.length > 2){
-            //filter liste
             this.meals = [];
             for(let i = 0; i<this.list.length; i++){
               if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) == 0){
-                console.log(this.list[i].name);
                 this.meals.push(this.list[i]);
               }
             }
@@ -92,6 +89,19 @@ export default {
     },
     mounted() {
         this.ChangeMode();
+    },
+    updated() {
+        if (window.sessionStorage.getItem("search") != null){
+          this.filter = window.sessionStorage.getItem("search");
+          if (this.filter.length > 1){
+            this.meals = [];
+            for(let i = 0; i<this.list.length; i++){
+              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) == 0){
+                this.meals.push(this.list[i]);
+              }
+            }
+          }
+        }
     }
 }
 </script>
