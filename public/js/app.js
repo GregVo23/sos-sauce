@@ -24170,6 +24170,9 @@ __webpack_require__.r(__webpack_exports__);
     updateMeal: function updateMeal(meal) {
       this.notification("le message est", "le titre est ", "le type est");
     },
+    likeMeal: function likeMeal(meal) {
+      this.notification("Ajouter un plat à vos favoris vous permet de le retrouver plus facilement par la suite.", "Ajouter " + meal.name + " à vos plats favoris ?", "le type est");
+    },
     deleteMeal: function deleteMeal(meal) {
       this.notification("Cette action est irréversible, soyez certain de vouloir effacer le plat suivant : " + meal.name + ".", "Etes vous sur de supprimer : " + meal.name + " ?", "delete");
     },
@@ -25454,7 +25457,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     stroke: "currentColor"
   }, _hoisted_9, 2
   /* CLASS */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
+      return $options.likeMeal($data.meal);
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'h-20 w-20 hover:fill-current hover:text-red-600']),
     fill: "none",
@@ -25463,7 +25470,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, _hoisted_11, 2
   /* CLASS */
   ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.deleteMeal($data.meal);
     })
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {

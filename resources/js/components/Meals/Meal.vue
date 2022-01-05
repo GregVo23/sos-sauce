@@ -17,7 +17,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
             </a>
-            <a>
+            <a @click="likeMeal(meal)">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-20 w-20 hover:fill-current hover:text-red-600']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -90,6 +90,9 @@ export default {
         },
         updateMeal(meal){
             this.notification("le message est", "le titre est ", "le type est");
+        },
+        likeMeal(meal){
+            this.notification("Ajouter un plat à vos favoris vous permet de le retrouver plus facilement par la suite.", "Ajouter " + meal.name + " à vos plats favoris ?", "le type est");
         },
         deleteMeal(meal) {
             this.notification("Cette action est irréversible, soyez certain de vouloir effacer le plat suivant : " + meal.name + ".", "Etes vous sur de supprimer : " + meal.name + " ?", "delete");
