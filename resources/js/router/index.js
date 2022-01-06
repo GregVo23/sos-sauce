@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import IngredientIndex from "../components/IngredientIndex.vue";
 import Login from "../components/Login.vue";
+import Register from "../components/Register.vue";
 import Home from "../components/Home.vue";
 import Recipe from "../components/Recipe.vue";
 import MealsIndex from "../components/Meals/MealsIndex.vue";
@@ -18,6 +19,11 @@ const routes = [
         path: '/login',
         name: 'login',
         component: Login
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: Register
     },
     {
         path: '/recettes',
