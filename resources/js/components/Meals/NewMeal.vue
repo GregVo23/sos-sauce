@@ -1,13 +1,18 @@
 <template>
 <Header @ChangeMode="changeMode($event)"></Header>
-  <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24']">
+
+    <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+        <div class="lg:w-2/5 md:w-1/2 sm:w-2/3 w-full">
+
+
+  <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'rounded-lg shadow-lg p-10 overflow-hidden']">
     <div class="relative max-w-xl mx-auto">
       <div class="text-center">
         <h2 :class="[dark ? 'text-white' : 'text-gray-900', 'text-3xl font-extrabold tracking-tight  sm:text-4xl']">
           Ajouter un plat
         </h2>
       </div>
-      <div class="mt-12">
+      <div class="mt-6">
         <form @submit="formSubmit" enctype="multipart/form-data" action="./meal" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
           <div class="sm:col-span-2">
             <label for="name" :class="[dark ? 'text-white' : 'text-gray-700','block text-sm font-medium']">Nom du plat</label>
@@ -90,6 +95,8 @@
       </div>
     </div>
   </div>
+  </div>
+  </section>
   <Footer :mode="this.dark"></Footer>
 </template>
 

@@ -31,11 +31,17 @@ export default {
     components: { Footer },
     data() {
         return {
-            message: "Hello"
+            message: "Hello",
+            dark: "false"
         }
     },
     methods: {
-
+    changeMode() {
+          this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
+      },
     },
+    mounted() {
+      this.changeMode();
+    }
 }
 </script>

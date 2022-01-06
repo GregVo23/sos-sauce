@@ -1,7 +1,7 @@
 <template>
     <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
-            <form class="bg-white p-10 rounded-lg shadow-lg min-w-full">
+            <form @submit="register($event)" class="bg-white p-10 rounded-lg shadow-lg min-w-full">
                 <div class="flex justify-center items-center">
                     <a href="http://localhost:8000/">
                         <img class="block h-24 w-auto" src="http://localhost:8000/images/logo/sos-sauce.png" alt="SOS sauce logo" />
@@ -9,19 +9,19 @@
                 </div>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="username">Username</label>
-                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="username" id="username" placeholder="username" />
+                    <input v-model="username" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="username" id="username" placeholder="username" />
                 </div>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="email">Email</label>
-                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="email" id="email" placeholder="@email" />
+                    <input v-model="email" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="email" id="email" placeholder="@email" />
                 </div>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="password">Password</label>
-                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="password" id="password" placeholder="password" />
+                    <input v-model="password" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="password" id="password" placeholder="password" />
                 </div>
                 <div>
                     <label class="text-gray-800 font-semibold block my-3 text-md" for="confirm">Confirm password</label>
-                    <input class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="confirm" id="confirm" placeholder="confirm password" />
+                    <input v-model="confirm" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="confirm" id="confirm" placeholder="confirm password" />
                 </div>
             
                 <div class="my-6 flex items-start">
@@ -56,12 +56,18 @@ import axios from "axios";
 import Footer from './Footer.vue';
 import { ref } from 'vue'
 import { Switch } from '@headlessui/vue'
+import { URL } from '../env.js'
 
 export default {
     components: { Footer, Switch },
     data() {
         return {
-            message: "Hello"
+            message: "Hello",
+            dark: "false",
+            username: "",
+            password: "",
+            email: "",
+            confirm: ""
         }
     },
     setup() {
@@ -72,7 +78,56 @@ export default {
         }
     },
     methods: {
+      changeMode() {
+          this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
+      },
+      checkUser() {
+        return true;  //TODO
+      },
+      checkEmail() {
+        return true;  //TODO
+      },
+      checkPassword() {
+        return true;  //TODO
+      },
+      checkConfirm() {
+        return true;  //TODO
+      },
+      checkAgreed() {
+        return true;  //TODO
+      },
+      register(event) {
+        event.preventDefault()
 
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+            //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+            //  .content,
+          },
+        };
+
+        if (this.checkUser() && this.checkEmail && this.checkPassword && this.checkConfirm && this.checkAgreed){
+            let data = new FormData()
+            data.set('name', this.username)
+            data.set('email', this.email)
+            data.set('password', this.password)
+            data.set('confirm_password', this.confirm)
+            data.set('agreed', this.agreed)
+            console.log(URL + "/api/register");
+            //console.log(data.get('name'));
+            axios.post("/api/register", data, config)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
+        }
+      }
     },
+    mounted() {
+      this.changeMode();
+    }
 }
 </script>
