@@ -1,27 +1,27 @@
 <template>
     <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
-            <form @submit="register($event)" class="bg-white p-10 rounded-lg shadow-lg min-w-full">
+            <form @submit="register($event)" :class="[dark ? 'bg-gray-600' : 'bg-white','p-10 rounded-lg shadow-lg min-w-full']">
                 <div class="flex justify-center items-center">
                     <a href="http://localhost:8000/">
                         <img class="block h-24 w-auto" src="http://localhost:8000/images/logo/sos-sauce.png" alt="SOS sauce logo" />
                     </a>
                 </div>
                 <div>
-                    <label class="text-gray-800 font-semibold block my-3 text-md" for="username">Username</label>
+                    <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="username">Username</label>
                     <input v-model="username" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="username" id="username" placeholder="username" />
                 </div>
                 <div>
-                    <label class="text-gray-800 font-semibold block my-3 text-md" for="email">Email</label>
-                    <input v-model="email" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="email" id="email" placeholder="@email" />
+                    <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="email">Email</label>
+                    <input v-model="email" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="email" name="email" id="email" placeholder="@email" />
                 </div>
                 <div>
-                    <label class="text-gray-800 font-semibold block my-3 text-md" for="password">Password</label>
-                    <input v-model="password" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="password" id="password" placeholder="password" />
+                    <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="password">Password</label>
+                    <input v-model="password" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="password" name="password" id="password" placeholder="password" />
                 </div>
                 <div>
-                    <label class="text-gray-800 font-semibold block my-3 text-md" for="confirm">Confirm password</label>
-                    <input v-model="confirm" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="confirm" id="confirm" placeholder="confirm password" />
+                    <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="confirm">Confirm password</label>
+                    <input v-model="confirm" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="password" name="confirm" id="confirm" placeholder="confirm password" />
                 </div>
             
                 <div class="my-6 flex items-start">
@@ -32,14 +32,14 @@
                         </Switch>
                     </div>
                     <div class="ml-3">
-                        <p class="text-base text-gray-500">
+                        <p :class="[dark ? 'text-gray-100' : 'text-gray-500','text-base']">
                         By selecting this, you agree to the
                         {{ ' ' }}
-                        <a href="#" class="font-medium text-gray-700 underline">Privacy Policy</a>
+                        <a href="#" :class="[dark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-700 hover:text-black','font-medium underline']">Privacy Policy</a>
                         {{ ' ' }}
                         and
                         {{ ' ' }}
-                        <a href="#" class="font-medium text-gray-700 underline">Cookie Policy</a>.
+                        <a href="#" :class="[dark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-700 hover:text-black','font-medium underline']">Cookie Policy</a>.
                         </p>
                     </div>
                 </div>
@@ -54,15 +54,15 @@
 <script>
 import axios from "axios";
 import Footer from './Footer.vue';
-import { ref } from 'vue'
-import { Switch } from '@headlessui/vue'
-import { URL } from '../env.js'
+import { ref } from 'vue';
+import { Switch } from '@headlessui/vue';
+import { URL } from '../env.js';
+import router from "vue-router";
 
 export default {
     components: { Footer, Switch },
     data() {
         return {
-            message: "Hello",
             dark: "false",
             username: "",
             password: "",
@@ -114,11 +114,15 @@ export default {
             data.set('password', this.password)
             data.set('confirm_password', this.confirm)
             data.set('agreed', this.agreed)
-            console.log(URL + "/api/register");
+
+            //console.log(URL + "/api/register");
             //console.log(data.get('name'));
+
             axios.post("/api/register", data, config)
             .then(res => {
                 console.log(res.data)
+                window.localStorage.setItem("api_token", res.data.api_token)
+                this.$router.push('/')
             })
             .catch(err => {
                 console.log(err.response)

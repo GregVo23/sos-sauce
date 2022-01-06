@@ -1,21 +1,4 @@
-<!--
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 <template>
-  <!-- When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars -->
   <Popover as="template" v-slot="{ open }">
     <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible', 'py-2']">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
