@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Validation\LoginValidation;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Validation\RegisterValidation;
+use App\Http\Validation\LoginValidation;
 
 class AuthenticationController extends Controller
 {
@@ -42,16 +42,17 @@ class AuthenticationController extends Controller
             return response()->json(['errors' => $validator->errors()]);
         }
 
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt($credentials)) {
+
+            $email = $request->input('email');
             $user = User::where('email', $email)->firstOrFail();
 
             return response()->json($user);
         } else {
 
-            return response()->json(['error' => 'Mauvais identifiant de connexion !']);
+            return response()->json(['error' => 'Mauvais identifiant de connexion !'], 401);
         }
     }
 }

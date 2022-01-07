@@ -41,13 +41,13 @@
                 </Switch>
               </div>
 
-            <a href="#" class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+            <a v-if="connected == true" href="#" class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
               <span class="sr-only">View notifications</span>
               <BellIcon class="h-6 w-6" aria-hidden="true" />
             </a>
 
             <!-- Profile dropdown -->
-            <Menu as="div" class="flex-shrink-0 relative ml-5">
+            <Menu v-if="connected == true" as="div" class="flex-shrink-0 relative ml-5">
               <div>
                 <MenuButton :class="[dark ? 'bg-white' : 'bg-gray-600', 'rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500']">
                   <span class="sr-only">Open user menu</span>
@@ -70,8 +70,11 @@
               </transition>
             </Menu>
 
-            <a href="http://www.localhost:8000/ajout/" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+            <a v-if="connected == true" :href="URL + 'ajout'" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
               Nouvelle recette
+            </a>
+            <a v-else :href="URL + 'login'" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+              Connexion
             </a>
 
           </div>
@@ -152,7 +155,8 @@ export default {
   ],
   data() {
     return {
-        URL: URL
+        URL: URL,
+        connected: false
     }
   },
   setup() {
@@ -180,16 +184,22 @@ export default {
         } else {
           if (this.letters.length > 2) {
             window.sessionStorage.setItem("search", this.letters);
-            window.location.href = "/meals";
+            this.$router.push('/meals');
           }
         }
+      }
+    },
+    isConnected() {
+      if (localStorage.getItem("user_token") && localStorage.getItem("api_token")) {
+        this.connected = true;
       }
     }
   },
   mounted() {
     this.changeMode();
+    this.isConnected();
 
-    if (window.sessionStorage.getItem("search") != null) {
+    if (window.sessionStorage.getItem("search") != null && this.$route.path == "/meals") {
       let searching = window.sessionStorage.getItem("search");
       let inputSearch = document.querySelector("#search");
       this.letters = searching;

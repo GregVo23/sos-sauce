@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <footer :class="[this.mode ? 'bg-gray-600' : 'bg-gray-200']" aria-labelledby="footer-heading">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
