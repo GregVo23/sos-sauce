@@ -32,7 +32,7 @@ export default {
         return {
             URL: URL,
             name: "Maitre saucier",
-            image: this.URL + "storage/meals/intro.jpeg",
+            image: URL + "storage/meals/intro.jpeg",
             description: "Accompagner vos plats de sauces aux milles saveurs !",
             slug: "/",
             dark:false,

@@ -27,6 +27,8 @@ class AuthenticationController extends Controller
             'password' => bcrypt($request->input('password')),
             'api_token' => Str::random(60)
         ]);
+        $user->user_token = bcrypt($user->id);
+        $user->save();
 
         return response()->json($user);
     }

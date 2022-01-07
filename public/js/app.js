@@ -23924,7 +23924,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       URL: _env_js__WEBPACK_IMPORTED_MODULE_3__.URL,
       name: "Maitre saucier",
-      image: this.URL + "storage/meals/intro.jpeg",
+      image: _env_js__WEBPACK_IMPORTED_MODULE_3__.URL + "storage/meals/intro.jpeg",
       description: "Accompagner vos plats de sauces aux milles saveurs !",
       slug: "/",
       dark: false,
@@ -24665,7 +24665,18 @@ __webpack_require__.r(__webpack_exports__);
       password: "",
       email: "",
       confirm: "",
-      errors: []
+      errors: [{
+        "name": ""
+      }, {
+        "email": ""
+      }, {
+        "password": ""
+      }, {
+        "confirm": ""
+      }, {
+        "agreed": ""
+      }],
+      canSubmit: false
     };
   },
   setup: function setup() {
@@ -24680,54 +24691,89 @@ __webpack_require__.r(__webpack_exports__);
     },
     checkUser: function checkUser() {
       if (this.username === "") {
-        this.errors.push("Il faut un nom d'utilisateur !");
+        this.errors[0].name = "Il faut un nom d'utilisateur !";
         return false;
+      } else {
+        this.errors[0].name = "";
       }
 
       if (this.username.length < 3) {
-        this.errors.push("Il faut un nom d'utilisateur de plus de 3 caractères !");
+        this.errors[0].name = "Il faut un nom d'utilisateur de plus de 3 caractères !";
         return false;
+      } else {
+        this.errors[0].name = "";
       }
 
       return true;
     },
     checkEmail: function checkEmail() {
+      if (this.email === "") {
+        this.errors[0].email = "Il faut une adresse email !";
+        return false;
+      } else {
+        this.errors[0].email = "";
+      }
+
       var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (regex.test(this.email) != true) {
-        this.errors.push("Votre email ne dispose pas d'un format valide !");
+        this.errors[0].email = "Votre email ne dispose pas d'un format valide !";
         return false;
+      } else {
+        this.errors[0].email = "";
       }
 
       return true;
     },
     checkPassword: function checkPassword() {
-      var regex = /(?=.*?[#?!@$%^&*-])/;
-
-      if (regex.test(this.password) != true) {
-        this.errors.push("Votre mot de passe doit contenir minimum un caractère spécial !");
+      if (this.password === "") {
+        this.errors[0].password = "Il faut un mot de passe !";
         return false;
+      } else {
+        this.errors[0].password = "";
       }
 
       if (this.password.length < 8) {
-        this.errors.push("Votre mot de passe doit contenir minimum 8 caractères !");
+        this.errors[0].password = "Votre mot de passe doit contenir minimum 8 caractères !";
         return false;
+      } else {
+        this.errors[0].password = "";
+      }
+
+      var regex = /(?=.*?[#?!@$%^&*-])/;
+
+      if (regex.test(this.password) != true) {
+        this.errors[0].password = "Votre mot de passe doit contenir minimum un caractère spécial !";
+        return false;
+      } else {
+        this.errors[0].password = "";
       }
 
       return true;
     },
     checkConfirm: function checkConfirm() {
-      if (this.password !== this.confirm) {
-        this.errors.push("Les deux mots de passe ne correspondent pas !");
+      if (this.confirm === "") {
+        this.errors[0].confirm = "Il faut confirmer votre mot de passe !";
         return false;
+      } else {
+        this.errors[0].confirm = "";
+      }
+
+      if (this.password !== this.confirm) {
+        this.errors[0].confirm = "Les deux mots de passe ne correspondent pas !";
+        return false;
+      } else {
+        this.errors[0].confirm = "";
       }
 
       return true;
     },
     checkAgreed: function checkAgreed() {
       if (this.agreed !== true) {
-        this.errors.push("Vous devez accepter les règles d'utilisation");
+        this.errors[0].agreed = "Vous devez accepter les règles d'utilisation";
         return false;
+      } else {
+        this.errors[0].agreed = "";
       }
 
       return true;
@@ -24743,8 +24789,13 @@ __webpack_require__.r(__webpack_exports__);
 
         }
       };
+      this.canSubmit = this.checkUser();
+      this.canSubmit = this.checkEmail();
+      this.canSubmit = this.checkPassword();
+      this.canSubmit = this.checkConfirm();
+      this.canSubmit = this.checkAgreed();
 
-      if (this.checkUser() && this.checkEmail() && this.checkPassword() && this.checkConfirm() && this.checkAgreed()) {
+      if (this.canSubmit) {
         var data = new FormData();
         data.set('name', this.username);
         data.set('email', this.email);
@@ -24755,16 +24806,14 @@ __webpack_require__.r(__webpack_exports__);
 
         console.log(this.checkUser() && this.checkEmail() && this.checkPassword() && this.checkConfirm() && this.checkAgreed());
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/register", data, config).then(function (res) {
-          console.log(res.data);
+          //console.log(res.data)
           window.localStorage.setItem("api_token", res.data.api_token);
+          window.localStorage.setItem("user_token", res.data.user_token);
 
           _this.$router.push('/');
         })["catch"](function (err) {
           console.log(err.response);
         });
-      } else {
-        console.log("Il y a des erreurs : " + this.errors);
-        this.errors = [];
       }
     }
   },
@@ -26464,41 +26513,62 @@ var _hoisted_3 = {
 var _hoisted_4 = ["href"];
 var _hoisted_5 = ["src"];
 var _hoisted_6 = ["placeholder"];
-var _hoisted_7 = ["placeholder"];
-var _hoisted_8 = {
-  "class": "my-6 flex items-start"
+var _hoisted_7 = {
+  id: "errorName",
+  "class": "text-red-600"
 };
+var _hoisted_8 = ["placeholder"];
 var _hoisted_9 = {
+  id: "errorEmail",
+  "class": "text-red-600"
+};
+var _hoisted_10 = {
+  id: "errorPassword",
+  "class": "text-red-600"
+};
+var _hoisted_11 = {
+  id: "errorConfirm",
+  "class": "text-red-600"
+};
+var _hoisted_12 = {
+  "class": "mt-6 mb-2 flex items-start"
+};
+var _hoisted_13 = {
   "class": "flex-shrink-0"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "sr-only"
 }, "Agree to policies", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = {
+var _hoisted_15 = {
   "class": "ml-3"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" By selecting this, you agree to the " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" En cochant cette case, j'accepte " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " and " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " et " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(". ");
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(". ");
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_19 = {
+  id: "errorAgreed",
+  "class": "text-red-600"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
-  "class": "w-full bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans"
-}, "Register", -1
+  "class": "w-full bg-red-600 hover:bg-red-700 rounded-lg mt-4 px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans"
+}, "Je m'enregistre", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "w-full mt-6 mb-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans"
-}, "Login", -1
+}, "Je suis déjà membre", -1
 /* HOISTED */
 );
 
@@ -26508,7 +26578,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Footer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Footer");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[5] || (_cache[5] = function ($event) {
+    onSubmit: _cache[9] || (_cache[9] = function ($event) {
       return $options.register($event);
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'bg-gray-600' : 'bg-white', 'p-10 rounded-lg shadow-lg min-w-full'])
@@ -26525,76 +26595,96 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
     "for": "username"
-  }, "Username", 2
+  }, "Login", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+    onKeyup: _cache[0] || (_cache[0] = function ($event) {
+      return $options.checkUser();
+    }),
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.username = $event;
     }),
-    "class": "w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.errors[0].name ? 'border border-red-600' : '', 'w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none']),
     type: "text",
     name: "username",
     id: "username",
     placeholder: [$data.username ? $data.username : 'username']
-  }, null, 8
-  /* PROPS */
-  , _hoisted_6), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.username]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  }, null, 42
+  /* CLASS, PROPS, HYDRATE_EVENTS */
+  , _hoisted_6), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.username]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors[0].name), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
     "for": "email"
   }, "Email", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+    onKeyup: _cache[2] || (_cache[2] = function ($event) {
+      return $options.checkEmail();
+    }),
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.email = $event;
     }),
-    "class": "w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.errors[0].email ? 'border border-red-600' : '', 'w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none']),
     type: "email",
     name: "email",
     id: "email",
     placeholder: [$data.email ? $data.email : '@email']
-  }, null, 8
-  /* PROPS */
-  , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.email]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  }, null, 42
+  /* CLASS, PROPS, HYDRATE_EVENTS */
+  , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.email]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors[0].email), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
     "for": "password"
-  }, "Password", 2
+  }, "Mot de passe", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+    onKeyup: _cache[4] || (_cache[4] = function ($event) {
+      return $options.checkPassword();
+    }),
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.password = $event;
     }),
-    "class": "w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.errors[0].password ? 'border border-red-600' : '', 'w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none']),
     type: "password",
     name: "password",
     id: "password",
     placeholder: "password"
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.password]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.password]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors[0].password), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
     "for": "confirm"
-  }, "Confirm password", 2
+  }, "Confirmez votre mot de passe", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    onKeyup: _cache[6] || (_cache[6] = function ($event) {
+      return $options.checkConfirm();
+    }),
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.confirm = $event;
     }),
-    "class": "w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.errors[0].confirm ? 'border border-red-600' : '', 'w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none']),
     type: "password",
     name: "confirm",
     id: "confirm",
     placeholder: "confirm password"
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.confirm]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Switch, {
+  }, null, 34
+  /* CLASS, HYDRATE_EVENTS */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.confirm]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors[0].confirm), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Switch, {
     modelValue: $setup.agreed,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $setup.agreed = $event;
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.agreed ? 'bg-red-600' : 'bg-gray-200', 'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'])
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      return [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         "aria-hidden": "true",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.agreed ? 'translate-x-5' : 'translate-x-0', 'inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'])
       }, null, 2
@@ -26606,21 +26696,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  , ["modelValue", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-500', 'text-base'])
-  }, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-700 hover:text-black', 'font-medium underline'])
-  }, "Privacy Policy", 2
+  }, "Les conditions d'utilisations", 2
   /* CLASS */
-  ), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  ), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-700 hover:text-black', 'font-medium underline'])
-  }, "Cookie Policy", 2
+  }, "La politique des coockies", 2
   /* CLASS */
-  ), _hoisted_14], 2
+  ), _hoisted_18], 2
   /* CLASS */
-  )])]), _hoisted_15, _hoisted_16], 34
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors[0].agreed), 1
+  /* TEXT */
+  ), _hoisted_20, _hoisted_21], 34
   /* CLASS, HYDRATE_EVENTS */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
