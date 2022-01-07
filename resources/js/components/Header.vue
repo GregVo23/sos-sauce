@@ -5,8 +5,8 @@
         <div class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
             <div class="flex-shrink-0 flex items-center">
-              <a href="http://localhost:8000/">
-                <img class="block h-24 w-auto" src="http://localhost:8000/images/logo/sos-sauce.png" alt="SOS sauce logo" />
+              <a :href="URL">
+                <img class="block h-24 w-auto" :src="URL + 'images/logo/sos-sauce.png'" alt="SOS sauce logo" />
               </a>
             </div>
           </div>
@@ -106,11 +106,12 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
-import { SearchIcon } from '@heroicons/vue/solid'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
-import { Switch } from '@headlessui/vue'
+import { ref } from 'vue';
+import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
+import { SearchIcon } from '@heroicons/vue/solid';
+import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
+import { Switch } from '@headlessui/vue';
+import { URL } from '../env.js';
 
 const user = {
   name: 'Chelsea Hagon',
@@ -149,6 +150,11 @@ export default {
   props:[
     "dark","letters"
   ],
+  data() {
+    return {
+        URL: URL
+    }
+  },
   setup() {
     const dark = ref(false)
     return {

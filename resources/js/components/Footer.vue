@@ -5,9 +5,9 @@
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
       <div class="xl:grid xl:grid-cols-3 xl:gap-8">
         <div class="space-y-8 xl:col-span-1">
-          <img class="h-24" src="http://localhost:8000/images/logo/sos-sauce.png" alt="logo sos sauce" />
+          <img class="h-24" :src="URL + 'images/logo/sos-sauce.png'" alt="logo sos sauce" />
           <p :class="[this.mode ? 'text-white' : 'text-gray-500','text-base pr-6']">
-            Accompagnez chaque bouchée d'une nouvelle saveur grace à SOS-SAUCE. {{ this.mode }}
+            Accompagnez chaque bouchée d'une nouvelle saveur grace à SOS-SAUCE.
           </p>
           <div class="flex space-x-6">
             <a v-for="item in navigation.social" :key="item.name" :href="item.href" class="text-gray-400 hover:text-gray-500">
@@ -81,7 +81,8 @@
 </template>
 
 <script>
-import { defineComponent, h } from 'vue'
+import { defineComponent, h } from 'vue';
+import { URL } from '../env.js';
 
 const navigation = {
   recettes: [
@@ -94,6 +95,7 @@ const navigation = {
   ],
   plats: [
     { name: 'Plats', href: '/meals' },
+    { name: 'Ajouter un plat', href: '/ajout' },
   ],
   compte: [
     { name: 'Inscription', href: '/register' },
@@ -179,6 +181,11 @@ const navigation = {
 }
 
 export default {
+  data() {
+    return {
+        URL: URL
+    }
+  },
   setup() {
     return {
       navigation,

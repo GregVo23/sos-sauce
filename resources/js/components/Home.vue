@@ -24,13 +24,15 @@
 import axios from "axios";
 import Header from './Header.vue';
 import Footer from './Footer.vue';
+import { URL } from '../env.js';
 
 export default {
     components: { Header, Footer },
     data() {
         return {
+            URL: URL,
             name: "Maitre saucier",
-            image: "http://www.localhost:8000/storage/meals/intro.jpeg",
+            image: this.URL + "storage/meals/intro.jpeg",
             description: "Accompagner vos plats de sauces aux milles saveurs !",
             slug: "/",
             dark:false,
@@ -52,7 +54,7 @@ export default {
         slider(){
             setInterval(() => {
                 let i = Math.round(Math.random(0, this.meals.length)*10);
-                this.image = "http://www.localhost:8000/storage/meals/" + this.meals[i].picture;
+                this.image = this.URL + "storage/meals/" + this.meals[i].picture;
                 this.name = this.meals[i].name;
                 this.description = this.meals[i].description;
                 this.slug = "/meal/" + this.meals[i].slug;

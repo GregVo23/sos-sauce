@@ -105,12 +105,14 @@ import { ref } from 'vue'
 import { Switch } from '@headlessui/vue'
 import Header from '../Header.vue';
 import Footer from '../Footer.vue';
+import { URL } from '../../env.js';
 
 export default {
   components: {
     Switch, Header, Footer
   },
   data() {
+      const URL = URL;
       let messageName = null;
       let messageDescription = null;
       let messageRule = null;
@@ -121,6 +123,7 @@ export default {
       let picture = {};
       const injuries = ["con", "salope", "merde", "pute", "shit", "fuck", "suck", "vomir"];
       return {
+          URL,
           dark, 
           name, 
           description, 
@@ -224,7 +227,7 @@ export default {
           axios
             .post('/api/meal', formData, config)
             .then(
-                window.location.assign("http://www.localhost:8000/meals?message=success")
+                window.location.assign(this.URL + "meals?message=success")
             )
             .catch((error) => console.log("error", error));
           } else {

@@ -3,8 +3,8 @@
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
             <form :class="[dark ? 'bg-gray-600' : 'bg-white' ,'p-10 rounded-lg shadow-lg min-w-full']">
                 <div class="flex justify-center items-center">
-                    <a href="http://localhost:8000/">
-                        <img class="block h-24 w-auto" src="http://localhost:8000/images/logo/sos-sauce.png" alt="SOS sauce logo" />
+                    <a :href="URL">
+                        <img class="block h-24 w-auto" :src="URL + 'images/logo/sos-sauce.png'" alt="SOS sauce logo" />
                     </a>
                 </div>
                 <div>
@@ -26,12 +26,13 @@
 <script>
 import axios from "axios";
 import Footer from './Footer.vue';
+import { URL } from '../env.js';
 
 export default {
     components: { Footer },
     data() {
         return {
-            message: "Hello",
+            URL: URL,
             dark: "false"
         }
     },

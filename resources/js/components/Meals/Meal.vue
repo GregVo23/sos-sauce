@@ -3,11 +3,11 @@
     <Modal @Refuse="Cancel($event)" @Accept="Delete($event)" :open="this.open" :message="this.message" :title="this.title" :type="this.type" :mode="this.dark" ></Modal>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white','xl:flex pt-6']">
         <div class="xl:w-1/2">
-            <img :src="'http://www.localhost:8000/storage/meals/' + meal.picture" :alt="meal.name" class="w-full h-full object-center object-cover group-hover:opacity-75" />
+            <img :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" class="w-full h-full object-center object-cover group-hover:opacity-75" />
         </div>
         <div class="xl:w-1/2 p-8">
             <div class="flex justify-between">
-            <a href="http://www.localhost:8000/meals">
+            <a :href="URL + 'meals'">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-20 w-20 hover:fill-current hover:text-red-600']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
                 </svg>
@@ -42,11 +42,13 @@ import axios from "axios";
 import Header from '../Header.vue';
 import Footer from '../Footer.vue';
 import Modal from '../Modal.vue';
+import { URL } from '../../env.js';
 
 export default {
   components: { Header, Footer, Modal },
     data() {
         return {
+            URL: URL,
             meal: {},
             dark: false,
             message: "",
@@ -111,7 +113,7 @@ export default {
             axios
                 .delete('/api/meal/' + this.meal.slug, config)
                 .then(
-                    window.location.assign("http://www.localhost:8000/meals")
+                    window.location.assign(this.URL + "meals")
                 )
                 .catch((error) => console.log("error", error));
             
