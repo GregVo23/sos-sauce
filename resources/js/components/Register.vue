@@ -3,13 +3,13 @@
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
             <form @submit="register($event)" :class="[dark ? 'bg-gray-600' : 'bg-white','p-10 rounded-lg shadow-lg min-w-full']">
                 <div class="flex justify-center items-center">
-                    <a href="http://localhost:8000/">
-                        <img class="block h-24 w-auto" src="http://localhost:8000/images/logo/sos-sauce.png" alt="SOS sauce logo" />
+                    <a :href="URL">
+                        <img class="block h-24 w-auto" :src="URL + 'images/logo/sos-sauce.png'" alt="SOS sauce logo" />
                     </a>
                 </div>
                 <div>
                     <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="username">Username</label>
-                    <input v-model="username" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="username" id="username" placeholder="username" />
+                    <input v-model="username" class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none" type="text" name="username" id="username" :placeholder="[username ? username : 'username']" />
                 </div>
                 <div>
                     <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="email">Email</label>
@@ -63,11 +63,13 @@ export default {
     components: { Footer, Switch },
     data() {
         return {
+            URL: URL,
             dark: "false",
             username: "",
             password: "",
             email: "",
-            confirm: ""
+            confirm: "",
+            errors: []
         }
     },
     setup() {
@@ -82,19 +84,49 @@ export default {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
       },
       checkUser() {
-        return true;  //TODO
+        if (this.username === "") {
+            this.errors.push("Il faut un nom d'utilisateur !")
+            return false;
+        }
+        if (this.username.length < 3) {
+            this.errors.push("Il faut un nom d'utilisateur de plus de 3 caractères !")
+            return false;
+        }
+        return true
       },
       checkEmail() {
-        return true;  //TODO
+        let regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (regex.test(this.email) != true) {
+            this.errors.push("Votre email ne dispose pas d'un format valide !");
+            return false;
+        }
+        return true;
       },
       checkPassword() {
-        return true;  //TODO
+        let regex = /(?=.*?[#?!@$%^&*-])/;
+        if (regex.test(this.password) != true) {
+            this.errors.push("Votre mot de passe doit contenir minimum un caractère spécial !");
+            return false;
+        }
+        if (this.password.length < 8) {
+            this.errors.push("Votre mot de passe doit contenir minimum 8 caractères !");
+            return false;
+        }
+        return true
       },
       checkConfirm() {
-        return true;  //TODO
+        if (this.password !== this.confirm) {
+            this.errors.push("Les deux mots de passe ne correspondent pas !");
+            return false;
+        }
+        return true;
       },
       checkAgreed() {
-        return true;  //TODO
+        if (this.agreed !== true) {
+            this.errors.push("Vous devez accepter les règles d'utilisation");
+            return false;
+        }
+        return true;
       },
       register(event) {
         event.preventDefault()
@@ -107,7 +139,7 @@ export default {
           },
         };
 
-        if (this.checkUser() && this.checkEmail && this.checkPassword && this.checkConfirm && this.checkAgreed){
+        if (this.checkUser() && this.checkEmail() && this.checkPassword() && this.checkConfirm() && this.checkAgreed()){
             let data = new FormData()
             data.set('name', this.username)
             data.set('email', this.email)
@@ -117,6 +149,7 @@ export default {
 
             //console.log(URL + "/api/register");
             //console.log(data.get('name'));
+            console.log(this.checkUser() && this.checkEmail() && this.checkPassword() && this.checkConfirm() && this.checkAgreed());
 
             axios.post("/api/register", data, config)
             .then(res => {
@@ -127,6 +160,9 @@ export default {
             .catch(err => {
                 console.log(err.response)
             })
+        } else {
+            console.log("Il y a des erreurs : " + this.errors)
+            this.errors = [];
         }
       }
     },

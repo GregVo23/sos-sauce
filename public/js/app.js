@@ -23668,7 +23668,7 @@ var navigation = {
     name: 'Connexion',
     href: '/login'
   }, {
-    name: 'Déonnexion',
+    name: 'Déconnexion',
     href: '/logout'
   }, {
     name: 'Compte',
@@ -24627,11 +24627,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      URL: _env_js__WEBPACK_IMPORTED_MODULE_3__.URL,
       dark: "false",
       username: "",
       password: "",
       email: "",
-      confirm: ""
+      confirm: "",
+      errors: []
     };
   },
   setup: function setup() {
@@ -24645,19 +24647,58 @@ __webpack_require__.r(__webpack_exports__);
       this.dark = window.sessionStorage.getItem("dark") == "true" ? true : false;
     },
     checkUser: function checkUser() {
-      return true; //TODO
+      if (this.username === "") {
+        this.errors.push("Il faut un nom d'utilisateur !");
+        return false;
+      }
+
+      if (this.username.length < 3) {
+        this.errors.push("Il faut un nom d'utilisateur de plus de 3 caractères !");
+        return false;
+      }
+
+      return true;
     },
     checkEmail: function checkEmail() {
-      return true; //TODO
+      var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (regex.test(this.email) != true) {
+        this.errors.push("Votre email ne dispose pas d'un format valide !");
+        return false;
+      }
+
+      return true;
     },
     checkPassword: function checkPassword() {
-      return true; //TODO
+      var regex = /(?=.*?[#?!@$%^&*-])/;
+
+      if (regex.test(this.password) != true) {
+        this.errors.push("Votre mot de passe doit contenir minimum un caractère spécial !");
+        return false;
+      }
+
+      if (this.password.length < 8) {
+        this.errors.push("Votre mot de passe doit contenir minimum 8 caractères !");
+        return false;
+      }
+
+      return true;
     },
     checkConfirm: function checkConfirm() {
-      return true; //TODO
+      if (this.password !== this.confirm) {
+        this.errors.push("Les deux mots de passe ne correspondent pas !");
+        return false;
+      }
+
+      return true;
     },
     checkAgreed: function checkAgreed() {
-      return true; //TODO
+      if (this.agreed !== true) {
+        this.errors.push("Vous devez accepter les règles d'utilisation");
+        return false;
+      }
+
+      return true;
     },
     register: function register(event) {
       var _this = this;
@@ -24671,7 +24712,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
 
-      if (this.checkUser() && this.checkEmail && this.checkPassword && this.checkConfirm && this.checkAgreed) {
+      if (this.checkUser() && this.checkEmail() && this.checkPassword() && this.checkConfirm() && this.checkAgreed()) {
         var data = new FormData();
         data.set('name', this.username);
         data.set('email', this.email);
@@ -24680,6 +24721,7 @@ __webpack_require__.r(__webpack_exports__);
         data.set('agreed', this.agreed); //console.log(URL + "/api/register");
         //console.log(data.get('name'));
 
+        console.log(this.checkUser() && this.checkEmail() && this.checkPassword() && this.checkConfirm() && this.checkAgreed());
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/register", data, config).then(function (res) {
           console.log(res.data);
           window.localStorage.setItem("api_token", res.data.api_token);
@@ -24688,6 +24730,9 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (err) {
           console.log(err.response);
         });
+      } else {
+        console.log("Il y a des erreurs : " + this.errors);
+        this.errors = [];
       }
     }
   },
@@ -25400,13 +25445,83 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "h-screen flex justify-center items-center",
+  style: {
+    "background-image": "url('http://www.localhost:8000/storage/meals/intro.jpeg')",
+    "background-position": "center",
+    "background-size": "cover",
+    "background-repeat": "no-repeat"
+  }
+};
+var _hoisted_2 = {
+  "class": "lg:w-2/5 md:w-1/2 w-2/3"
+};
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<section class=\"h-screen flex justify-center items-center\" style=\"background-image:url(&#39;http://www.localhost:8000/storage/meals/intro.jpeg&#39;);background-position:center;background-size:cover;background-repeat:no-repeat;\"><div class=\"lg:w-2/5 md:w-1/2 w-2/3\"><form class=\"bg-white p-10 rounded-lg shadow-lg min-w-full\"><div class=\"flex justify-center items-center\"><a href=\"http://localhost:8000/\"><img class=\"block h-24 w-auto\" src=\"http://localhost:8000/images/logo/sos-sauce.png\" alt=\"SOS sauce logo\"></a></div><div><label class=\"text-gray-800 font-semibold block my-3 text-md\" for=\"email\">Email</label><input class=\"w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none\" type=\"text\" name=\"email\" id=\"email\" placeholder=\"@email\"></div><div><label class=\"text-gray-800 font-semibold block my-3 text-md\" for=\"password\">Password</label><input class=\"w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none\" type=\"text\" name=\"password\" id=\"password\" placeholder=\"password\"></div><button type=\"submit\" class=\"w-full mt-6 bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans\">Login</button><button type=\"submit\" class=\"w-full mt-6 mb-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans\">Register</button></form></div></section>", 1);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex justify-center items-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "http://localhost:8000/"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "block h-24 w-auto",
+  src: "http://localhost:8000/images/logo/sos-sauce.png",
+  alt: "SOS sauce logo"
+})])], -1
+/* HOISTED */
+);
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  "class": "w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none",
+  type: "email",
+  name: "email",
+  id: "email",
+  placeholder: "@email"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  "class": "w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none",
+  type: "password",
+  name: "password",
+  id: "password",
+  placeholder: "password"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "w-full mt-6 bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans"
+}, "Login", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "w-full mt-6 mb-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans"
+}, "Register", -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Footer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Footer");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'bg-gray-600' : 'bg-white', 'p-10 rounded-lg shadow-lg min-w-full'])
+  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
+    "for": "email"
+  }, "Email", 2
+  /* CLASS */
+  ), _hoisted_4]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
+    "for": "password"
+  }, "Password", 2
+  /* CLASS */
+  ), _hoisted_5]), _hoisted_6, _hoisted_7], 2
+  /* CLASS */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
   }, null, 8
   /* PROPS */
@@ -26305,50 +26420,43 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "lg:w-2/5 md:w-1/2 w-2/3"
 };
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_3 = {
   "class": "flex justify-center items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "http://localhost:8000/"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  "class": "block h-24 w-auto",
-  src: "http://localhost:8000/images/logo/sos-sauce.png",
-  alt: "SOS sauce logo"
-})])], -1
-/* HOISTED */
-);
-
-var _hoisted_4 = {
+};
+var _hoisted_4 = ["href"];
+var _hoisted_5 = ["src"];
+var _hoisted_6 = ["placeholder"];
+var _hoisted_7 = {
   "class": "my-6 flex items-start"
 };
-var _hoisted_5 = {
+var _hoisted_8 = {
   "class": "flex-shrink-0"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "sr-only"
 }, "Agree to policies", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = {
+var _hoisted_10 = {
   "class": "ml-3"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" By selecting this, you agree to the " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" By selecting this, you agree to the " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " and " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " and " + /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(' ') + " ");
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(". ");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(". ");
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "w-full bg-red-600 hover:bg-red-700 rounded-lg px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans"
 }, "Register", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "w-full mt-6 mb-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans"
 }, "Login", -1
@@ -26365,7 +26473,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.register($event);
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'bg-gray-600' : 'bg-white', 'p-10 rounded-lg shadow-lg min-w-full'])
-  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: $data.URL
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "block h-24 w-auto",
+    src: $data.URL + 'images/logo/sos-sauce.png',
+    alt: "SOS sauce logo"
+  }, null, 8
+  /* PROPS */
+  , _hoisted_5)], 8
+  /* PROPS */
+  , _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
     "for": "username"
   }, "Username", 2
@@ -26378,10 +26496,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     name: "username",
     id: "username",
-    placeholder: "username"
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.username]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    placeholder: [$data.username ? $data.username : 'username']
+  }, null, 8
+  /* PROPS */
+  , _hoisted_6), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.username]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-800', 'font-semibold block my-3 text-md']),
     "for": "email"
   }, "Email", 2
@@ -26429,7 +26547,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "confirm password"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.confirm]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Switch, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.confirm]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Switch, {
     modelValue: $setup.agreed,
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $setup.agreed = $event;
@@ -26437,7 +26555,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.agreed ? 'bg-red-600' : 'bg-gray-200', 'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'])
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      return [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         "aria-hidden": "true",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$setup.agreed ? 'translate-x-5' : 'translate-x-0', 'inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'])
       }, null, 2
@@ -26449,21 +26567,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["modelValue", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  , ["modelValue", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-100' : 'text-gray-500', 'text-base'])
-  }, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-700 hover:text-black', 'font-medium underline'])
   }, "Privacy Policy", 2
   /* CLASS */
-  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  ), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     href: "#",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-700 hover:text-black', 'font-medium underline'])
   }, "Cookie Policy", 2
   /* CLASS */
-  ), _hoisted_10], 2
+  ), _hoisted_13], 2
   /* CLASS */
-  )])]), _hoisted_11, _hoisted_12], 34
+  )])]), _hoisted_14, _hoisted_15], 34
   /* CLASS, HYDRATE_EVENTS */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
@@ -26551,7 +26669,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "URL": () => (/* binding */ URL)
 /* harmony export */ });
-var URL = '127.0.0.1:8000';
+var URL = 'http://localhost:8000/';
 
 /***/ }),
 

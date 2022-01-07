@@ -98,7 +98,7 @@ const navigation = {
   compte: [
     { name: 'Inscription', href: '/register' },
     { name: 'Connexion', href: '/login' },
-    { name: 'Déonnexion', href: '/logout' },
+    { name: 'Déconnexion', href: '/logout' },
     { name: 'Compte', href: '/user' },
   ],
   social: [
