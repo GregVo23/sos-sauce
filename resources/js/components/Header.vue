@@ -5,9 +5,9 @@
         <div class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
             <div class="flex-shrink-0 flex items-center">
-              <a :href="URL">
+              <router-link to="/">
                 <img class="block h-24 w-auto" :src="URL + 'images/logo/sos-sauce.png'" alt="SOS sauce logo" />
-              </a>
+              </router-link>
             </div>
           </div>
           <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
@@ -70,12 +70,13 @@
               </transition>
             </Menu>
 
-            <a v-if="connected == true" :href="URL + 'ajout'" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+            <router-link v-if="connected == true" to="/ajout" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
               Nouvelle recette
-            </a>
-            <a v-else :href="URL + 'login'" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
+            </router-link>
+            
+            <router-link v-else to="/login" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
               Connexion
-            </a>
+            </router-link>
 
           </div>
         </div>
@@ -193,6 +194,9 @@ export default {
       if (localStorage.getItem("user_token") && localStorage.getItem("api_token")) {
         this.connected = true;
       }
+    },
+    addRecipe() {
+      this.$router.push('/ajout');
     }
   },
   mounted() {

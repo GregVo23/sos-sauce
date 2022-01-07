@@ -23,9 +23,9 @@
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.recettes" :key="item.name">
-                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                  <router-link :to="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -35,9 +35,9 @@
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.ingredients" :key="item.name">
-                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                  <router-link :to="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -49,9 +49,9 @@
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.plats" :key="item.name">
-                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                  <router-link :to="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -61,9 +61,9 @@
               </h3>
               <ul role="list" class="mt-4 space-y-4">
                 <li v-for="item in navigation.compte" :key="item.name">
-                  <a :href="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                  <router-link :to="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
                     {{ item.name }}
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>

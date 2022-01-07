@@ -3,9 +3,9 @@
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
             <form @submit="register($event)" :class="[dark ? 'bg-gray-600' : 'bg-white','p-10 rounded-lg shadow-lg min-w-full']">
                 <div class="flex justify-center items-center">
-                    <a :href="URL">
+                    <router-link to="/">
                         <img class="block h-24 w-auto" :src="URL + 'images/logo/sos-sauce.png'" alt="SOS sauce logo" />
-                    </a>
+                    </router-link>
                 </div>
                 <div>
                     <label :class="[dark ? 'text-gray-100' : 'text-gray-800' ,'font-semibold block my-3 text-md']" for="username">Login</label>
