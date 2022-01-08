@@ -66,6 +66,7 @@
                   <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                     <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</a>
                   </MenuItem>
+                  <a @click="logout()" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Déconnexion</a>
                 </MenuItems>
               </transition>
             </Menu>
@@ -197,6 +198,12 @@ export default {
     },
     addRecipe() {
       this.$router.push('/ajout');
+    },
+    logout() {
+      localStorage.setItem("user_token", "");
+      localStorage.setItem("api", "");
+      localStorage.clear();
+      this.$router.push('/');
     }
   },
   mounted() {

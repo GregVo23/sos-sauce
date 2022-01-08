@@ -65,6 +65,9 @@
                     {{ item.name }}
                   </router-link>
                 </li>
+                <li>
+                  <a @click="logout()" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base cursor-pointer']">Déconnexion</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -99,8 +102,6 @@ const navigation = {
   compte: [
     { name: 'Inscription', href: '/register' },
     { name: 'Connexion', href: '/login' },
-    { name: 'Déconnexion', href: '/logout' },
-    { name: 'Compte', href: '/user' },
   ],
   social: [
     {
@@ -191,5 +192,15 @@ export default {
     }
   },
   props: ['mode'],
+  methods: {
+    logout() {
+      localStorage.setItem("user_token", "");
+      localStorage.setItem("api", "");
+      localStorage.clear();
+      //this.$emit('connected', false);
+      //this.$router.push('/');
+      location.href="/";
+    }
+  }
 }
 </script>

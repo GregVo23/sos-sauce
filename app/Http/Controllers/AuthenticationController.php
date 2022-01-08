@@ -48,10 +48,12 @@ class AuthenticationController extends Controller
 
             $email = $request->input('email');
             $user = User::where('email', $email)->firstOrFail();
-
-            return response()->json($user);
+            if ($user) {
+                return response()->json($user);
+            } else {
+                return response()->json(['error' => 'Mauvais identifiant de connexion !'], 401);
+            }
         } else {
-
             return response()->json(['error' => 'Mauvais identifiant de connexion !'], 401);
         }
     }

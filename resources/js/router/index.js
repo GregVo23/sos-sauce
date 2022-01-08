@@ -56,7 +56,7 @@ const routes = [
         component: Lost
     },
     {
-        path: '/*', 
+        path: '/:pathMatch(.*)*', 
         redirect: '/404' 
     }
 ];
