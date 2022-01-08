@@ -149,7 +149,7 @@ export default {
       },
       validText(text, words) {
         for (const element of words) {
-          if (text.includes(element)) {
+          if (text.includes(" " + element + " ")) {
             this.messageDescription = "Le texte contient un vocabulaire interdit comme : " + element + " !"; 
           }
         }
@@ -209,27 +209,27 @@ export default {
           e.preventDefault();
 
           if(this.checkForm()){
-          let formData = new FormData();
-          formData.append('name', this.name ? this.name.trim() : null);
-          formData.append('description', this.description ? this.description.trim() : null);
-          formData.append('agreed', this.agreed ? this.agreed : null);
-          formData.append("picture", this.picture ? this.picture : null);
-          formData.append('pictureName', this.pictureName ? this.pictureName : null);
+            let formData = new FormData();
+            formData.append('name', this.name ? this.name.trim() : null);
+            formData.append('description', this.description ? this.description.trim() : null);
+            formData.append('agreed', this.agreed ? this.agreed : null);
+            formData.append("picture", this.picture ? this.picture : null);
+            formData.append('pictureName', this.pictureName ? this.pictureName : null);
 
-          const config = {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-              //.content,
-            },
-          };
+            const config = {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                'API-TOKEN': localStorage.getItem('api_token'),
+                'USER-TOKEN': localStorage.getItem('user_token')
+              },
+            };
 
-          axios
-            .post('/api/meal', formData, config)
-            .then(
-                window.location.assign(this.URL + "meals?message=success")
-            )
-            .catch((error) => console.log("error", error));
+            axios
+              .post('/api/meal', formData, config)
+              .then((res) => console.log(res)
+                  //window.location.assign(this.URL + "meals?message=success")
+              )
+              .catch((error) => console.log("error", error));
           } else {
             console.log("Probleme avec le formulaire");
           }

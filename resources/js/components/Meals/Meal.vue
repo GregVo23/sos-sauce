@@ -100,13 +100,12 @@ export default {
             this.notification("Cette action est irréversible, soyez certain de vouloir effacer le plat suivant : " + meal.name + ".", "Etes vous sur de supprimer : " + meal.name + " ?", "delete");
         },
         Delete() {
-            if (true) {  //Vérification supplémentaire ?
+            if (true) {
                 this.open = false;
                 const config = {
                 headers: {
-                //'Content-Type': 'multipart/form-data',
-                //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-                //.content,
+                    'API-TOKEN': localStorage.getItem('api_token'),
+                    'USER-TOKEN': localStorage.getItem('user_token')
                 },
             };
 

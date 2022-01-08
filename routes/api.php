@@ -28,5 +28,5 @@ Route::get('/ingredients', [IngredientController::class, 'index']);
 //Meals
 Route::get('/meals', [MealController::class, 'index']);
 Route::get('/meal/{slug}', [MealController::class, 'show']);
-Route::post('/meal', [MealController::class, 'store']);
-Route::delete('/meal/{slug}', [MealController::class, 'destroy']);
+Route::post('/meal', [MealController::class, 'store'])->middleware('App\Http\Middleware\TokenVerify');
+Route::delete('/meal/{slug}', [MealController::class, 'destroy'])->middleware('App\Http\Middleware\TokenVerify');

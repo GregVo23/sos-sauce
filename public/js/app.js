@@ -24309,12 +24309,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     Delete: function Delete() {
       if (true) {
-        //Vérification supplémentaire ?
         this.open = false;
         var config = {
-          headers: {//'Content-Type': 'multipart/form-data',
-            //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-            //.content,
+          headers: {
+            'API-TOKEN': localStorage.getItem('api_token'),
+            'USER-TOKEN': localStorage.getItem('user_token')
           }
         };
         axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/meal/' + this.meal.slug, config).then(window.location.assign(this.URL + "meals"))["catch"](function (error) {
@@ -24517,7 +24516,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var element = _step.value;
 
-          if (text.includes(element)) {
+          if (text.includes(" " + element + " ")) {
             this.messageDescription = "Le texte contient un vocabulaire interdit comme : " + element + " !";
           }
         }
@@ -24594,12 +24593,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         formData.append('pictureName', this.pictureName ? this.pictureName : null);
         var config = {
           headers: {
-            'Content-Type': 'multipart/form-data' //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-            //.content,
-
+            'Content-Type': 'multipart/form-data',
+            'API-TOKEN': localStorage.getItem('api_token'),
+            'USER-TOKEN': localStorage.getItem('user_token')
           }
         };
-        axios.post('/api/meal', formData, config).then(window.location.assign(this.URL + "meals?message=success"))["catch"](function (error) {
+        axios.post('/api/meal', formData, config).then(function (res) {
+          return console.log(res);
+        } //window.location.assign(this.URL + "meals?message=success")
+        )["catch"](function (error) {
           return console.log("error", error);
         });
       } else {
