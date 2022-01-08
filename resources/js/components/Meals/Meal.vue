@@ -112,9 +112,12 @@ export default {
             axios
                 .delete('/api/meal/' + this.meal.slug, config)
                 .then(
-                    window.location.assign(this.URL + "meals")
+                    this.$router.push('/meals?msg=deleteSuccess')
                 )
-                .catch((error) => console.log("error", error));
+                .catch((error) => {
+                    console.log("error", error)
+                    this.$router.push('/meals?msg=deleteError')
+                });
             
             }
         },

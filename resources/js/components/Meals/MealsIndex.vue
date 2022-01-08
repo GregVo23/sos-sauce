@@ -1,6 +1,7 @@
 <template>
 <Header @ChangeMode="ChangeMode($event)" @Filter="Search($event)"></Header>
   <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
+    <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.mode"></Notification>
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <h2 class="sr-only text-red">Meals</h2>
 
@@ -30,9 +31,10 @@ import axios from "axios";
 import Header from '../Header.vue';
 import Footer from '../Footer.vue';
 import { URL } from '../../env.js';
+import Notification from '../Notification.vue';
 
 export default {
-  components: { Header, Footer },
+  components: { Header, Footer, Notification },
     data() {
         return {
             URL: URL,
@@ -40,7 +42,11 @@ export default {
             meals: {},
             dark: false,
             filter: "test",
-            test: false
+            test: false,
+            message: "",
+            title: "",
+            type: "",
+            show: false,
         }
     },
     props : ['mode', 'letters'],
@@ -84,6 +90,18 @@ export default {
             this.meals = this.list;
             window.sessionStorage.removeItem("search");
           }
+        },
+        notification(message, title, type) {
+            this.message = message;
+            this.title = title;
+            this.type = type;
+            this.open == true ? this.open = false : this.open = true;
+        },
+        notify() {
+            //TODO mounted where query string ...
+        },
+        Cancel() {
+            this.show = false;
         }
     },
     created() {
