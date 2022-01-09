@@ -197,9 +197,11 @@ export default {
       localStorage.setItem("user_token", "");
       localStorage.setItem("api", "");
       localStorage.clear();
-      //this.$emit('connected', false);
-      //this.$router.push('/');
-      location.href="/";
+      if (this.$route.path == "/") {
+        location.href="/";
+      } else {
+        this.$router.push('/');
+      }
     }
   }
 }

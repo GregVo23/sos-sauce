@@ -8,6 +8,7 @@ import MealsIndex from "../components/Meals/MealsIndex.vue";
 import Meal from "../components/Meals/Meal.vue";
 import NewMeal from "../components/Meals/NewMeal.vue";
 import Lost from "../components/Lost.vue";
+import Profil from "../pages/User/Profil.vue";
 
 const routes = [
     {
@@ -49,6 +50,11 @@ const routes = [
         path: '/meal/:slug',
         name: 'meal',
         component: Meal
+    },
+    {
+        path: '/profil',
+        name: 'profil',
+        component: Profil
     },
     {
         path: '/404',

@@ -226,8 +226,9 @@ export default {
 
             axios
               .post('/api/meal', formData, config)
-              .then((res) => console.log(res)
+              .then((res) => 
                   //window.location.assign(this.URL + "meals?message=success")
+                  this.$router.push('/meals?msg=mealsuccess&name=' + this.name)
               )
               .catch((error) => console.log("error", error));
           } else {

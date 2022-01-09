@@ -66,6 +66,7 @@
                   <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                     <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</a>
                   </MenuItem>
+                  <router-link to="/profil" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Profil</router-link>
                   <a @click="logout()" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Déconnexion</a>
                 </MenuItems>
               </transition>
@@ -131,9 +132,7 @@ const navigation = [
   { name: 'Directory', href: '#', current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
 ]
 let letters = "";
 
@@ -203,7 +202,11 @@ export default {
       localStorage.setItem("user_token", "");
       localStorage.setItem("api", "");
       localStorage.clear();
-      this.$router.push('/');
+      if (this.$route.path == "/") {
+        location.href="/";
+      } else {
+        this.$router.push('/');
+      }
     }
   },
   mounted() {

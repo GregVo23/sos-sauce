@@ -1,7 +1,7 @@
 <template>
 <Header @ChangeMode="ChangeMode($event)" @Filter="Search($event)"></Header>
   <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
-    <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.mode"></Notification>
+    <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <h2 class="sr-only text-red">Meals</h2>
 
@@ -95,10 +95,24 @@ export default {
             this.message = message;
             this.title = title;
             this.type = type;
-            this.open == true ? this.open = false : this.open = true;
+            this.show == true ? this.show = false : this.show = true;
         },
         notify() {
             //TODO mounted where query string ...
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
+
+            switch (params.msg) {
+              case "deleteSuccess":
+                this.notification("Votre plat a été supprimé avec succès, toutes les données associées également.", "Suppression effectuée !", "success");
+                break;
+              case "deleteError":
+                this.notification("Une erreur est survenue lors de la suppression de votre plat, veuillez réessayer plus tard.", "Suppression échouée !", "error");
+                break;
+              case "mealsuccess":
+                this.notification("Votre nouveau plat a été ajouté : " + params.name, "Nouveau plat ajouté !", "success");
+                break;
+            }
         },
         Cancel() {
             this.show = false;
@@ -109,6 +123,7 @@ export default {
     },
     mounted() {
         this.ChangeMode();
+        this.notify();
     },
     updated() {
         if (window.sessionStorage.getItem("search") != null){
