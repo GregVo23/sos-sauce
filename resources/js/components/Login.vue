@@ -101,7 +101,10 @@ export default {
                     this.$router.push('/')
                 })
                 .catch(err => {
-                    console.log(err.response)
+                    //console.log(err.response.data.error)
+
+                        this.errors[0].email = err.response.data.error
+                        this.errors[0].password = err.response.data.error
                 })
             }
         },

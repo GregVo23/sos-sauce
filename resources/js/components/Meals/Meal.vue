@@ -3,7 +3,7 @@
     <Modal @Refuse="Cancel($event)" @Accept="Delete($event)" :open="this.open" :message="this.message" :title="this.title" :type="this.type" :mode="this.dark" ></Modal>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white','xl:flex pt-6']">
         <div class="xl:w-1/2">
-            <img :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" class="w-full h-full object-center object-cover group-hover:opacity-75" />
+            <img :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" :class="[dark ? 'opacity-60' : 'opacity-100', 'w-full h-full object-center object-cover group-hover:opacity-75']" />
         </div>
         <div class="xl:w-1/2 p-8">
             <div class="flex justify-between">
@@ -39,9 +39,9 @@
 
 <script>
 import axios from "axios";
-import Header from '../Header.vue';
-import Footer from '../Footer.vue';
-import Modal from '../Modal.vue';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
+import Modal from '../../components/Modal.vue';
 import { URL } from '../../env.js';
 
 export default {

@@ -106,6 +106,7 @@ import { Switch } from '@headlessui/vue'
 import Header from '../Header.vue';
 import Footer from '../Footer.vue';
 import { URL } from '../../env.js';
+import router from '../../router';
 
 export default {
   components: {
@@ -223,14 +224,24 @@ export default {
                 'USER-TOKEN': localStorage.getItem('user_token')
               },
             };
-
+            
             axios
               .post('/api/meal', formData, config)
               .then((res) => 
                   //window.location.assign(this.URL + "meals?message=success")
                   this.$router.push('/meals?msg=mealsuccess&name=' + this.name)
               )
-              .catch((error) => console.log("error", error));
+              //.catch((error) => console.log("error", error))
+              .catch(function (error)  { 
+              
+                if (error.response.status == 403) {
+                  router.push('/login?msg=notconnected')
+                } else {
+                  console.log(error.response.status)
+                  console.log(error.response.data)
+                }
+              })
+
           } else {
             console.log("Probleme avec le formulaire");
           }

@@ -49,7 +49,7 @@
                 </div>
                     <p id="errorAgreed" class="text-red-600">{{ errors[0].agreed }}</p>
                     <button type="submit" class="w-full bg-red-600 hover:bg-red-700 rounded-lg mt-4 px-4 py-2 text-lg text-white tracking-wide font-semibold font-sans">Je m'enregistre</button>
-                    <button @click="goToLogin()" class="w-full mt-6 mb-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans">Je suis déjà membre</button>
+                    <button @click="goToLogin()" class="w-full mt-6 mb-3 bg-gray-200 hover:bg-gray-300 rounded-lg px-4 py-2 text-lg text-gray-800 tracking-wide font-semibold font-sans">J'ai déjà un compte</button>
             </form>
         </div>
     </section>
@@ -58,7 +58,7 @@
 
 <script>
 import axios from "axios";
-import Footer from './Footer.vue';
+import Footer from '../components/Footer.vue';
 import { ref } from 'vue';
 import { Switch } from '@headlessui/vue';
 import { URL } from '../env.js';
