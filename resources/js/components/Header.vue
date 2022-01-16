@@ -18,8 +18,26 @@
                   <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
                     <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </div>
-                  <input @keyup="filteredList()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
+                  <input @keyup="filteredList()" @click="showFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
                 </div>
+<transition name="filterSearch" enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+  <div v-if="showFilter" class="mt-2">
+    <label :class="[dark ? 'text-white' : 'text-gray-900' ,'text-base font-medium']">Recherche sur base</label>
+    <fieldset class="mt-2">
+      <legend class="sr-only">filter method</legend>
+      <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+        <div v-for="filterSearch in filterSearchs" :key="filterSearch.id" class="flex items-center">
+          <input :id="filterSearch.id" name="filter-method" type="radio" class="focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300" :checked="filterSearch.id === 'name'"/>
+          <label :for="filterSearch.id" :class="[dark ? 'text-gray-300' : 'text-gray-700' ,'ml-3 block text-sm font-medium']">
+            {{ filterSearch.title }}
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  </transition>
+
+
               </div>
             </div>
           </div>
@@ -40,11 +58,6 @@
                   <span aria-hidden="true" :class="[dark ? 'translate-x-5' : 'translate-x-0', 'inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200']" />
                 </Switch>
               </div>
-
-            <a v-if="connected == true" href="#" class="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-              <span class="sr-only">View notifications</span>
-              <BellIcon class="h-6 w-6" aria-hidden="true" />
-            </a>
 
             <!-- Profile dropdown -->
             <Menu v-if="connected == true" as="div" class="flex-shrink-0 relative ml-5">
@@ -134,6 +147,10 @@ const navigation = [
 const userNavigation = [
   { name: 'Settings', href: '#' },
 ]
+const filterSearchs = [
+  { id: 'name', title: 'Du nom' },
+  { id: 'ingredient', title: 'd\'un ingrédient' },
+]
 let letters = "";
 
 export default {
@@ -157,7 +174,8 @@ export default {
   data() {
     return {
         URL: URL,
-        connected: false
+        connected: false,
+        showFilter: false
     }
   },
   setup() {
@@ -168,6 +186,7 @@ export default {
       userNavigation,
       dark,
       letters,
+      filterSearchs,
     }
   },
   methods: {
@@ -180,6 +199,7 @@ export default {
     },
     filteredList() {
       if (this.letters != "" && this.letters.length > 0){
+        this.showFilter = true
         if (this.$route.path == "/meals"){
           this.$emit('filter', this.letters);
         } else {
@@ -188,7 +208,12 @@ export default {
             this.$router.push('/meals');
           }
         }
+      } else {
+        this.showFilter = false;
       }
+    },
+    showFilterSearch() {
+      this.showFilter = true;
     },
     isConnected() {
       if (localStorage.getItem("user_token") && localStorage.getItem("api_token")) {
@@ -225,3 +250,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #name{
+    color: red;
+    background-color: red;
+  }
+</style>
