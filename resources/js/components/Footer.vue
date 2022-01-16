@@ -53,6 +53,11 @@
                     {{ item.name }}
                   </router-link>
                 </li>
+                <li v-if="connected == true">
+                  <router-link to="/ajout" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                    Ajouter un plat
+                  </router-link>
+                </li>
               </ul>
             </div>
             <div class="mt-12 md:mt-0">
@@ -65,7 +70,7 @@
                     {{ item.name }}
                   </router-link>
                 </li>
-                <li>
+                <li v-if="connected == true">
                   <a @click="logout()" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base cursor-pointer']">Déconnexion</a>
                 </li>
               </ul>
@@ -97,7 +102,6 @@ const navigation = {
   ],
   plats: [
     { name: 'Plats', href: '/meals' },
-    { name: 'Ajouter un plat', href: '/ajout' },
   ],
   compte: [
     { name: 'Inscription', href: '/register' },
@@ -183,7 +187,8 @@ const navigation = {
 export default {
   data() {
     return {
-        URL: URL
+        URL: URL,
+        connected: false
     }
   },
   setup() {
@@ -193,6 +198,11 @@ export default {
   },
   props: ['mode'],
   methods: {
+    isConnected() {
+      if (localStorage.getItem("user_token") && localStorage.getItem("api_token")) {
+        this.connected = true;
+      }
+    },
     logout() {
       localStorage.setItem("user_token", "");
       localStorage.setItem("api", "");
@@ -203,6 +213,9 @@ export default {
         this.$router.push('/');
       }
     }
+  },
+  mounted() {
+    this.isConnected()
   }
 }
 </script>

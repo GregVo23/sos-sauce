@@ -103,8 +103,8 @@
 <script>
 import { ref } from 'vue'
 import { Switch } from '@headlessui/vue'
-import Header from '../Header.vue';
-import Footer from '../Footer.vue';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import { URL } from '../../env.js';
 import router from '../../router';
 

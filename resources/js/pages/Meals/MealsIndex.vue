@@ -28,10 +28,10 @@
 
 <script>
 import axios from "axios";
-import Header from '../Header.vue';
-import Footer from '../Footer.vue';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import { URL } from '../../env.js';
-import Notification from '../Notification.vue';
+import Notification from '../../components/Notification.vue';
 
 export default {
   components: { Header, Footer, Notification },

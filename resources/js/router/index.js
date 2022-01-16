@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import IngredientIndex from "../components/IngredientIndex.vue";
-import Login from "../components/Login.vue";
-import Register from "../components/Register.vue";
-import Home from "../components/Home.vue";
+import IngredientIndex from "../pages/Ingredients/IngredientIndex.vue";
+import Login from "../pages/Login.vue";
+import Register from "../pages/Register.vue";
+import Home from "../pages/Home.vue";
 import Recipe from "../components/Recipe.vue";
-import MealsIndex from "../components/Meals/MealsIndex.vue";
-import Meal from "../components/Meals/Meal.vue";
-import NewMeal from "../components/Meals/NewMeal.vue";
-import Lost from "../components/Lost.vue";
+import MealsIndex from "../pages/Meals/MealsIndex.vue";
+import Meal from "../pages/Meals/Meal.vue";
+import NewMeal from "../pages/Meals/NewMeal.vue";
+import Lost from "../pages/Lost.vue";
 import Profil from "../pages/User/Profil.vue";
 
 const routes = [

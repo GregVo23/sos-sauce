@@ -206,7 +206,7 @@ export default {
                 //console.log(res.data)
                 window.localStorage.setItem("api_token", res.data.api_token)
                 window.localStorage.setItem("user_token", res.data.user_token)
-                this.$router.push('/')
+                this.$router.push('/?msg=welcome&name=' + this.username)
             })
             .catch(err => {
                 console.log(err.response)
