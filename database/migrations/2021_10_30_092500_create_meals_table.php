@@ -25,20 +25,10 @@ class CreateMealsTable extends Migration
             $table->integer('review')->nullable();
             $table->enum('taste', ['sucré', 'salé', 'amer',])->default('salé');
             $table->enum('temperature', ['chaud', 'froid', 'tiède',])->default('chaud');
-            $table->foreignId('recipe_meal_id')->nullable();
-            $table->foreignId('preperation_id')->nullable();
             $table->foreignId('user_id');
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
-                ->onDelete('restrict')->onUpdate('cascade');
-
-            $table->foreign('preperation_id')
-                ->references('id')->on('preperations')
-                ->onDelete('restrict')->onUpdate('cascade');
-
-            $table->foreign('recipe_meal_id')
-                ->references('id')->on('recipe_meals')
                 ->onDelete('restrict')->onUpdate('cascade');
         });
     }

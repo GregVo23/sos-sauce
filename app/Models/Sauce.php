@@ -18,7 +18,6 @@ class Sauce extends Model
         'taste',
         'temperature',
         'recipe_sauce_id',
-        'preperation_id',
         'user_id',
     ];
 
@@ -26,11 +25,8 @@ class Sauce extends Model
 
     public $timestamps = true;
 
-    public function preperation () {
-        return $this->hasOne(Preperation::class);
-    }
-
-    public function user () {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

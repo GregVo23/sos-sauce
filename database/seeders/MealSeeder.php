@@ -25,8 +25,6 @@ class MealSeeder extends Seeder
                 'review' => '1',
                 'taste' => 'salé',
                 'temperature' => 'chaud',
-                'recipe_meal_id' => null,
-                'preparation_id' => null,
                 'user_id' => 1,
             ],
             [
@@ -38,8 +36,6 @@ class MealSeeder extends Seeder
                 'review' => '1',
                 'taste' => 'salé',
                 'temperature' => 'chaud',
-                'recipe_meal_id' => null,
-                'preparation_id' => null,
                 'user_id' => 1,
             ],
             [
@@ -51,8 +47,6 @@ class MealSeeder extends Seeder
                 'review' => '1',
                 'taste' => 'salé',
                 'temperature' => 'chaud',
-                'recipe_meal_id' => null,
-                'preparation_id' => null,
                 'user_id' => 1,
             ],
             [
@@ -64,8 +58,6 @@ class MealSeeder extends Seeder
                 'review' => '1',
                 'taste' => 'salé',
                 'temperature' => 'chaud',
-                'recipe_meal_id' => null,
-                'preparation_id' => null,
                 'user_id' => 1,
             ],
             [
@@ -77,8 +69,6 @@ class MealSeeder extends Seeder
                 'review' => '1',
                 'taste' => 'salé',
                 'temperature' => 'chaud',
-                'recipe_meal_id' => null,
-                'preparation_id' => null,
                 'user_id' => 1,
             ],
             [
@@ -90,8 +80,6 @@ class MealSeeder extends Seeder
                 'review' => '1',
                 'taste' => 'salé',
                 'temperature' => 'chaud',
-                'recipe_meal_id' => null,
-                'preparation_id' => null,
                 'user_id' => 1,
             ],
         ];
@@ -107,8 +95,6 @@ class MealSeeder extends Seeder
                 'review' => $meal['review'],
                 'taste' => $meal['taste'],
                 'temperature' => $meal['temperature'],
-                //'recipe_meal_id' => $meal['recipe_meal_id'],
-                //'preparation_id' => $meal['preparation_id'],
                 'user_id' => $meal['user_id'],
             ]);
         }

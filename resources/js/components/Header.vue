@@ -20,14 +20,15 @@
                   </div>
                   <input @keyup="filteredList()" @click="showFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
                 </div>
-<transition name="filterSearch" enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+
+<transition name="filterSearch" enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-200" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
   <div v-if="showFilter" class="mt-2">
     <label :class="[dark ? 'text-white' : 'text-gray-900' ,'text-base font-medium']">Recherche sur base</label>
     <fieldset class="mt-2">
       <legend class="sr-only">filter method</legend>
       <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
         <div v-for="filterSearch in filterSearchs" :key="filterSearch.id" class="flex items-center">
-          <input :id="filterSearch.id" name="filter-method" type="radio" class="focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300" :checked="filterSearch.id === 'name'"/>
+          <input v-model="filterChoice" :id="filterSearch.id" name="filter-method" type="radio" :value="filterSearch.id" class="accent-red-500 focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300" :checked="filterSearch.id === 'name'"/>
           <label :for="filterSearch.id" :class="[dark ? 'text-gray-300' : 'text-gray-700' ,'ml-3 block text-sm font-medium']">
             {{ filterSearch.title }}
           </label>
@@ -35,8 +36,7 @@
       </div>
     </fieldset>
   </div>
-  </transition>
-
+</transition>
 
               </div>
             </div>
@@ -175,7 +175,8 @@ export default {
     return {
         URL: URL,
         connected: false,
-        showFilter: false
+        showFilter: false,
+        filterChoice: "name"
     }
   },
   setup() {
@@ -204,8 +205,12 @@ export default {
           this.$emit('filter', this.letters);
         } else {
           if (this.letters.length > 2) {
-            window.sessionStorage.setItem("search", this.letters);
-            this.$router.push('/meals');
+            if (this.filterChoice === "name") {
+              window.sessionStorage.setItem("search", this.letters);
+              this.$router.push('/meals');
+            } else if (this.filterChoice === "ingredient") {
+              alert(" recherche sur base d'un ingrédient !");
+            }
           }
         }
       } else {
@@ -252,8 +257,24 @@ export default {
 </script>
 
 <style scoped>
-  #name{
-    color: red;
-    background-color: red;
-  }
+input[type='radio'] {
+  -webkit-appearance:none;
+  width:20px;
+  height:20px;
+  border:1px solid darkgray;
+  border-radius:50%;
+  outline:none;
+}
+
+input[type='radio']:before {
+  content:'';
+  display:block;
+  width:60%;
+  height:60%;
+  margin: 20% auto;    
+  border-radius:50%;    
+}
+input[type='radio']:checked:before {
+  background:#dc2626;
+}
 </style>

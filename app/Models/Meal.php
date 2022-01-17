@@ -19,18 +19,12 @@ class Meal extends Model
         'review',
         'taste',
         'temperature',
-        'recipe_meal_id',
         'user_id',
     ];
 
     protected $table = 'meals';
 
     public $timestamps = true;
-
-    public function preperations()
-    {
-        return $this->hasMany(Preperation::class);
-    }
 
     public function user()
     {
@@ -40,5 +34,10 @@ class Meal extends Model
     public function favoriteUser()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function recettes()
+    {
+        return $this->hasMany(Recipe::class);
     }
 }

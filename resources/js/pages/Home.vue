@@ -59,7 +59,7 @@ export default {
         },
         slider(){
             setInterval(() => {
-                let i = Math.round(Math.random(0, this.meals.length)*10);
+                let i = Math.round(Math.random(0, this.meals.length*10));
                 this.image = this.URL + "storage/meals/" + this.meals[i].picture;
                 this.name = this.meals[i].name;
                 this.description = this.meals[i].description;
