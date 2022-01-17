@@ -34,6 +34,15 @@ class RecipeSeeder extends Seeder
                 'picture' => "ketchup.jpg",
                 'time' => "2000000",
             ],
+            [
+                'ingredient_id' => 1,
+                'meal_id' => 1,
+                'step' => 1,
+                'quantity' => 1,
+                'description' => "Cuire des pommes de terre dans de l'eau bouillante, puis les écraser avec du beurre.",
+                'picture' => "pommes.jpg",
+                'time' => "5000000",
+            ],
         ];
 
         foreach ($recipes as $recipe) {

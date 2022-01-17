@@ -23,13 +23,8 @@ class Ingredient extends Model
 
     public $timestamps = false;
 
-    public function recipeSauces()
+    public function recipes()
     {
-        return $this->belongsTo(RecipeSauce::class);
-    }
-
-    public function recipeMeals()
-    {
-        return $this->belongsTo(RecipeMeal::class);
+        return $this->belongsTo(Recipe::class);
     }
 }

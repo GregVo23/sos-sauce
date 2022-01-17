@@ -26,17 +26,17 @@ class Meal extends Model
 
     public $timestamps = true;
 
-    public function user()
+    public function owner()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function favoriteUser()
+    public function favoriteUsers()
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function recettes()
+    public function recipes()
     {
         return $this->hasMany(Recipe::class);
     }

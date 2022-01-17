@@ -25,8 +25,18 @@ class Sauce extends Model
 
     public $timestamps = true;
 
-    public function user()
+    public function owner()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function favoriteUsers()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
     }
 }

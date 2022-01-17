@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             MealSeeder::class,
             RecipeSeeder::class,
             IngredientRecipeSeeder::class,
+            FavoriSeeder::class,
         ]);
     }
 }

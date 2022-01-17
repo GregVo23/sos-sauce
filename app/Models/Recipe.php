@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * A recipe is composed by one or many steps
+ * 
+ */
 class Recipe extends Model
 {
     use HasFactory;
