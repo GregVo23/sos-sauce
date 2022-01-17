@@ -6,7 +6,7 @@
       <h2 class="sr-only text-red">Meals</h2>
 
       <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-        <a v-for="meal in meals" :key="meal.id" :href="URL + 'meal/' + meal.slug" class="group">
+        <router-link v-for="meal in meals" :key="meal.id" :to="'/meal/' + meal.slug" class="group">
           <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
             <svg xmlns="http://www.w3.org/2000/svg" class="mt-2 ml-2 absolute h-10 w-10 text-white group-hover:text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -19,7 +19,7 @@
           <p :class="[dark ? 'text-white group-hover:text-red-200' : 'text-gray-900 group-hover:text-red-600','mt-1 text-lg font-medium']">
             {{ meal.description }}
           </p>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>

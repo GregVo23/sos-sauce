@@ -2,7 +2,7 @@
 <Header @ChangeMode="ChangeMode($event)"></Header>
   <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
 
-  <main class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+  <main class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
     <div class="max-w-7xl mx-auto px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
       <p class="text-sm font-semibold text-gray-100 text-opacity-80 uppercase tracking-wide">404 erreur</p>
       <h1 class="mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl">Vous êtes perdu ?</h1>

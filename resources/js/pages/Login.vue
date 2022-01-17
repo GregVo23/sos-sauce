@@ -1,5 +1,5 @@
 <template>
-    <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+    <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
         <div class="lg:w-2/5 md:w-1/2 w-2/3">
             <form @submit="login($event)" :class="[dark ? 'bg-gray-600' : 'bg-white' ,'p-10 rounded-lg shadow-lg min-w-full']">
                 <div class="flex justify-center items-center">

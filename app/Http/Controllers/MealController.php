@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use stdClass;
 use App\Models\Meal;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -95,7 +96,51 @@ class MealController extends Controller
      */
     public function show(string $slug)
     {
-        return MealResource::make(Meal::where('slug', $slug)->first());
+        $meal = Meal::where('slug', $slug)->first();
+        $meals = $meal->recipes->all();
+        $mealIngredients = [];
+
+
+        if (!$meals) {
+
+            $mealIngredients = false;
+
+        } elseif(count($meals) < 2) {
+
+            $meals = Meal::where('slug', $slug)->first()->recipes->first()->ingredient;
+            
+            $mealIngredients[] = 
+            [   
+                "id" => $meals->id,
+                "name" => $meals->name,
+            ];
+
+        } else {
+
+            foreach($meals[0]->ingredients as $ingredient) {
+                $mealIngredients[] = 
+                [
+                    "id" => $ingredient->id,
+                    "name" => $ingredient->name,
+                ];
+            }
+        }
+        
+        return response()->json([$meal, $mealIngredients]);
+
+        /*
+        foreach($meals[0]->ingredients as $ingredient) {
+            $mealIngredients[] = 
+            [
+                "id" => $ingredient->id,
+                "name" => $ingredient->name,
+            ];
+        }
+      
+        return response()->json([$meal, $mealIngredients]);
+        */
+        //return MealResource::make(Meal::where('slug', $slug)->first());
+
     }
 
     /**

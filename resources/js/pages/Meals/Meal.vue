@@ -3,11 +3,11 @@
     <Modal @Refuse="Cancel($event)" @Accept="Delete($event)" :open="this.open" :message="this.message" :title="this.title" :type="this.type" :mode="this.dark" ></Modal>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white','xl:flex pt-6']">
         
-        <transition name="filterSearch" enter-active-class="transition ease-out duration-500" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-500" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-        <div v-if="charged" class="xl:w-1/2">
-            <img :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" :class="[dark ? 'opacity-60' : 'opacity-100', 'w-full h-full object-center object-cover group-hover:opacity-75']" />
-        </div>
+        <div class="xl:w-1/2">
+        <transition name="filterSearch" enter-active-class="transition ease-out duration-1000" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-1000" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+            <img v-if="charged" :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" :class="[dark ? 'opacity-60' : 'opacity-100', 'xl:rounded-tr-3xl w-full h-full object-center object-cover group-hover:opacity-75']" />
         </transition>
+        </div>
 
         <div class="xl:w-1/2 p-8">
             <div class="flex justify-between">
@@ -36,6 +36,9 @@
             <p :class="[dark ? 'text-white' : 'text-gray-800']">{{ meal.description }}</p>
 
             <h2 :class="[dark ? 'text-white' : 'text-gray-800' ,'mt-6 text-xl font-bold']">Ingrédients</h2>
+            <div v-for="ingredient in ingredients" :key="ingredient.id">
+                <p>{{ ingredient.name }}</p>
+            </div>
         </div>
     </div>
     <Footer :mode="this.dark"></Footer>
@@ -54,6 +57,7 @@ export default {
         return {
             URL: URL,
             meal: {},
+            ingredients: {},
             dark: false,
             message: "",
             title: "",
@@ -81,7 +85,9 @@ export default {
             .get('/api/meal/' + this.$route.params.slug)
             .then(
                 ({ data }) => (
-                    (this.meal = data.data)
+                    //console.log(data[0])
+                    (this.meal = data[0]),
+                    (this.ingredients = data[1]),
                     (this.charged = true)
                 )
             )
