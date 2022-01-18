@@ -26,6 +26,7 @@ class MealSeeder extends Seeder
                 'taste' => 'salé',
                 'temperature' => 'chaud',
                 'user_id' => 1,
+                'number' => 4,
             ],
             [
                 'name' => 'Spaghetti ketchup',
@@ -37,6 +38,7 @@ class MealSeeder extends Seeder
                 'taste' => 'salé',
                 'temperature' => 'chaud',
                 'user_id' => 1,
+                'number' => 3,
             ],
             [
                 'name' => 'Lasagne',
@@ -48,6 +50,7 @@ class MealSeeder extends Seeder
                 'taste' => 'salé',
                 'temperature' => 'chaud',
                 'user_id' => 1,
+                'number' => 4,
             ],
             [
                 'name' => 'Chicons',
@@ -59,6 +62,7 @@ class MealSeeder extends Seeder
                 'taste' => 'salé',
                 'temperature' => 'chaud',
                 'user_id' => 1,
+                'number' => 2,
             ],
             [
                 'name' => 'Raviolis',
@@ -70,6 +74,7 @@ class MealSeeder extends Seeder
                 'taste' => 'salé',
                 'temperature' => 'chaud',
                 'user_id' => 1,
+                'number' => 3,
             ],
             [
                 'name' => 'Frittes',
@@ -81,6 +86,7 @@ class MealSeeder extends Seeder
                 'taste' => 'salé',
                 'temperature' => 'chaud',
                 'user_id' => 1,
+                'number' => 1,
             ],
         ];
 
@@ -96,6 +102,7 @@ class MealSeeder extends Seeder
                 'taste' => $meal['taste'],
                 'temperature' => $meal['temperature'],
                 'user_id' => $meal['user_id'],
+                'number' => $meal['number'],
             ]);
         }
     }

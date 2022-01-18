@@ -16,6 +16,7 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meal_id');
+            $table->foreignId('sauce_id')->nullable();
             $table->foreignId('ingredient_id');
             $table->integer('quantity');
             $table->integer('step')->default(0);
@@ -28,6 +29,10 @@ class CreateRecipesTable extends Migration
                 ->onDelete('restrict')->onUpdate('cascade');
 
             $table->foreign('meal_id')
+                ->references('id')->on('meals')
+                ->onDelete('restrict')->onUpdate('cascade');
+
+            $table->foreign('sauce_id')
                 ->references('id')->on('meals')
                 ->onDelete('restrict')->onUpdate('cascade');
         });

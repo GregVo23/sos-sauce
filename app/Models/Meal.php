@@ -20,6 +20,7 @@ class Meal extends Model
         'taste',
         'temperature',
         'user_id',
+        'number',
     ];
 
     protected $table = 'meals';

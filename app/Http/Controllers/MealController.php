@@ -104,43 +104,31 @@ class MealController extends Controller
         if (!$meals) {
 
             $mealIngredients = false;
-
-        } elseif(count($meals) < 2) {
+        } elseif (count($meals) < 2) {
 
             $meals = Meal::where('slug', $slug)->first()->recipes->first()->ingredient;
-            
-            $mealIngredients[] = 
-            [   
-                "id" => $meals->id,
-                "name" => $meals->name,
-            ];
 
+            $mealIngredients[] =
+                [
+                    "id" => $meals->id,
+                    "name" => $meals->name,
+                    "unit" => $meals->unit,
+                    "quantity" => Meal::where('slug', $slug)->first()->recipes->first()->quantity,
+                ];
         } else {
 
-            foreach($meals[0]->ingredients as $ingredient) {
-                $mealIngredients[] = 
-                [
-                    "id" => $ingredient->id,
-                    "name" => $ingredient->name,
-                ];
+            foreach ($meals[0]->ingredients as $ingredient) {
+                $mealIngredients[] =
+                    [
+                        "id" => $ingredient->id,
+                        "name" => $ingredient->name,
+                        "unit" => $ingredient->unit,
+                        "quantity" => $meals[0]->quantity
+                    ];
             }
         }
-        
-        return response()->json([$meal, $mealIngredients]);
 
-        /*
-        foreach($meals[0]->ingredients as $ingredient) {
-            $mealIngredients[] = 
-            [
-                "id" => $ingredient->id,
-                "name" => $ingredient->name,
-            ];
-        }
-      
         return response()->json([$meal, $mealIngredients]);
-        */
-        //return MealResource::make(Meal::where('slug', $slug)->first());
-
     }
 
     /**

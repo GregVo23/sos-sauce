@@ -22,6 +22,7 @@ class CreateMealsTable extends Migration
             $table->string('picture')->default("http://localhost:8000/images/logo/sos-sauce.png");
             $table->enum('difficulty', ['1', '2', '3', '4', '5'])->nullable();
             $table->integer('time')->nullable();
+            $table->integer('number')->nullable();
             $table->integer('review')->nullable();
             $table->enum('taste', ['sucré', 'salé', 'amer',])->default('salé');
             $table->enum('temperature', ['chaud', 'froid', 'tiède',])->default('chaud');
