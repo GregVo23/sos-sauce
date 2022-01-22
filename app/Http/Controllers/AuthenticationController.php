@@ -6,9 +6,10 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Http\Validation\LoginValidation;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Validation\RegisterValidation;
-use App\Http\Validation\LoginValidation;
 
 class AuthenticationController extends Controller
 {
@@ -56,5 +57,11 @@ class AuthenticationController extends Controller
         } else {
             return response()->json(['error' => 'Mauvais identifiant de connexion !'], 401);
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        Session::flush();
     }
 }

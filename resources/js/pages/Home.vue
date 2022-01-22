@@ -4,7 +4,7 @@
     <section class="h-screen relative">
         
         <div class="absolute w-full h-full bg-black">
-            <img :class="[dark ? 'opacity-50' : 'opacity-75','w-full h-full object-cover']" :src="image" :alt="name" />
+            <img :class="[dark ? 'opacity-60' : 'opacity-80','w-full h-full object-cover']" :src="image" :alt="name" />
         </div>
 
         <div class="absolute top-1/3 left-1/2 transform -translate-x-1/2">
@@ -76,7 +76,6 @@ export default {
             this.show == true ? this.show = false : this.show = true;
         },
         notify() {
-            //TODO mounted where query string ...
             const urlSearchParams = new URLSearchParams(window.location.search);
             const params = Object.fromEntries(urlSearchParams.entries());
 

@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-            <div class="flex items-center px-6 py-8 md:max-w-3xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
+            <div class="flex items-center px-6 py-8 md:max-w-xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
               <div class="w-full">
                 <label for="search" class="sr-only">Rechercher</label>
                 <div class="relative">
@@ -21,22 +21,22 @@
                   <input @keyup="filteredList()" @click="showFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
                 </div>
 
-<transition name="filterSearch" enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-200" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-  <div v-if="showFilter" class="mt-2">
-    <label :class="[dark ? 'text-white' : 'text-gray-900' ,'text-base font-medium']">Recherche sur base</label>
-    <fieldset class="mt-2">
-      <legend class="sr-only">filter method</legend>
-      <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
-        <div v-for="filterSearch in filterSearchs" :key="filterSearch.id" class="flex items-center">
-          <input v-model="filterChoice" :id="filterSearch.id" name="filter-method" type="radio" :value="filterSearch.id" class="accent-red-500 focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300" :checked="filterSearch.id === 'name'"/>
-          <label :for="filterSearch.id" :class="[dark ? 'text-gray-300' : 'text-gray-700' ,'ml-3 block text-sm font-medium']">
-            {{ filterSearch.title }}
-          </label>
-        </div>
-      </div>
-    </fieldset>
-  </div>
-</transition>
+              <transition name="filterSearch" enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-200" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                <div v-if="showFilter" class="mt-2">
+                  <label :class="[dark ? 'text-white' : 'text-gray-900' ,'text-base font-medium']">Recherche sur base</label>
+                  <fieldset class="mt-2">
+                    <legend class="sr-only">filter method</legend>
+                    <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                      <div v-for="filterSearch in filterSearchs" :key="filterSearch.id" class="flex items-center">
+                        <input v-model="filterChoice" :id="filterSearch.id" name="filter-method" type="radio" :value="filterSearch.id" class="accent-red-500 focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300" :checked="filterSearch.id === 'name'"/>
+                        <label :for="filterSearch.id" :class="[dark ? 'text-gray-300' : 'text-gray-700' ,'ml-3 block text-sm font-medium']">
+                          {{ filterSearch.title }}
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </transition>
 
               </div>
             </div>
@@ -131,6 +131,7 @@ import { SearchIcon } from '@heroicons/vue/solid';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
 import { Switch } from '@headlessui/vue';
 import { URL } from '../env.js';
+import { CONFIG } from '../env.js';
 
 const user = {
   name: 'Chelsea Hagon',
@@ -174,6 +175,7 @@ export default {
   data() {
     return {
         URL: URL,
+        CONFIG: CONFIG,
         connected: false,
         showFilter: false,
         filterChoice: "name"
@@ -230,13 +232,24 @@ export default {
     },
     logout() {
       localStorage.setItem("user_token", "");
-      localStorage.setItem("api", "");
+      localStorage.setItem("api_token", "");
       localStorage.clear();
+              axios
+              .get('/api/logout',this.CONFIG)
+              .then((res) => 
+                  console.log("logout: "+res)
+              )
+              //.catch((error) => console.log("error", error))
+              .catch(function (error)  { 
+                console.log(error)
+              })
+              
       if (this.$route.path == "/") {
         location.href="/";
       } else {
         this.$router.push('/');
       }
+      
     }
   },
   mounted() {

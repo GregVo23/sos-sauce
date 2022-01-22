@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\AuthenticationController;
 
@@ -23,10 +24,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
+Route::get('/logout', [AuthenticationController::class, 'logout']);
 
 Route::get('/ingredients', [IngredientController::class, 'index']);
 //Meals
-Route::get('/meals', [MealController::class, 'index']);
-Route::get('/meal/{slug}', [MealController::class, 'show']);
+Route::get('/meals', [MealController::class, 'index'])->middleware('App\Http\Middleware\ConnectedVerify');
+Route::get('/meal/{slug}', [MealController::class, 'show'])->middleware('App\Http\Middleware\ConnectedVerify');
 Route::post('/meal', [MealController::class, 'store'])->middleware('App\Http\Middleware\TokenVerify');
 Route::delete('/meal/{slug}', [MealController::class, 'destroy'])->middleware('App\Http\Middleware\TokenVerify');
+
+Route::put('/meal', [MealController::class, 'update'])->middleware('App\Http\Middleware\TokenVerify'); //TODO
+
+//Favorite
+Route::get('/favorite', [FavoriteController::class, 'index'])->middleware('App\Http\Middleware\TokenVerify');
+Route::get('/favorite/{id}', [FavoriteController::class, 'handle'])->middleware('App\Http\Middleware\TokenVerify');
+
+//Recipe
+Route::get('/recipe/{slug}', [MealController::class, 'showRecipe']); //TODO
+Route::post('/recipe', [MealController::class, 'storeRecipe'])->middleware('App\Http\Middleware\TokenVerify'); //TODO

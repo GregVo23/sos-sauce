@@ -73,5 +73,34 @@ const router = createRouter({
     routes
 });
 
+let isAuthenticated = false;
+
+router.beforeEach((to, from, next) => {
+    if(localStorage.getItem('api_token') && localStorage.getItem('user_token'))
+        isAuthenticated = true;
+    else
+        isAuthenticated= false;
+    
+    switch (to.name) {
+        case "home":
+            next()
+            break;
+        case "login":
+            next()
+            break;
+        case "register":
+            next()
+            break;
+        case "meals":
+            next()
+            break;
+        case "meal":
+            next()
+            break;
+        default:
+            if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
+            else next()
+    }
+  })
 
 export default router;

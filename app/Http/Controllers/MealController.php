@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use stdClass;
 use App\Models\Meal;
+use App\Models\Recipe;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\MealResource;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,7 +19,29 @@ class MealController extends Controller
      */
     public function index()
     {
-        return MealResource::collection(Meal::all());
+        $user = auth()->user();
+        if ($user) {
+            $meals = [];
+            $user_id = $user->id;
+            $listOfMeals = Meal::all();
+            foreach ($listOfMeals as $meal) {
+
+                $liked = DB::table('meal_user')->where('user_id', $user_id)
+                    ->where('meal_id', $meal->id)
+                    ->first();
+
+                if (empty($liked)) {
+                    $like = ["like" => false];
+                } else {
+                    $like = ["like" => true];
+                }
+                $dataMeal = json_decode(json_encode($meal), true);
+                array_push($meals, ($like + $dataMeal));
+            }
+            return response()->json(['data' => $meals]);
+        } else {
+            return MealResource::collection(Meal::all());
+        }
     }
 
     /**
@@ -26,7 +49,7 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(string $id)
     {
         //
     }
@@ -99,6 +122,21 @@ class MealController extends Controller
         $meal = Meal::where('slug', $slug)->first();
         $meals = $meal->recipes->all();
         $mealIngredients = [];
+        $like = ["like" => false];
+
+        $user = auth()->user();
+        if ($user) {
+            $liked = DB::table('meal_user')
+                ->where('user_id', $user->id)
+                ->where('meal_id', $meal->id)
+                ->first();
+
+            if (empty($liked)) {
+                $like = ["like" => false];
+            } else {
+                $like = ["like" => true];
+            }
+        }
 
 
         if (!$meals) {
@@ -128,7 +166,7 @@ class MealController extends Controller
             }
         }
 
-        return response()->json([$meal, $mealIngredients]);
+        return response()->json([$meal, $mealIngredients, $like]);
     }
 
     /**
@@ -163,6 +201,12 @@ class MealController extends Controller
     public function destroy(string $slug)
     {
         $meal = Meal::where("slug", $slug)->first();
+        DB::table('meal_user')->where('meal_id', $meal->id)->delete();
+        $recipeId = Recipe::where('meal_id', $meal->id)->get();
+        foreach ($recipeId as $step) {
+            DB::table('ingredient_recipe')->where('recipe_id', $step->id)->delete();
+        }
+        DB::table('recipes')->where('meal_id', $meal->id)->delete();
         if ($meal->delete()) {
             return true;
         }

@@ -1,66 +1,63 @@
 <template>
 <Header @ChangeMode="changeMode($event)"></Header>
 
-    <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
-        <div class="lg:w-2/5 md:w-1/2 sm:w-2/3 w-full">
+  <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+    <div class="lg:w-2/5 md:w-1/2 sm:w-2/3 w-full">
 
-
-  <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'rounded-lg shadow-lg p-10 overflow-hidden']">
-    <div class="relative max-w-xl mx-auto">
-      <div class="text-center">
-        <h2 :class="[dark ? 'text-white' : 'text-gray-900', 'text-3xl font-extrabold tracking-tight  sm:text-4xl']">
-          Ajouter un plat
-        </h2>
-      </div>
-      <div class="mt-6">
-        <form @submit="formSubmit" enctype="multipart/form-data" action="./meal" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
-          <div class="sm:col-span-2">
-            <label for="name" :class="[dark ? 'text-white' : 'text-gray-700','block text-sm font-medium']">Nom du plat</label>
-            <div class="mt-1">
-              <input v-model="name" @keydown="checkName()" type="text" name="name" id="name" :class="[messageName != null ? 'ring-red-600 border-red-600 border' : '' ,'py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md']" />
-            <p v-if="messageName != null" class="text-red-600">{{ messageName }}</p>
-            </div>
-          </div>
-
-          
-
-              <div class="sm:col-span-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                <div v-if="!pictureName" class="space-y-1 text-center">
-                  <svg :class="[dark ? 'text-gray-200' : 'text-gray-400','mx-auto h-12 w-12']" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <div :class="[dark ? 'text-white' : 'text-gray-600','flex text-sm']">
-                    <label for="picture" :class="[dark ? 'bg-gray-600' : 'bg-white', 'relative cursor-pointer  rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500']">
-                      <span>Charger une photo</span>
-                      <input @change="updatePhoto" id="picture" name="picture" type="file" accept="image/*" class="sr-only" />
-                    </label>
-                    <p :class="[dark ? 'text-white' : 'text-gray-500','pl-1']">ou glisser / déposer</p>
-                  </div>
-                  <p :class="[dark ? 'text-white' : 'text-gray-500','text-xs']">
-                    PNG, JPG, GIF jusqu'à 20MB
-                  </p>
-                </div>
-                <div v-else class="space-y-1 text-center">
-                  <svg :class="[dark ? 'text-gray-200' : 'text-gray-400','mx-auto h-12 w-12']" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <div :class="[dark ? 'text-white' : 'text-gray-600','flex text-sm']">
-                    <label for="picture" :class="[dark ? 'bg-gray-600' : 'bg-white', 'relative cursor-pointer  rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500']">
-                      <span>{{ pictureName }}</span>
-                      <input @change="updatePhoto" id="picture" name="picture" type="file" accept="image/*" class="sr-only" />
-                    </label>
-                    <p :class="[dark ? 'text-white' : 'text-gray-500','pl-1']">ou glisser / déposer</p>
-                  </div>
-                  <p @click="removeImage" :class="[dark ? 'text-white' : 'text-red-600','text-xs hover:text-red-800']">
-                    Supprimer l'image
-                  </p>
-                </div>
+    <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'rounded-lg shadow-lg p-10 overflow-hidden']">
+      <div class="relative max-w-xl mx-auto">
+        <div class="text-center">
+          <h2 :class="[dark ? 'text-white' : 'text-gray-900', 'text-3xl font-extrabold tracking-tight  sm:text-4xl']">
+            Ajouter un plat
+          </h2>
+        </div>
+        <div class="mt-6">
+          <form @submit="formSubmit" enctype="multipart/form-data" action="./meal" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+            <div class="sm:col-span-2">
+              <label for="name" :class="[dark ? 'text-white' : 'text-gray-700','block text-sm font-medium']">Nom du plat</label>
+              <div class="mt-1">
+                <input v-model="name" @keydown="checkName()" type="text" name="name" id="name" :class="[messageName != null ? 'ring-red-600 border-red-600 border' : '' , dark? 'bg-gray-600 text-white' : 'bg-white','py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md']" />
+              <p v-if="messageName != null" class="text-red-600">{{ messageName }}</p>
               </div>
+            </div>
+
+            <div class="sm:col-span-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div v-if="!pictureName" class="space-y-1 text-center">
+                <svg :class="[dark ? 'text-gray-200' : 'text-gray-400','mx-auto h-12 w-12']" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div :class="[dark ? 'text-white' : 'text-gray-600','flex text-sm']">
+                  <label for="picture" :class="[dark ? 'bg-gray-600' : 'bg-white', 'relative cursor-pointer  rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500']">
+                    <span>Charger une photo</span>
+                    <input @change="updatePhoto" id="picture" name="picture" type="file" accept="image/*" class="sr-only" />
+                  </label>
+                  <p :class="[dark ? 'text-white' : 'text-gray-500','pl-1']">ou glisser / déposer</p>
+                </div>
+                <p :class="[dark ? 'text-white' : 'text-gray-500','text-xs']">
+                  PNG, JPG, GIF jusqu'à 20MB
+                </p>
+              </div>
+              <div v-else class="space-y-1 text-center">
+                <svg :class="[dark ? 'text-gray-200' : 'text-gray-400','mx-auto h-12 w-12']" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div :class="[dark ? 'text-white' : 'text-gray-600','flex text-sm']">
+                  <label for="picture" :class="[dark ? 'bg-gray-600' : 'bg-white', 'relative cursor-pointer  rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500']">
+                    <span>{{ pictureName }}</span>
+                    <input @change="updatePhoto" id="picture" name="picture" type="file" accept="image/*" class="sr-only" />
+                  </label>
+                  <p :class="[dark ? 'text-white' : 'text-gray-500','pl-1']">ou glisser / déposer</p>
+                </div>
+                <p @click="removeImage" :class="[dark ? 'text-white' : 'text-red-600','text-xs hover:text-red-800']">
+                  Supprimer l'image
+                </p>
+              </div>
+            </div>
 
           <div class="sm:col-span-2">
             <label for="description" :class="[dark ? 'text-white' : 'text-gray-700' ,'block text-sm font-medium']">Description</label>
             <div class="mt-1">
-              <textarea v-model="description" @keydown="checkDescription()" id="description" name="description" rows="4" :class="[messageDescription != null ? 'ring-red-600 border-red-600 border' : '' ,'py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md']" />
+              <textarea v-model="description" @keydown="checkDescription()" id="description" name="description" rows="4" :class="[messageDescription != null ? 'ring-red-600 border-red-600 border' : '', dark? 'bg-gray-600 text-white' : 'bg-white','py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md']" />
               <p v-if="messageDescription != null" class="text-red-600">{{ messageDescription }}</p>
             </div>
           </div>

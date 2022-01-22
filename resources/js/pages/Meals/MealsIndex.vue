@@ -1,17 +1,31 @@
 <template>
 <Header @ChangeMode="ChangeMode($event)" @Filter="Search($event)"></Header>
-  <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
+  <main :class="[dark ? 'bg-gray-600' : 'bg-white']">
     <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
-    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+    
+    <div v-if="meals.length == 0" class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+      <div class="max-w-7xl mx-auto px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
+        <p class="text-sm font-semibold text-gray-100 text-opacity-80 uppercase tracking-wide">...</p>
+        <h1 class="mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl">Aucun plat trouvé !</h1>
+        <p class="mt-2 text-lg font-medium text-gray-100 text-opacity-80">Le plat que vous cherchez ne semble pas présent !</p>
+        <div class="mt-6">
+          <router-link to="/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black text-opacity-75 bg-white bg-opacity-70 sm:bg-opacity-70 sm:hover:bg-opacity-90">
+            Retour à l'accueil
+          </router-link>
+        </div>
+      </div>
+    </div>
+    
+    <div v-else class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <h2 class="sr-only text-red">Meals</h2>
 
       <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         <router-link v-for="meal in meals" :key="meal.id" :to="'/meal/' + meal.slug" class="group">
           <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mt-2 ml-2 absolute h-10 w-10 text-white group-hover:text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg v-if="meal.like" xmlns="http://www.w3.org/2000/svg" class="mt-2 ml-2 absolute h-10 w-10 text-white group-hover:text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
-            <img :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" class="w-full h-64 object-center object-cover group-hover:opacity-75" />
+            <img :src="URL + 'storage/meals/' + meal.picture" :alt="meal.name" :class="[dark ? 'opacity-90 group-hover:opacity-75' : 'opacity-100 group-hover:opacity-75', 'w-full h-64 object-center object-cover']" />
           </div>
           <h3 :class="[dark ? 'text-white group-hover:text-red-400' : 'text-gray-700 group-hover:text-red-600','mt-4 text-sm']">
             {{ meal.name }}
@@ -22,7 +36,8 @@
         </router-link>
       </div>
     </div>
-  </div>
+  
+  </main>
   <Footer :mode="this.dark"></Footer>
 </template>
 
@@ -47,30 +62,27 @@ export default {
             title: "",
             type: "",
             show: false,
+            CONFIG : {
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                'API-TOKEN': '',
+                'USER-TOKEN': ''
+                },
+            }
         }
     },
     props : ['mode', 'letters'],
-    /*
-    setup() {
-        const getIngredients = async () => {
-            let data = await axios.get('/api/ingredients');
-            //this.ingredients = data.data;
-            console.log(data);
-            //this.ingredients = data;
-        }
 
-        getIngredients();
-    },
-    */
     methods: {
         loadData(){
+
             axios
-            .get('/api/meals')
+            .get('/api/meals', this.CONFIG)
             .then(
-                ({ data }) => (
-                    (this.list = data.data)
+                ({ data }) => {
+                    (this.list = data.data),
                     (this.meals = data.data)
-                )
+                }
             )
             .catch((error) => console.log("error", error));
         },
@@ -82,7 +94,9 @@ export default {
           if (this.filter.length > 2){
             this.meals = [];
             for(let i = 0; i<this.list.length; i++){
-              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) == 0){
+
+              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) != -1){
+
                 this.meals.push(this.list[i]);
               }
             }
@@ -112,6 +126,12 @@ export default {
               case "mealsuccess":
                 this.notification("Votre nouveau plat a été ajouté : " + params.name, "Nouveau plat ajouté !", "success");
                 break;
+              case "favoritesuccess":
+                this.notification("Le plat a été ajouté aux favoris : " + params.name, "Nouveau plat ajouté !", "success");
+                break;
+              case "favoriteError":
+                this.notification("Le plat n'a pas pu être ajouté aux Favoris : " + params.name, "Ajout aux favoris échoué !", "error");
+                break;
             }
         },
         Cancel() {
@@ -119,6 +139,8 @@ export default {
         }
     },
     created() {
+        this.CONFIG.headers['API-TOKEN'] = localStorage.getItem('api_token');
+        this.CONFIG.headers['USER-TOKEN'] = localStorage.getItem('user_token');
         this.loadData();
     },
     mounted() {
@@ -131,7 +153,7 @@ export default {
           if (this.filter.length > 1){
             this.meals = [];
             for(let i = 0; i<this.list.length; i++){
-              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) == 0){
+              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) != -1){
                 this.meals.push(this.list[i]);
               }
             }

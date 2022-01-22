@@ -64,10 +64,10 @@ export default {
   props: ['mode', 'message', 'title', 'type', 'open'],
   methods: {
     accept(){
-      this.$emit('Accept');
+      this.$emit('accept');
     },
     refuse(){
-      this.$emit('Refuse');
+      this.$emit('refuse');
     },
   }, 
 }
