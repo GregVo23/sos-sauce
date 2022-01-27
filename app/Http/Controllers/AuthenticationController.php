@@ -64,4 +64,11 @@ class AuthenticationController extends Controller
         Auth::logout();
         Session::flush();
     }
+
+    public function user()
+    {
+        $user = auth()->user();
+
+        return response()->json(['user' => $user]);
+    }
 }

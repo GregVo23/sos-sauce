@@ -42,9 +42,19 @@ const routes = [
         component: MealsIndex
     },
     {
+        path: '/mine',
+        name: 'mine',
+        component: MealsIndex
+    },
+    {
         path: '/ajout',
         name: 'ajout',
         component: NewMeal
+    },
+    {
+        path: '/favorite',
+        name: 'favorite',
+        component: MealsIndex
     },
     {
         path: '/meal/:slug',

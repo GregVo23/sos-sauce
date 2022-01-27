@@ -12,22 +12,22 @@
 
         <div class="xl:w-1/2 p-8">
             <div class="flex justify-between">
-            <router-link to="/meals">
+            <a @click="goBack">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-20 w-20 hover:fill-current hover:text-red-600']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
                 </svg>
-            </router-link>
-            <a @click="updateMeal(meal)">
+            </a>
+            <a v-if="connected" @click="updateMeal(meal)">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-20 w-20 hover:fill-current hover:text-red-600']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
             </a>
-            <a @click="likeMeal(meal)">
+            <a v-if="connected" @click="likeMeal(meal)">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-20 w-20 hover:fill-current hover:text-red-600']" :fill="like ? 'currentColor' : 'none'" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
             </a>
-            <a @click="deleteMeal(meal)">
+            <a v-if="connected" @click="deleteMeal(meal)">
                 <svg xmlns="http://www.w3.org/2000/svg" :class="[dark ? 'text-white' : 'text-gray-800','h-20 w-20 hover:fill-current hover:text-red-600']" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
@@ -92,6 +92,7 @@ export default {
             charged: false,
             showModalDelete: false,
             showModalLike: false,
+            connected: false,
             CONFIG : {
                 headers: {
                 'Content-Type': 'multipart/form-data',
@@ -176,13 +177,22 @@ export default {
                 });
             }
         },
+        goBack() {
+            return this.$router.go(-1);
+        },
         Cancel() {
             this.open = false;
+        },
+        isConnected() {
+            if (localStorage.getItem('api_token') && localStorage.getItem('user_token')) {
+                this.CONFIG.headers['API-TOKEN'] = localStorage.getItem('api_token');
+                this.CONFIG.headers['USER-TOKEN'] = localStorage.getItem('user_token');
+                this.connected = true;
+            }
         }
     },
     created() {
-        this.CONFIG.headers['API-TOKEN'] = localStorage.getItem('api_token');
-        this.CONFIG.headers['USER-TOKEN'] = localStorage.getItem('user_token');
+        this.isConnected();
         this.loadData();
     },
     mounted() {

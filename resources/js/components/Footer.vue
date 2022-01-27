@@ -58,6 +58,16 @@
                     Ajouter un plat
                   </router-link>
                 </li>
+                <li v-if="connected == true">
+                  <router-link to="/mine" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                    Mes plats
+                  </router-link>
+                </li>
+                <li v-if="connected == true">
+                  <router-link to="/favorite" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                    Favoris
+                  </router-link>
+                </li>
               </ul>
             </div>
             <div class="mt-12 md:mt-0">

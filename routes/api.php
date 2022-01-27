@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::get('/logout', [AuthenticationController::class, 'logout']);
+Route::get('/user', [AuthenticationController::class, 'user'])->middleware('App\Http\Middleware\ConnectedVerify');
 
 Route::get('/ingredients', [IngredientController::class, 'index']);
 //Meals

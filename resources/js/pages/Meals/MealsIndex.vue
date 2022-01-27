@@ -53,15 +53,20 @@ export default {
     data() {
         return {
             URL: URL,
+            user: {},
             list: {},
             meals: {},
+            allMeals: {},
+            favorite: [],
+            mine: [],
             dark: false,
-            filter: "test",
-            test: false,
+            filter: "",
+            searching: false,
             message: "",
             title: "",
             type: "",
             show: false,
+            currentPage: "",
             CONFIG : {
                 headers: {
                 'Content-Type': 'multipart/form-data',
@@ -75,14 +80,21 @@ export default {
 
     methods: {
         loadData(){
-
             axios
             .get('/api/meals', this.CONFIG)
             .then(
-                ({ data }) => {
-                    (this.list = data.data),
-                    (this.meals = data.data)
-                }
+                  ({ data }) => {
+                      (this.list = data.data),
+                      (this.meals = data.data),
+                      (this.allMeals = data.data),
+                      // Favorite
+                      Object.keys(this.list).forEach(key => {
+                          if (this.list[key].like == true) {
+                            this.favorite.push(this.list[key]);
+                          }
+                      }),
+                      this.connectedUser(this.allMeals);
+                  }
             )
             .catch((error) => console.log("error", error));
         },
@@ -90,19 +102,23 @@ export default {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         },
         Search($event = null) {
-          this.filter = ($event != null) ? $event : window.sessionStorage.getItem("search");
-          if (this.filter.length > 2){
-            this.meals = [];
-            for(let i = 0; i<this.list.length; i++){
+          this.filter = (typeof($event) == "string") ? $event : window.sessionStorage.getItem("search");
+          if (this.filter != null) {
+            if (this.filter.length > 2){
+              this.searching = true;
+              this.meals = [];
+              for(let i = 0; i<this.list.length; i++){
 
-              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) != -1){
+                if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) != -1){
 
-                this.meals.push(this.list[i]);
+                  this.meals.push(this.list[i]);
+                }
               }
+            } else {
+              this.searching = false;
+              this.meals = this.list;
+              window.sessionStorage.removeItem("search");
             }
-          } else {
-            this.meals = this.list;
-            window.sessionStorage.removeItem("search");
           }
         },
         notification(message, title, type) {
@@ -136,6 +152,40 @@ export default {
         },
         Cancel() {
             this.show = false;
+        },
+        connectedUser(mealList) {
+            axios
+            .get('/api/user', this.CONFIG)
+            .then(
+                ({ data }) => {
+                    (this.user = data.user),
+                    Object.keys(mealList).forEach(key => {
+                        if (mealList[key].user_id == this.user.id) {
+                          this.mine.push(mealList[key]);
+                        }
+                    }),
+                    this.choicePage();
+                    this.Search();
+                }
+            )
+            .catch((error) => console.log("error", error));
+        },
+        choicePage() {
+            if (this.$router.currentRoute.value.name == "favorite" && this.currentPage != "favorite" && this.searching == false) {
+              this.currentPage = "favorite";
+              this.list = this.favorite;
+              this.meals = this.favorite;
+            } else if (this.$router.currentRoute.value.name == "meals" && this.currentPage != "meals" && this.searching == false){
+              this.currentPage = "meals";
+              this.list = this.allMeals;
+              this.meals = this.allMeals;
+            } else if (this.$router.currentRoute.value.name == "mine" && this.currentPage != "mine" && this.searching == false){
+              this.currentPage = "mine";
+              this.list = this.mine;
+              this.meals = this.mine;
+            } else {
+              this.currentPage = "";
+            }
         }
     },
     created() {
@@ -147,18 +197,8 @@ export default {
         this.ChangeMode();
         this.notify();
     },
-    updated() {
-        if (window.sessionStorage.getItem("search") != null){
-          this.filter = window.sessionStorage.getItem("search");
-          if (this.filter.length > 1){
-            this.meals = [];
-            for(let i = 0; i<this.list.length; i++){
-              if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) != -1){
-                this.meals.push(this.list[i]);
-              }
-            }
-          }
-        }
+    beforeUpdate() {
+        this.choicePage();
     }
 }
 </script>
