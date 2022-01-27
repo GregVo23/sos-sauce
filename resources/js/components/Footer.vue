@@ -75,9 +75,19 @@
                 Mon Compte
               </h3>
               <ul role="list" class="mt-4 space-y-4">
-                <li v-for="item in navigation.compte" :key="item.name">
-                  <router-link :to="item.href" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
-                    {{ item.name }}
+                <li v-if="connected == false">
+                  <router-link to="/register" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                    Inscription
+                  </router-link>
+                </li>
+                <li v-if="connected == false">
+                  <router-link to="/login" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                    Connexion
+                  </router-link>
+                </li>
+                <li v-if="connected == true">
+                  <router-link to="/profil" :class="[this.mode ? 'text-gray-300 hover:text-gray-100' : 'text-gray-500 hover:text-gray-900','text-base']">
+                    Profil
                   </router-link>
                 </li>
                 <li v-if="connected == true">
