@@ -1,10 +1,10 @@
 <template>
   <Popover as="template" v-slot="{ open }">
-    <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible', 'py-2']">
+    <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible', showFilter ? 'mb-12' : '', 'h-32 py-2']">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
-            <div class="flex-shrink-0 flex items-center">
+            <div class="flex-shrink-0 flex">
               <router-link to="/">
                 <img class="block h-24 w-auto" :src="URL + 'images/logo/sos-sauce.png'" alt="SOS sauce logo" />
               </router-link>
@@ -18,10 +18,10 @@
                   <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
                     <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </div>
-                  <input @keyup="filteredList()" @click="showFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
+                  <input @keyup="filteredList()" @click="showFilterSearch()" @blur="closeFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
                 </div>
 
-              <transition name="filterSearch" enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-200" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+              <transition name="filterSearch" enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-100" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <div v-if="showFilter" class="mt-2">
                   <label :class="[dark ? 'text-white' : 'text-gray-900' ,'text-base font-medium']">Recherche sur base</label>
                   <fieldset class="mt-2">
@@ -221,6 +221,11 @@ export default {
     },
     showFilterSearch() {
       this.showFilter = true;
+    },
+    closeFilterSearch() {
+      if (this.showFilter == true) {
+        this.showFilter = false;
+      }
     },
     isConnected() {
       if (localStorage.getItem("user_token") && localStorage.getItem("api_token")) {

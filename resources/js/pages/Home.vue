@@ -1,11 +1,9 @@
 <template>
-    <Header @ChangeMode="ChangeMode($event)"></Header>
-    <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
-    <Slider :mode="this.dark"></Slider>
-    <section class="h-screen relative">
-        
-
-    </section>
+        <div :class="[dark? 'bg-gray-600' : 'bg-white']">
+            <Header @ChangeMode="ChangeMode($event)"></Header>
+            <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
+            <Slider :mode="this.dark"></Slider>
+        </div>
     <Footer :mode="this.dark"></Footer>
 </template>
 
