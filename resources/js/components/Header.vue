@@ -1,7 +1,7 @@
 <template>
   <Popover as="template" v-slot="{ open }">
-    <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible', showFilter ? 'mb-12' : '', 'h-32 py-2']">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header :class="[open ? 'fixed inset-0 z-40 overflow-y-auto' : '', dark ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible' : 'bg-white shadow-sm lg:static lg:overflow-y-visible', showFilter ? 'mb-6' : '', 'h-32 py-2']">
+      <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8']">
         <div class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8">
           <div class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2">
             <div class="flex-shrink-0 flex">
@@ -12,7 +12,7 @@
           </div>
           <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
             <div class="flex items-center px-6 py-8 md:max-w-xl md:mx-auto lg:max-w-none lg:mx-0 xl:px-0">
-              <div class="w-full">
+              <div :class="[dark ? 'bg-gray-600' : 'bg-white' ,'w-full']">
                 <label for="search" class="sr-only">Rechercher</label>
                 <div class="relative">
                   <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -41,6 +41,7 @@
               </div>
             </div>
           </div>
+          
           <div class="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
             <!-- Mobile menu button -->
             <PopoverButton class="-mx-2 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500">
