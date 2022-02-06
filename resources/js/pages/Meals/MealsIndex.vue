@@ -1,4 +1,5 @@
 <template>
+<div :class="[dark? 'bg-gray-600' : 'bg-white']">
 <Header @ChangeMode="ChangeMode($event)" @Filter="Search($event)"></Header>
   <main :class="[dark ? 'bg-gray-600' : 'bg-white']">
     <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
@@ -39,6 +40,7 @@
   
   </main>
   <Footer :mode="this.dark"></Footer>
+</div>
 </template>
 
 <script>

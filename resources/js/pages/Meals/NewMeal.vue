@@ -1,4 +1,5 @@
 <template>
+<div :class="[dark? 'bg-gray-600' : 'bg-white']">
 <Header @ChangeMode="changeMode($event)"></Header>
 
   <section class="h-screen flex justify-center items-center" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
@@ -95,6 +96,7 @@
   </div>
   </section>
   <Footer :mode="this.dark"></Footer>
+</div>
 </template>
 
 <script>

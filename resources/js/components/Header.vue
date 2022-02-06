@@ -18,7 +18,7 @@
                   <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
                     <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   </div>
-                  <input @keyup="filteredList()" @click="showFilterSearch()" @blur="closeFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
+                  <input @keyup="filteredList()" @click="showFilterSearch()" v-model="letters" id="search" name="search" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Rechercher" type="search" />
                 </div>
 
               <transition name="filterSearch" enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-100" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -214,6 +214,8 @@ export default {
             } else if (this.filterChoice === "ingredient") {
               alert(" recherche sur base d'un ingrédient !");
             }
+          } else if(this.letters.length < 1) {
+            this.closeFilterSearch();
           }
         }
       } else {

@@ -1,5 +1,6 @@
 <template>
-<Header @ChangeMode="ChangeMode($event)"></Header>
+<div :class="[dark? 'bg-gray-600' : 'bg-white']">
+<Header @ChangeMode="changeMode($event)"></Header>
 <div class="bg-gray-100">
     <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2 ">
@@ -163,6 +164,7 @@
     </div>
 </div>
 <Footer :mode="this.dark"></Footer>
+</div>
 </template>
 
 <script>
@@ -189,9 +191,12 @@ export default {
     },
     props : ['mode', 'letters'],
     methods : {
-        ChangeMode() {
+        changeMode() {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         },
+    },
+    mounted() {
+      this.changeMode();
     }
 }
 </script>

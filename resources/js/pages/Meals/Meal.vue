@@ -1,4 +1,5 @@
 <template>
+<div :class="[dark? 'bg-gray-600' : 'bg-white']">
     <Header @ChangeMode="ChangeMode($event)"></Header>
     <Modal v-if="showModalDelete" @refuse="Cancel($event)" @accept="Delete($event)" :open="this.open" :message="this.message" :title="this.title" :type="this.type" :mode="this.dark" ></Modal>
     <Modal v-if="showModalLike" @refuse="Cancel($event)" @accept="Like($event)" :open="this.open" :message="this.message" :title="this.title" :type="this.type" :mode="this.dark" ></Modal>
@@ -67,6 +68,7 @@
     </div>
 
     <Footer :mode="this.dark"></Footer>
+</div>
 </template>
 
 <script>
