@@ -4,11 +4,37 @@
   <main :class="[dark ? 'bg-gray-600' : 'bg-white']">
     <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
     
-    <div v-if="meals.length == 0" class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+    <div v-if="meals.length == 0 && currentPage == 'meals'" class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
       <div class="max-w-7xl mx-auto px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
         <p class="text-sm font-semibold text-gray-100 text-opacity-80 uppercase tracking-wide">...</p>
         <h1 class="mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl">Aucun plat trouvé !</h1>
         <p class="mt-2 text-lg font-medium text-gray-100 text-opacity-80">Le plat que vous cherchez ne semble pas présent !</p>
+        <div class="mt-6">
+          <router-link to="/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black text-opacity-75 bg-white bg-opacity-70 sm:bg-opacity-70 sm:hover:bg-opacity-90">
+            Retour à l'accueil
+          </router-link>
+        </div>
+      </div>
+    </div>
+ 
+    <div v-else-if="meals.length == 0 && currentPage == 'favorite'" class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+      <div class="max-w-7xl mx-auto px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
+        <p class="text-sm font-semibold text-gray-100 text-opacity-80 uppercase tracking-wide">...</p>
+        <h1 class="mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl">Aucun plat correspondant dans vos favoris !</h1>
+        <p class="mt-2 text-lg font-medium text-gray-100 text-opacity-80">Le plat que vous cherchez ne semble pas présent dans vos favoris !</p>
+        <div class="mt-6">
+          <router-link to="/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black text-opacity-75 bg-white bg-opacity-70 sm:bg-opacity-70 sm:hover:bg-opacity-90">
+            Retour à l'accueil
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <div v-else-if="meals.length == 0 && currentPage == 'mine'" class="min-h-full h-screen bg-cover bg-top sm:bg-top" style="background-image: url('http://www.localhost:8000/storage/meals/intro.jpg'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+      <div class="max-w-7xl mx-auto px-4 py-16 text-center sm:px-6 sm:py-24 lg:px-8 lg:py-48">
+        <p class="text-sm font-semibold text-gray-100 text-opacity-80 uppercase tracking-wide">...</p>
+        <h1 class="mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl">Aucun de vos plats ne correspond !</h1>
+        <p class="mt-2 text-lg font-medium text-gray-100 text-opacity-80">Le plat que vous cherchez ne semble pas présent dans vos plats !</p>
         <div class="mt-6">
           <router-link to="/" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-black text-opacity-75 bg-white bg-opacity-70 sm:bg-opacity-70 sm:hover:bg-opacity-90">
             Retour à l'accueil
@@ -186,7 +212,7 @@ export default {
               this.list = this.mine;
               this.meals = this.mine;
             } else {
-              this.currentPage = "";
+              this.currentPage = this.$router.currentRoute.value.name;
             }
         }
     },

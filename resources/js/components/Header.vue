@@ -204,13 +204,14 @@ export default {
     filteredList() {
       if (this.letters != "" && this.letters.length > 0){
         this.showFilter = true
-        if (this.$route.path == "/meals"){
+        if (this.$route.path == "/meals" || this.$route.path == "/favorite" || this.$route.path == "/mine"){
           this.$emit('filter', this.letters);
         } else {
           if (this.letters.length > 2) {
             if (this.filterChoice === "name") {
               window.sessionStorage.setItem("search", this.letters);
-              this.$router.push('/meals');
+              if (this.$route.path != '/favorite' && this.$route.path != '/mine')
+                this.$router.push('/meals');
             } else if (this.filterChoice === "ingredient") {
               alert(" recherche sur base d'un ingrédient !");
             }
