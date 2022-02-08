@@ -100,7 +100,7 @@
       </div>
       <div class="mt-12 border-t border-gray-200 pt-8">
         <p class="text-base text-gray-400 xl:text-center">
-          &copy; 2021 SOS-SAUCE, Inc. All rights reserved.
+          &copy; {{ year }} SOS-SAUCE, Inc. All rights reserved.
         </p>
       </div>
     </div>
@@ -208,7 +208,8 @@ export default {
   data() {
     return {
         URL: URL,
-        connected: false
+        connected: false,
+        year: (new Date).getFullYear()
     }
   },
   setup() {

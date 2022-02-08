@@ -135,6 +135,7 @@ export default {
             if (this.filter.length > 2){
               this.searching = true;
               this.meals = [];
+              console.log(this.meals);
               for(let i = 0; i<this.list.length; i++){
 
                 if (this.list[i].name.toLowerCase().indexOf(this.filter.toLowerCase()) != -1){
@@ -227,6 +228,6 @@ export default {
     },
     beforeUpdate() {
         this.choicePage();
-    }
+    },
 }
 </script>

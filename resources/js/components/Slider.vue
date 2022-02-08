@@ -13,8 +13,8 @@
             </div>
         </div>
         <div class="slider">
-            <div class="container-slide" :style="{transform: `translateX(${index}px)`, transition:`${transition}`}">
-                <div v-for="meal in meals" :key="meal.id" class="div-slider" :style="`width:100vw; height:100vh; background-image:url(http://localhost:8000/storage/meals/${meal.picture}); background-size: cover;`">
+            <div :class="[mode ? 'bg-gray-600' : 'bg-white' ,'container-slide']" :style="{transform: `translateX(${index}px)`, transition:`${transition}`}">
+                <div v-for="meal in meals" :key="meal.id" :class="[mode ? 'opacity-80' : '' ,'div-slider']" :style="`width:100vw; height:100vh; background-image:url(http://localhost:8000/storage/meals/${meal.picture}); background-size: cover;`">
                     
                     <h1 class="titre mt-12 text-8xl px-10 font-extrabold tracking-tight text-white text-center">
                     <router-link
@@ -49,7 +49,6 @@ export default {
             transition: "transform 0.4s ease"
         }
     },
-    props:['mode'],
     methods: {
         loadData(){
             axios

@@ -1,7 +1,7 @@
 <template>
 <div :class="[dark? 'bg-gray-600' : 'bg-white']">
 <Header @ChangeMode="changeMode($event)"></Header>
-<div class="bg-gray-100">
+<div :class="[dark ? 'bg-gray-700' : 'bg-gray-100']">
     <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2 ">
             <!-- Left Side -->
@@ -54,7 +54,7 @@
                         <div class="grid md:grid-cols-2 text-sm">
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">First Name</div>
-                                <div class="px-4 py-2">Jane</div>
+                                <div class="px-4 py-2">{{ user.name }}</div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Last Name</div>
@@ -171,32 +171,45 @@
 import axios from "axios";
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-//import { URL } from '../../env.js';
 
 export default {
   components: { Header, Footer },
     data() {
         return {
-            //URL: URL,
-            list: {},
-            meals: {},
             dark: false,
             filter: "test",
-            test: false,
-            message: "",
-            title: "",
-            type: "",
-            show: false,
+            CONFIG : {
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                'API-TOKEN': '',
+                'USER-TOKEN': ''
+                },
+            },
+            user: [],
         }
     },
-    props : ['mode', 'letters'],
     methods : {
         changeMode() {
           this.dark = (window.sessionStorage.getItem("dark") == "true") ? true : false;
         },
+        connectedUser() {
+            axios
+            .get('/api/user', this.CONFIG)
+            .then(
+                ({ data }) => {
+                    this.user = data.user
+                }
+            )
+            .catch((error) => console.error("error", error));
+        },
+    },
+    created() {
+        this.CONFIG.headers['API-TOKEN'] = localStorage.getItem('api_token');
+        this.CONFIG.headers['USER-TOKEN'] = localStorage.getItem('user_token');
     },
     mounted() {
       this.changeMode();
+      this.connectedUser();
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-        <div :class="[dark? 'bg-gray-600' : 'bg-white']">
+        <div :class="[dark? 'bg-gray-600' : 'bg-white', 'overflow-hidden']">
             <Header @ChangeMode="ChangeMode($event)"></Header>
             <Notification @Cancel="Cancel($event)" :message="this.message" :title="this.title" :type="this.type" :show="this.show" :mode="this.dark"></Notification>
             <Slider :mode="this.dark"></Slider>
