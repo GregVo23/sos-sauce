@@ -88,7 +88,7 @@ class MealController extends Controller
                 if ($request->hasFile('picture')) {
                     $file = $request->file('picture');
                     // Get filename with the extension
-                    $filenameWithExt = $file->getClientOriginalName();
+                    $filenameWithExt = str_replace(" ", "_", $file->getClientOriginalName());
                     // Get just filename
                     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                     // Get just ext
