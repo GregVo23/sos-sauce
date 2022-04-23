@@ -6,6 +6,7 @@ use App\Http\Controllers\MealController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,6 @@ Route::get('/favorite/{id}', [FavoriteController::class, 'handle'])->middleware(
 //Recipe
 Route::get('/recipe/{slug}', [MealController::class, 'showRecipe']); //TODO
 Route::post('/recipe', [MealController::class, 'storeRecipe'])->middleware('App\Http\Middleware\TokenVerify'); //TODO
+
+//User
+Route::post('/avatar/{id}', [UserController::class, 'saveAvatar'])->middleware('App\Http\Middleware\TokenVerify');

@@ -25252,12 +25252,13 @@ __webpack_require__.r(__webpack_exports__);
       filter: "test",
       CONFIG: {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          'API-TOKEN': '',
-          'USER-TOKEN': ''
+          "Content-Type": "multipart/form-data",
+          "API-TOKEN": "",
+          "USER-TOKEN": ""
         }
       },
-      user: []
+      user: [],
+      avatar: ""
     };
   },
   methods: {
@@ -25267,17 +25268,36 @@ __webpack_require__.r(__webpack_exports__);
     connectedUser: function connectedUser() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/user', this.CONFIG).then(function (_ref) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/user", this.CONFIG).then(function (_ref) {
         var data = _ref.data;
         _this.user = data.user;
       })["catch"](function (error) {
         return console.error("error", error);
       });
+    },
+    onChange: function onChange(e) {
+      this.avatar = e.target.files[0];
+      this.avatarName = e.target.files[0].name;
+      this.changeAvatar(e);
+    },
+    changeAvatar: function changeAvatar(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var data = new FormData();
+      data.append("file", this.avatar);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/avatar/" + this.user.id, data, this.CONFIG).then(function (res) {
+        console.log(res);
+
+        _this2.connectedUser();
+      })["catch"](function (error) {
+        console.log("error", error);
+      });
     }
   },
   created: function created() {
-    this.CONFIG.headers['API-TOKEN'] = localStorage.getItem('api_token');
-    this.CONFIG.headers['USER-TOKEN'] = localStorage.getItem('user_token');
+    this.CONFIG.headers["API-TOKEN"] = localStorage.getItem("api_token");
+    this.CONFIG.headers["USER-TOKEN"] = localStorage.getItem("user_token");
   },
   mounted: function mounted() {
     this.changeMode();
@@ -28105,22 +28125,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "container mx-auto my-5 p-5"
+  "class": "container mx-auto my-5 p-5 min-h-screen"
 };
 var _hoisted_2 = {
   "class": "md:flex no-wrap md:-mx-2"
 };
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"w-full md:w-3/12 md:mx-2\"><!-- Profile Card --><div class=\"bg-white p-3 border-t-4 border-green-400\"><div class=\"image overflow-hidden\"><img class=\"h-auto w-full mx-auto\" src=\"https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg\" alt=\"\"></div><h1 class=\"text-gray-900 font-bold text-xl leading-8 my-1\">Jane Doe</h1><h3 class=\"text-gray-600 font-lg text-semibold leading-6\">Owner at Her Company Inc.</h3><p class=\"text-sm text-gray-500 hover:text-gray-600 leading-6\">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p><ul class=\"bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm\"><li class=\"flex items-center py-3\"><span>Status</span><span class=\"ml-auto\"><span class=\"bg-green-500 py-1 px-2 rounded text-white text-sm\">Active</span></span></li><li class=\"flex items-center py-3\"><span>Member since</span><span class=\"ml-auto\">Nov 07, 2016</span></li></ul></div><!-- End of profile card --><div class=\"my-4\"></div></div>", 1);
-
+var _hoisted_3 = {
+  "class": "w-full md:w-3/12 md:mx-2"
+};
 var _hoisted_4 = {
-  "class": "w-full md:w-9/12 mx-2 h-64"
+  "class": "hover:bg-red-700 cursor-pointer"
 };
 var _hoisted_5 = {
+  className: "relative",
+  title: "changer l'avatar",
+  "class": "image overflow-hidden cursor-pointer"
+};
+var _hoisted_6 = ["src"];
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div><h1 class=\"text-gray-900 font-bold text-xl leading-8 my-1\"> Jane Doe </h1><h3 class=\"text-gray-600 font-lg text-semibold leading-6\"> Owner at Her Company Inc. </h3><p class=\"text-sm text-gray-500 hover:text-gray-600 leading-6\"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt </p><ul class=\"bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm\"><li class=\"flex items-center py-3\"><span>Status</span><span class=\"ml-auto\"><span class=\"bg-green-500 py-1 px-2 rounded text-white text-sm\">Active</span></span></li><li class=\"flex items-center py-3\"><span>Member since</span><span class=\"ml-auto\">Nov 07, 2016</span></li></ul></div>", 1);
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "my-4"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
+  "class": "w-full md:w-9/12 mx-2 h-64"
+};
+var _hoisted_10 = {
   "class": "bg-white p-3 shadow-sm rounded-sm"
 };
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex items-center space-x-2 font-semibold text-gray-900 leading-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   clas: "text-green-500"
@@ -28141,41 +28179,41 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = {
+var _hoisted_12 = {
   "class": "text-gray-700"
 };
-var _hoisted_8 = {
+var _hoisted_13 = {
   "class": "grid md:grid-cols-2 text-sm"
 };
-var _hoisted_9 = {
+var _hoisted_14 = {
   "class": "grid grid-cols-2"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "px-4 py-2 font-semibold"
-}, "First Name", -1
+}, " First Name ", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = {
+var _hoisted_16 = {
   "class": "px-4 py-2"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Last Name</div><div class=\"px-4 py-2\">Doe</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Gender</div><div class=\"px-4 py-2\">Female</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Contact No.</div><div class=\"px-4 py-2\">+11 998001001</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Current Address</div><div class=\"px-4 py-2\">Beech Creek, PA, Pennsylvania</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Permanant Address</div><div class=\"px-4 py-2\">Arlington Heights, IL, Illinois</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Email.</div><div class=\"px-4 py-2\"><a class=\"text-blue-800\" href=\"mailto:jane@example.com\">jane@example.com</a></div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\">Birthday</div><div class=\"px-4 py-2\">Feb 06, 1998</div></div>", 7);
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Last Name </div><div class=\"px-4 py-2\">Doe</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Gender </div><div class=\"px-4 py-2\">Female</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Contact No. </div><div class=\"px-4 py-2\"> +11 998001001 </div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Current Address </div><div class=\"px-4 py-2\"> Beech Creek, PA, Pennsylvania </div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Permanant Address </div><div class=\"px-4 py-2\"> Arlington Heights, IL, Illinois </div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Email. </div><div class=\"px-4 py-2\"><a class=\"text-blue-800\" href=\"mailto:jane@example.com\">jane@example.com</a></div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Birthday </div><div class=\"px-4 py-2\"> Feb 06, 1998 </div></div>", 7);
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
-}, "Show Full Information", -1
+}, " Show Full Information ", -1
 /* HOISTED */
 );
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "my-4"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "bg-white p-3 shadow-sm rounded-sm"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "grid grid-cols-2"
@@ -28200,21 +28238,21 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "class": "list-inside space-y-2"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-teal-600"
-}, "Owner at Her Company Inc."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Owner at Her Company Inc. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-500 text-xs"
-}, "March 2020 - Now")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " March 2020 - Now ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-teal-600"
-}, "Owner at Her Company Inc."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Owner at Her Company Inc. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-500 text-xs"
-}, "March 2020 - Now")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " March 2020 - Now ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-teal-600"
-}, "Owner at Her Company Inc."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Owner at Her Company Inc. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-500 text-xs"
-}, "March 2020 - Now")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " March 2020 - Now ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-teal-600"
-}, "Owner at Her Company Inc."), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Owner at Her Company Inc. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-500 text-xs"
-}, "March 2020 - Now")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " March 2020 - Now ")])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   clas: "text-green-500"
@@ -28241,13 +28279,13 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "class": "list-inside space-y-2"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-teal-600"
-}, "Masters Degree in Oxford"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Masters Degree in Oxford "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-500 text-xs"
-}, "March 2020 - Now")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " March 2020 - Now ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-teal-600"
-}, "Bachelors Degreen in LPU"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Bachelors Degreen in LPU "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-gray-500 text-xs"
-}, "March 2020 - Now")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Experience and education grid ")], -1
+}, " March 2020 - Now ")])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of Experience and education grid ")], -1
 /* HOISTED */
 );
 
@@ -28264,9 +28302,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'bg-gray-700' : 'bg-gray-100'])
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left Side "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right Side "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Profile tab "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" About Section "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.name), 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Left Side "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Profile Card "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[2] || (_cache[2] = function () {
+      return $options.changeAvatar && $options.changeAvatar.apply($options, arguments);
+    }),
+    name: "frmAvatar",
+    id: "frmAvatar",
+    method: "POST",
+    enctype: "multipart/form-data",
+    action: "./api/avatar"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $data.user.avatar,
+    alt: "",
+    className: "hover:opacity-25 transition-opacity duration-1000 ease-out",
+    style: {
+      "object-fit": "cover"
+    }
+  }, null, 8
+  /* PROPS */
+  , _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onChange: _cache[1] || (_cache[1] = function () {
+      return $options.onChange && $options.onChange.apply($options, arguments);
+    }),
+    "class": "hidden",
+    type: "file",
+    id: "avatar",
+    name: "avatar"
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  )])], 32
+  /* HYDRATE_EVENTS */
+  )]), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile card "), _hoisted_8]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right Side "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Profile tab "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" About Section "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.name), 1
   /* TEXT */
-  )]), _hoisted_12])]), _hoisted_19]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of about section "), _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Experience and education "), _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile tab ")])])])], 2
+  )]), _hoisted_17])]), _hoisted_24]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of about section "), _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Experience and education "), _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile tab ")])])])], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
@@ -28546,7 +28614,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\n        --main-color: #4a76a8;\n}\n.bg-main-color {\n        background-color: var(--main-color);\n}\n.text-main-color {\n        color: var(--main-color);\n}\n.border-main-color {\n        border-color: var(--main-color);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n:root {\n    --main-color: #4a76a8;\n}\n.bg-main-color {\n    background-color: var(--main-color);\n}\n.text-main-color {\n    color: var(--main-color);\n}\n.border-main-color {\n    border-color: var(--main-color);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable()->default(null);
             $table->string('user_token')->nullable()->default(null);
             $table->string('password');
+            $table->string('avatar')->default("./images/profil.png");
             $table->rememberToken();
             $table->timestamps();
         });
