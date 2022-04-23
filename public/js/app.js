@@ -28143,22 +28143,64 @@ var _hoisted_5 = {
 };
 var _hoisted_6 = ["src"];
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div><h1 class=\"text-gray-900 font-bold text-xl leading-8 my-1\"> Jane Doe </h1><h3 class=\"text-gray-600 font-lg text-semibold leading-6\"> Owner at Her Company Inc. </h3><p class=\"text-sm text-gray-500 hover:text-gray-600 leading-6\"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt </p><ul class=\"bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm\"><li class=\"flex items-center py-3\"><span>Status</span><span class=\"ml-auto\"><span class=\"bg-green-500 py-1 px-2 rounded text-white text-sm\">Active</span></span></li><li class=\"flex items-center py-3\"><span>Member since</span><span class=\"ml-auto\">Nov 07, 2016</span></li></ul></div>", 1);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-gray-900 font-bold text-xl leading-8 my-1"
+}, " Jane Doe ", -1
+/* HOISTED */
+);
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "text-gray-600 font-lg text-semibold leading-6"
+}, " Owner at Her Company Inc. ", -1
+/* HOISTED */
+);
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-sm text-gray-500 hover:text-gray-600 leading-6"
+}, " Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt ", -1
+/* HOISTED */
+);
+
+var _hoisted_10 = {
+  "class": "bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "flex items-center py-3"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Status"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "ml-auto"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "bg-green-500 py-1 px-2 rounded text-white text-sm"
+}, "Active")])], -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "flex items-center py-3"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Member since", -1
+/* HOISTED */
+);
+
+var _hoisted_14 = {
+  "class": "ml-auto"
+};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "my-4"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_9 = {
+var _hoisted_16 = {
   "class": "w-full md:w-9/12 mx-2 h-64"
 };
-var _hoisted_10 = {
+var _hoisted_17 = {
   "class": "bg-white p-3 shadow-sm rounded-sm"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "flex items-center space-x-2 font-semibold text-gray-900 leading-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   clas: "text-green-500"
@@ -28179,41 +28221,87 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_12 = {
+var _hoisted_19 = {
   "class": "text-gray-700"
 };
-var _hoisted_13 = {
+var _hoisted_20 = {
   "class": "grid md:grid-cols-2 text-sm"
 };
-var _hoisted_14 = {
+var _hoisted_21 = {
   "class": "grid grid-cols-2"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "px-4 py-2 font-semibold"
 }, " First Name ", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = {
+var _hoisted_23 = {
+  "class": "px-4 py-2"
+};
+var _hoisted_24 = {
+  "class": "grid grid-cols-2"
+};
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-2 font-semibold"
+}, " Last Name ", -1
+/* HOISTED */
+);
+
+var _hoisted_26 = {
   "class": "px-4 py-2"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Last Name </div><div class=\"px-4 py-2\">Doe</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Gender </div><div class=\"px-4 py-2\">Female</div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Contact No. </div><div class=\"px-4 py-2\"> +11 998001001 </div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Current Address </div><div class=\"px-4 py-2\"> Beech Creek, PA, Pennsylvania </div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Permanant Address </div><div class=\"px-4 py-2\"> Arlington Heights, IL, Illinois </div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Email. </div><div class=\"px-4 py-2\"><a class=\"text-blue-800\" href=\"mailto:jane@example.com\">jane@example.com</a></div></div><div class=\"grid grid-cols-2\"><div class=\"px-4 py-2 font-semibold\"> Birthday </div><div class=\"px-4 py-2\"> Feb 06, 1998 </div></div>", 7);
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "grid grid-cols-2"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-2 font-semibold"
+}, " Gender "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-2"
+}, "Female")], -1
+/* HOISTED */
+);
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_28 = {
+  "class": "grid grid-cols-2"
+};
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-2 font-semibold"
+}, " Email. ", -1
+/* HOISTED */
+);
+
+var _hoisted_30 = {
+  "class": "px-4 py-2"
+};
+var _hoisted_31 = ["href"];
+
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "grid grid-cols-2"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-2 font-semibold"
+}, " Birthday "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "px-4 py-2"
+}, " Feb 06, 1998 ")], -1
+/* HOISTED */
+);
+
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
 }, " Show Full Information ", -1
 /* HOISTED */
 );
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "my-4"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "bg-white p-3 shadow-sm rounded-sm"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "grid grid-cols-2"
@@ -28332,9 +28420,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* HYDRATE_EVENTS */
   )])], 32
   /* HYDRATE_EVENTS */
-  )]), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile card "), _hoisted_8]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right Side "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Profile tab "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" About Section "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.name), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_7, _hoisted_8, _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.created_at), 1
   /* TEXT */
-  )]), _hoisted_17])]), _hoisted_24]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of about section "), _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Experience and education "), _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile tab ")])])])], 2
+  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile card "), _hoisted_15]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right Side "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Profile tab "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" About Section "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.name), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.firstName), 1
+  /* TEXT */
+  )]), _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    "class": "text-blue-800",
+    href: _ctx.mailto
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.name), 9
+  /* TEXT, PROPS */
+  , _hoisted_31)])]), _hoisted_32])]), _hoisted_33]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of about section "), _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Experience and education "), _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End of profile tab ")])])])], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
@@ -28459,56 +28556,56 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [{
-  path: '/',
-  name: 'home',
+  path: "/",
+  name: "home",
   component: _pages_Home_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
-  path: '/login',
-  name: 'login',
+  path: "/login",
+  name: "login",
   component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
 }, {
-  path: '/register',
-  name: 'register',
+  path: "/register",
+  name: "register",
   component: _pages_Register_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
-  path: '/recettes',
-  name: 'recipe',
+  path: "/recettes",
+  name: "recipe",
   component: _components_Recipe_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
-  path: '/ingredients',
-  name: 'ingredients',
+  path: "/ingredients",
+  name: "ingredients",
   component: _pages_Ingredients_IngredientIndex_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
-  path: '/meals',
-  name: 'meals',
+  path: "/meals",
+  name: "meals",
   component: _pages_Meals_MealsIndex_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
-  path: '/mine',
-  name: 'mine',
+  path: "/mine",
+  name: "mine",
   component: _pages_Meals_MealsIndex_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
-  path: '/ajout',
-  name: 'ajout',
+  path: "/ajout",
+  name: "ajout",
   component: _pages_Meals_NewMeal_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
-  path: '/favorite',
-  name: 'favorite',
+  path: "/favorite",
+  name: "favorite",
   component: _pages_Meals_MealsIndex_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
-  path: '/meal/:slug',
-  name: 'meal',
+  path: "/meal/:slug",
+  name: "meal",
   component: _pages_Meals_Meal_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
-  path: '/profil',
-  name: 'profil',
+  path: "/profil",
+  name: "profil",
   component: _pages_User_Profil_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
-  path: '/404',
-  name: '404',
+  path: "/404",
+  name: "404",
   component: _pages_Lost_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
-  path: '/:pathMatch(.*)*',
-  redirect: '/404'
+  path: "/:pathMatch(.*)*",
+  redirect: "/404"
 }];
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_10__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_10__.createWebHistory)(),
@@ -28516,7 +28613,7 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_10__.createRouter)({
 });
 var isAuthenticated = false;
 router.beforeEach(function (to, from, next) {
-  if (localStorage.getItem('api_token') && localStorage.getItem('user_token')) isAuthenticated = true;else isAuthenticated = false;
+  if (localStorage.getItem("api_token") && localStorage.getItem("user_token")) isAuthenticated = true;else isAuthenticated = false;
 
   switch (to.name) {
     case "home":
@@ -28539,9 +28636,15 @@ router.beforeEach(function (to, from, next) {
       next();
       break;
 
+    case "profil":
+      if (!isAuthenticated) next({
+        name: "login"
+      });else next();
+      break;
+
     default:
-      if (to.name !== 'login' && !isAuthenticated) next({
-        name: 'login'
+      if (to.name !== "login" && !isAuthenticated) next({
+        name: "login"
       });else next();
   }
 });

@@ -73,7 +73,9 @@
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Member since</span>
-                                    <span class="ml-auto">Nov 07, 2016</span>
+                                    <span class="ml-auto">{{
+                                        user.created_at
+                                    }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -121,7 +123,9 @@
                                         <div class="px-4 py-2 font-semibold">
                                             Last Name
                                         </div>
-                                        <div class="px-4 py-2">Doe</div>
+                                        <div class="px-4 py-2">
+                                            {{ user.firstName }}
+                                        </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
@@ -131,37 +135,13 @@
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Contact No.
-                                        </div>
-                                        <div class="px-4 py-2">
-                                            +11 998001001
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">
-                                            Current Address
-                                        </div>
-                                        <div class="px-4 py-2">
-                                            Beech Creek, PA, Pennsylvania
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">
-                                            Permanant Address
-                                        </div>
-                                        <div class="px-4 py-2">
-                                            Arlington Heights, IL, Illinois
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">
                                             Email.
                                         </div>
                                         <div class="px-4 py-2">
                                             <a
                                                 class="text-blue-800"
-                                                href="mailto:jane@example.com"
-                                                >jane@example.com</a
+                                                :href="mailto"
+                                                >{{ user.name }}</a
                                             >
                                         </div>
                                     </div>

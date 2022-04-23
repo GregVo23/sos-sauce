@@ -12,105 +12,108 @@ import Profil from "../pages/User/Profil.vue";
 
 const routes = [
     {
-        path: '/',
-        name: 'home',
-        component: Home
+        path: "/",
+        name: "home",
+        component: Home,
     },
     {
-        path: '/login',
-        name: 'login',
-        component: Login
+        path: "/login",
+        name: "login",
+        component: Login,
     },
     {
-        path: '/register',
-        name: 'register',
-        component: Register
+        path: "/register",
+        name: "register",
+        component: Register,
     },
     {
-        path: '/recettes',
-        name: 'recipe',
-        component: Recipe
+        path: "/recettes",
+        name: "recipe",
+        component: Recipe,
     },
     {
-        path: '/ingredients',
-        name: 'ingredients',
-        component: IngredientIndex
+        path: "/ingredients",
+        name: "ingredients",
+        component: IngredientIndex,
     },
     {
-        path: '/meals',
-        name: 'meals',
-        component: MealsIndex
+        path: "/meals",
+        name: "meals",
+        component: MealsIndex,
     },
     {
-        path: '/mine',
-        name: 'mine',
-        component: MealsIndex
+        path: "/mine",
+        name: "mine",
+        component: MealsIndex,
     },
     {
-        path: '/ajout',
-        name: 'ajout',
-        component: NewMeal
+        path: "/ajout",
+        name: "ajout",
+        component: NewMeal,
     },
     {
-        path: '/favorite',
-        name: 'favorite',
-        component: MealsIndex
+        path: "/favorite",
+        name: "favorite",
+        component: MealsIndex,
     },
     {
-        path: '/meal/:slug',
-        name: 'meal',
-        component: Meal
+        path: "/meal/:slug",
+        name: "meal",
+        component: Meal,
     },
     {
-        path: '/profil',
-        name: 'profil',
-        component: Profil
+        path: "/profil",
+        name: "profil",
+        component: Profil,
     },
     {
-        path: '/404',
-        name: '404',
-        component: Lost
+        path: "/404",
+        name: "404",
+        component: Lost,
     },
     {
-        path: '/:pathMatch(.*)*', 
-        redirect: '/404' 
-    }
+        path: "/:pathMatch(.*)*",
+        redirect: "/404",
+    },
 ];
-
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
 });
 
 let isAuthenticated = false;
 
 router.beforeEach((to, from, next) => {
-    if(localStorage.getItem('api_token') && localStorage.getItem('user_token'))
+    if (localStorage.getItem("api_token") && localStorage.getItem("user_token"))
         isAuthenticated = true;
-    else
-        isAuthenticated= false;
-    
+    else isAuthenticated = false;
+
     switch (to.name) {
         case "home":
-            next()
+            next();
             break;
         case "login":
-            next()
+            next();
             break;
         case "register":
-            next()
+            next();
             break;
         case "meals":
-            next()
+            next();
             break;
         case "meal":
-            next()
+            next();
+            break;
+        case "profil":
+            if (!isAuthenticated) next({ name: "login" });
+            else next();
             break;
         default:
-            if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })
-            else next()
+            if (to.name !== "login" && !isAuthenticated)
+                next({ name: "login" });
+            else next();
     }
-  })
+});
 
 export default router;
