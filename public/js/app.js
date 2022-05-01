@@ -24122,8 +24122,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'Slider',
-  props: ['mode'],
+  name: "Slider",
+  props: ["mode"],
   data: function data() {
     return {
       URL: _env_js__WEBPACK_IMPORTED_MODULE_1__.URL,
@@ -24141,7 +24141,7 @@ __webpack_require__.r(__webpack_exports__);
     loadData: function loadData() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/meals').then(function (_ref) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/meals").then(function (_ref) {
         var data = _ref.data;
         return _this.meals = data.data;
       })["catch"](function (error) {
@@ -24192,7 +24192,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.slider();
     this.ChangeMode();
-    document.body.style.overflowX = 'hidden';
+    document.body.style.overflowX = "hidden";
   }
 });
 
@@ -26482,6 +26482,26 @@ var _hoisted_3 = {
 var _hoisted_4 = {
   "class": "mt-6 mx-auto px-12 text-2xl text-white text-center truncate"
 };
+
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex justify-center h-full"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    "class": "fixed bottom-28 h-16 w-16 animate-bounce text-white",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    stroke: "currentColor",
+    "stroke-width": "4"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    d: "M19 9l-7 7-7-7"
+  })])], -1
+  /* HOISTED */
+  );
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
@@ -26521,7 +26541,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS, DYNAMIC_SLOTS */
     , ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(meal.description), 1
     /* TEXT */
-    )], 6
+    ), _hoisted_5], 6
     /* CLASS, STYLE */
     );
   }), 128
@@ -27091,7 +27111,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
     xmlns: "http://www.w3.org/2000/svg",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'h-20 w-20 hover:text-red-600']),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'h-20 w-20 hover:animate-spin hover:text-red-600']),
     fill: "none",
     viewBox: "0 0 24 24",
     stroke: "currentColor"
@@ -28790,7 +28810,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.slider[data-v-872262e8] {\n        width: 100vw;\n        height: 100vh;\n        background: #888;\n        /*position: relative;*/\n}\n.container-slide[data-v-872262e8] {\n        display: inline-flex;\n        flex-wrap: nowrap;\n}\n.img-slider[data-v-872262e8] {\n        width: 100vw;\n        height: 100vh;\n        /*margin-left: 1000px;*/\n        /*object-fit: cover;*/\n}\n.div-slider[data-v-872262e8] {\n        width: 100vw;\n        height: 100vh;\n}\n.titre[data-v-872262e8] {\n        text-shadow: 0 8px 12px rgba(0,0,0,0.30);\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.slider[data-v-872262e8] {\n    width: 100vw;\n    height: 100vh;\n    background: #888;\n    /*position: relative;*/\n}\n.container-slide[data-v-872262e8] {\n    display: inline-flex;\n    flex-wrap: nowrap;\n}\n.img-slider[data-v-872262e8] {\n    width: 100vw;\n    height: 100vh;\n    /*margin-left: 1000px;*/\n    /*object-fit: cover;*/\n}\n.div-slider[data-v-872262e8] {\n    width: 100vw;\n    height: 100vh;\n}\n.titre[data-v-872262e8] {\n    text-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
