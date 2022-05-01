@@ -109,11 +109,11 @@
                                 </span>
                                 <span class="tracking-wide">About</span>
                             </div>
-                            <div class="text-gray-700">
+                            <div class="text-gray-700" v-if="updateProfil">
                                 <div class="grid md:grid-cols-2 text-sm">
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            First Name
+                                            Last Name
                                         </div>
                                         <div class="px-4 py-2">
                                             {{ user.name }}
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Last Name
+                                            First Name
                                         </div>
                                         <div class="px-4 py-2">
                                             {{ user.firstName }}
@@ -141,7 +141,7 @@
                                             <a
                                                 class="text-blue-800"
                                                 :href="mailto"
-                                                >{{ user.name }}</a
+                                                >{{ user.emailexit }}</a
                                             >
                                         </div>
                                     </div>
@@ -155,10 +155,75 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="text-gray-700" v-if="!updateProfil">
+                                <div class="grid md:grid-cols-2 text-sm">
+                                    <div class="grid grid-cols-2">
+                                        <div class="px-4 py-2 font-semibold">
+                                            Last Name
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                :value="user.name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div class="px-4 py-2 font-semibold">
+                                            First Name
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            <input
+                                                type="text"
+                                                name="firstname"
+                                                :value="user.firstname"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div class="px-4 py-2 font-semibold">
+                                            Gender
+                                        </div>
+                                        <div class="px-4 py-2">Female</div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div class="px-4 py-2 font-semibold">
+                                            Email.
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            <input
+                                                type="text"
+                                                name="email"
+                                                :value="user.email"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="grid grid-cols-2">
+                                        <div class="px-4 py-2 font-semibold">
+                                            Birthday
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            Feb 06, 1998
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <button
-                                class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4"
+                                :class="[
+                                    updateProfil
+                                        ? 'bg-gray-100 hover:bg-gray-300 focus:outline-none focus:shadow-outline'
+                                        : 'bg-red-300 hover:bg-red-500 focus:outline-none focus:shadow-outline',
+                                    'block w-full text-blue-800 text-sm font-semibold rounded-lg focus:outline-none focus:shadow-outline hover:shadow-xs p-3 my-4',
+                                ]"
+                                @click="updateProfil = !updateProfil"
                             >
-                                Show Full Information
+                                {{
+                                    updateProfil
+                                        ? "Modifier profil"
+                                        : "Sauvegarder profil"
+                                }}
                             </button>
                         </div>
                         <!-- End of about section -->
@@ -294,6 +359,7 @@
 import axios from "axios";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
+import { useField, useForm } from "vee-validate";
 
 export default {
     components: { Header, Footer },
@@ -310,9 +376,13 @@ export default {
             },
             user: [],
             avatar: "",
+            updateProfil: true,
         };
     },
     methods: {
+        saveProfil() {
+            console.log("update");
+        },
         changeMode() {
             this.dark =
                 window.sessionStorage.getItem("dark") == "true" ? true : false;
