@@ -114,8 +114,8 @@ export default {
                 let image = document.querySelector(
                     "#app > section > div > div > img:nth-child(" + x + ")"
                 );
-                console.log("h " + x);
-                console.log("i " + this.meals.length);
+                //console.log("h " + x);
+                //console.log("i " + this.meals.length);
             }
             console.log(this.index);
         },
@@ -127,8 +127,8 @@ export default {
                 this.transition = "transform 0.4s ease";
                 this.index += window.screen.availWidth;
             }
-            console.log(Math.abs(this.index / window.screen.availWidth) + 1);
-            console.log("i " + this.meals.length);
+            //console.log(Math.abs(this.index / window.screen.availWidth) + 1);
+            //console.log("i " + this.meals.length);
         },
     },
     created() {
