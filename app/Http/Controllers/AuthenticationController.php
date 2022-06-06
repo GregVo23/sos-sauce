@@ -14,6 +14,11 @@ use App\Http\Validation\RegisterValidation;
 class AuthenticationController extends Controller
 {
 
+    /**
+     * Register a user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function register(Request $request, RegisterValidation $validation)
     {
         $validator = Validator::make($request->all(), $validation->rules(), $validation->messages());
@@ -34,7 +39,11 @@ class AuthenticationController extends Controller
         return response()->json($user);
     }
 
-
+    /**
+     * Login a user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request, LoginValidation $validation)
     {
         $validator = Validator::make($request->all(), $validation->rules(), $validation->messages());
@@ -59,16 +68,37 @@ class AuthenticationController extends Controller
         }
     }
 
+    /**
+     * Disconnect the connected user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function logout()
     {
         Auth::logout();
         Session::flush();
     }
 
+    /**
+     * Show the connected user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function user()
     {
         $user = auth()->user();
 
         return response()->json(['user' => $user]);
+    }
+
+    /**
+     * Show the number of users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function nbUsers()
+    {
+        $users = User::all()->count();
+        return response()->json($users);
     }
 }

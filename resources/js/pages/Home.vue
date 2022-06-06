@@ -12,7 +12,58 @@
         <Slider :mode="this.dark"></Slider>
         <Title></Title>
         <Statistic></Statistic>
+
+        <div
+            class="bg-cover bg-center py-56"
+            style="
+                background-image: url('http://localhost:8000/images/sauce.jpeg');
+            "
+        ></div>
+        <div class="bg-gray-600">
+            <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2
+                        class="text-base font-semibold text-red-600 tracking-wide uppercase"
+                    >
+                        Pricing
+                    </h2>
+                    <p
+                        class="mt-1 text-4xl font-extrabold text-gray-100 sm:text-5xl sm:tracking-tight lg:text-6xl"
+                    >
+                        Take control of your team.
+                    </p>
+                    <p class="max-w-xl mt-5 mx-auto text-xl text-gray-300">
+                        Start building for free, then add a site plan to go
+                        live. Account plans unlock additional features.
+                    </p>
+                    <div class="mt-8 flex justify-center">
+                        <div class="inline-flex rounded-md shadow">
+                            <a
+                                href="#"
+                                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+                            >
+                                Get started
+                            </a>
+                        </div>
+                        <div class="ml-3 inline-flex">
+                            <a
+                                href="#"
+                                class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200"
+                            >
+                                Learn more
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <Carousel></Carousel>
+        <div
+            class="bg-cover bg-center py-56"
+            style="
+                background-image: url('http://localhost:8000/images/meals/intro.jpg');
+            "
+        ></div>
     </div>
     <Footer :mode="this.dark"></Footer>
 </template>

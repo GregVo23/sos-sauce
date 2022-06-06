@@ -115,7 +115,6 @@ class UserController extends Controller
         }
 
     }
-
     
     /**
      * Remove the User and all user's files and folders from storage.

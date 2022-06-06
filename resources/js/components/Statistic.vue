@@ -65,10 +65,16 @@ export default {
         };
     },
     methods: {
-        loadData() {
+        loadNbMeals() {
             axios
-                .get("/api/meals")
-                .then(({ data }) => (this.meals = data.data))
+                .get("/api/meals/count")
+                .then(({ data }) => (this.nbMeals = data))
+                .catch((error) => console.log("error", error));
+        },
+        loadNbUsers() {
+            axios
+                .get("/api/users/count")
+                .then(({ data }) => (this.nbUsers = data))
                 .catch((error) => console.log("error", error));
         },
         ChangeMode() {
@@ -77,7 +83,8 @@ export default {
         },
     },
     created() {
-        this.loadData();
+        this.loadNbMeals();
+        this.loadNbUsers();
     },
     mounted() {
         this.ChangeMode();

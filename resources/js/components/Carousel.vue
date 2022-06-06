@@ -294,10 +294,6 @@
                 </div>
             </div>
         </Slide>
-
-        <template #addons>
-            <Navigation />
-        </template>
     </Carousel>
 </template>
 

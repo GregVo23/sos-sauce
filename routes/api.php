@@ -26,11 +26,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::get('/logout', [AuthenticationController::class, 'logout']);
+Route::get('/users/count', [AuthenticationController::class, 'nbUsers']);
 Route::get('/user', [AuthenticationController::class, 'user'])->middleware('App\Http\Middleware\ConnectedVerify');
 
 Route::get('/ingredients', [IngredientController::class, 'index']);
 //Meals
 Route::get('/meals', [MealController::class, 'index'])->middleware('App\Http\Middleware\ConnectedVerify');
+Route::get('/meals/count', [MealController::class, 'nbMeals']);
 Route::get('/meal/{slug}', [MealController::class, 'show'])->middleware('App\Http\Middleware\ConnectedVerify');
 Route::post('/meal', [MealController::class, 'store'])->middleware('App\Http\Middleware\TokenVerify');
 Route::delete('/meal/{slug}', [MealController::class, 'destroy'])->middleware('App\Http\Middleware\TokenVerify');
