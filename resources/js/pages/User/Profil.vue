@@ -44,13 +44,13 @@
                             <h1
                                 class="text-gray-900 font-bold text-xl leading-8 my-1"
                             >
-                                Jane Doe
+                                {{
+                                    profile.firstName != "my first name"
+                                        ? profile.firstName
+                                        : ""
+                                }}
+                                {{ profile.lastName }}
                             </h1>
-                            <h3
-                                class="text-gray-600 font-lg text-semibold leading-6"
-                            >
-                                Owner at Her Company Inc.
-                            </h3>
                             <p
                                 class="text-sm text-gray-500 hover:text-gray-600 leading-6"
                             >
@@ -63,7 +63,7 @@
                                 class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm"
                             >
                                 <li class="flex items-center py-3">
-                                    <span>Status</span>
+                                    <span>Statut</span>
                                     <span class="ml-auto"
                                         ><span
                                             class="bg-green-500 py-1 px-2 rounded text-white text-sm"
@@ -74,7 +74,7 @@
                                 <li class="flex items-center py-3">
                                     <span>Member since</span>
                                     <span class="ml-auto">{{
-                                        user.created_at
+                                        profile.createdAt
                                     }}</span>
                                 </li>
                             </ul>
@@ -107,50 +107,101 @@
                                         />
                                     </svg>
                                 </span>
-                                <span class="tracking-wide">About</span>
+                                <span class="tracking-wide">A propos</span>
                             </div>
                             <div class="text-gray-700" v-if="updateProfil">
                                 <div class="grid md:grid-cols-2 text-sm">
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Last Name
+                                            Nom
                                         </div>
-                                        <div class="px-4 py-2">
-                                            {{ user.name }}
+                                        <div
+                                            @click="
+                                                (updateProfil = !updateProfil),
+                                                    updateSelectedInputProfil(
+                                                        'last_name'
+                                                    )
+                                            "
+                                            class="px-4 py-2"
+                                        >
+                                            {{ profile.lastName }}
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            First Name
+                                            Prénom
                                         </div>
-                                        <div class="px-4 py-2">
-                                            {{ user.firstName }}
+                                        <div
+                                            @click="
+                                                (updateProfil = !updateProfil),
+                                                    updateSelectedInputProfil(
+                                                        'first_name'
+                                                    )
+                                            "
+                                            class="px-4 py-2"
+                                        >
+                                            {{ profile.firstName }}
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Gender
+                                            Genre
                                         </div>
-                                        <div class="px-4 py-2">Female</div>
+                                        <div
+                                            @click="
+                                                (updateProfil = !updateProfil),
+                                                    updateSelectedInputProfil(
+                                                        'gender'
+                                                    )
+                                            "
+                                            class="px-4 py-2"
+                                        >
+                                            {{
+                                                profile.gender != null
+                                                    ? profile.gender == "man"
+                                                        ? "homme"
+                                                        : profile.gender ==
+                                                          "woman"
+                                                        ? "femme"
+                                                        : "autres"
+                                                    : "Définir votre genre"
+                                            }}
+                                        </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Email.
+                                            E-mail
                                         </div>
-                                        <div class="px-4 py-2">
+                                        <div
+                                            @click="
+                                                (updateProfil = !updateProfil),
+                                                    updateSelectedInputProfil(
+                                                        'email'
+                                                    )
+                                            "
+                                            class="px-4 py-2"
+                                        >
                                             <a
                                                 class="text-blue-800"
                                                 :href="mailto"
-                                                >{{ user.emailexit }}</a
+                                                >{{ profile.email }}</a
                                             >
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Birthday
+                                            Anniversaire
                                         </div>
-                                        <div class="px-4 py-2">
-                                            Feb 06, 1998
+                                        <div
+                                            @click="
+                                                (updateProfil = !updateProfil),
+                                                    updateSelectedInputProfil(
+                                                        'birthday'
+                                                    )
+                                            "
+                                            class="px-4 py-2"
+                                        >
+                                            {{ profile.birthday.split(" ")[0] }}
                                         </div>
                                     </div>
                                 </div>
@@ -159,52 +210,97 @@
                                 <div class="grid md:grid-cols-2 text-sm">
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Last Name
+                                            Nom
                                         </div>
                                         <div class="px-4 py-2">
                                             <input
+                                                id="last_name"
                                                 type="text"
                                                 name="name"
-                                                :value="user.name"
+                                                v-model="profile.lastName"
                                             />
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            First Name
+                                            Prénom
                                         </div>
                                         <div class="px-4 py-2">
                                             <input
+                                                id="first_name"
                                                 type="text"
                                                 name="firstname"
-                                                :value="user.firstname"
+                                                v-model="profile.firstName"
                                             />
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Gender
+                                            Genre
                                         </div>
-                                        <div class="px-4 py-2">Female</div>
+                                        <div class="px-4 py-2">
+                                            <select name="gender" id="gender">
+                                                <option
+                                                    :value="
+                                                        profile.gender != null
+                                                            ? profile.gender ==
+                                                              'man'
+                                                                ? 'man'
+                                                                : profile.gender ==
+                                                                  'woman'
+                                                                ? 'woman'
+                                                                : 'other'
+                                                            : null
+                                                    "
+                                                >
+                                                    {{
+                                                        profile.gender != null
+                                                            ? profile.gender ==
+                                                              "man"
+                                                                ? "homme"
+                                                                : profile.gender ==
+                                                                  "woman"
+                                                                ? "femme"
+                                                                : "autres"
+                                                            : "Définir votre genre"
+                                                    }}
+                                                </option>
+                                                <option value="woman">
+                                                    Femme
+                                                </option>
+                                                <option value="man">
+                                                    Homme
+                                                </option>
+                                                <option value="other">
+                                                    Autre
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Email.
+                                            E-mail
                                         </div>
                                         <div class="px-4 py-2">
                                             <input
+                                                id="email"
                                                 type="text"
                                                 name="email"
-                                                :value="user.email"
+                                                v-model="profile.email"
                                             />
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-2">
                                         <div class="px-4 py-2 font-semibold">
-                                            Birthday
+                                            Anniversaire
                                         </div>
                                         <div class="px-4 py-2">
-                                            Feb 06, 1998
+                                            <input
+                                                id="birthday"
+                                                type="date"
+                                                name="birthday"
+                                                v-model="profile.birthday"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -217,7 +313,9 @@
                                         : 'bg-red-300 hover:bg-red-500 focus:outline-none focus:shadow-outline',
                                     'block w-full text-blue-800 text-sm font-semibold rounded-lg focus:outline-none focus:shadow-outline hover:shadow-xs p-3 my-4',
                                 ]"
-                                @click="updateProfil = !updateProfil"
+                                @click="
+                                    (updateProfil = !updateProfil), saveProfil()
+                                "
                             >
                                 {{
                                     updateProfil
@@ -254,7 +352,7 @@
                                             </svg>
                                         </span>
                                         <span class="tracking-wide"
-                                            >Experience</span
+                                            >Mes recettes</span
                                         >
                                     </div>
                                     <ul class="list-inside space-y-2">
@@ -321,7 +419,7 @@
                                             </svg>
                                         </span>
                                         <span class="tracking-wide"
-                                            >Education</span
+                                            >Mes sauces</span
                                         >
                                     </div>
                                     <ul class="list-inside space-y-2">
@@ -377,11 +475,34 @@ export default {
             user: [],
             avatar: "",
             updateProfil: true,
+            profile: {
+                lastName: "",
+                firstName: "",
+                email: "",
+                birthday: "",
+                gender: "",
+                about: "",
+                memberSince: "",
+            },
         };
     },
     methods: {
+        updateSelectedInputProfil(id) {
+            setTimeout(() => {
+                document.querySelector("#" + id).focus();
+            }, 400);
+        },
         saveProfil() {
-            console.log("update");
+            let data = new FormData();
+            data.append("user", this.profile);
+            axios
+                .post("/api/profile/" + this.user.id, data, this.CONFIG)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((error) => {
+                    console.log("error", error);
+                });
         },
         changeMode() {
             this.dark =
@@ -392,6 +513,15 @@ export default {
                 .get("/api/user", this.CONFIG)
                 .then(({ data }) => {
                     this.user = data.user;
+                    this.profile.lastName = this.user.last_name;
+                    this.profile.firstName = this.user.first_name;
+                    this.profile.email = this.user.email;
+                    this.profile.gender = this.user.gender;
+                    this.profile.lastName = this.user.last_name;
+                    this.profile.memberSince = this.user.member_since;
+                    this.profile.birthday = this.user.birthday;
+                    this.profile.about = this.user.about;
+                    this.profile.createdAt = this.user.created_at;
                 })
                 .catch((error) => console.error("error", error));
         },

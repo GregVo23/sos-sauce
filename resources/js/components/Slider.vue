@@ -32,7 +32,7 @@
                 :style="`width:100vw; height:100vh; background-image:url(http://localhost:8000/storage/meals/${meal.picture}); background-size: cover;`"
             >
                 <h1
-                    class="titre mt-12 text-8xl px-10 font-extrabold tracking-tight text-white text-center"
+                    class="titre mt-52 text-8xl px-10 font-extrabold tracking-tight text-white text-center"
                 >
                     <router-link :to="`/meal/${meal.slug}`"
                         >{{ meal.name }}

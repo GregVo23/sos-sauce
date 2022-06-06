@@ -17,12 +17,14 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Van Mossel',
+                'last_name' => 'Van Mossel',
+                'first_name' => 'Luc',
                 'email' => 'jean@vanmossel.com',
                 'password' => 'epfcepfc',
             ],
             [
-                'name' => 'Epfc',
+                'last_name' => 'Epfc',
+                'first_name' => 'Jean',
                 'email' => 'epfc@epfc.com',
                 'password' => 'epfcepfc',
             ],
@@ -30,7 +32,8 @@ class UserSeeder extends Seeder
 
         foreach ($users as $user) {
             DB::table('users')->insert([
-                'name' => $user['name'],
+                'last_name' => $user['last_name'],
+                'first_name' => $user['last_name'],
                 'email' => $user['email'],
                 'password' => Hash::make($user['password']),
             ]);

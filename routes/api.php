@@ -47,3 +47,4 @@ Route::post('/recipe', [MealController::class, 'storeRecipe'])->middleware('App\
 
 //User
 Route::post('/avatar/{id}', [UserController::class, 'saveAvatar'])->middleware('App\Http\Middleware\TokenVerify');
+Route::post('/profile/{id}', [UserController::class, 'saveProfil'])->middleware('App\Http\Middleware\TokenVerify');

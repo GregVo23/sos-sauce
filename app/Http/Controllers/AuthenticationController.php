@@ -24,7 +24,7 @@ class AuthenticationController extends Controller
 
         $user = User::create([
             'email' => $request->input('email'),
-            'name' => $request->input('name'),
+            'last_name' => $request->input('name'),
             'password' => bcrypt($request->input('password')),
             'api_token' => Str::random(60)
         ]);

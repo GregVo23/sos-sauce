@@ -92,53 +92,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function saveProfil(Request $request, $id)
     {
         
-        $idUserConnected = Auth()->user()->id;
+        $user_id = Auth()->user()->id;
         $user = User::findOrFail($id);
-        if($user->id == $idUserConnected){
+    
+        $user->last_name = $request->user()->last_name;
+        $user->save();
 
-            // validate
-            $rules = array(
-
-                'phone' => 'nullable|numeric|unique:users',
-                'email' => 'nullable|string|email|max:255|unique:users',
-                'firstname' => 'nullable|string|max:255',
-                'lastname' => 'nullable|string|max:255'
-            );
-            $validator = Validator::make($request->all(), $rules);
-
-            // process
-            if ($validator->fails()) {
-                return response()->json([
-                    'message' => $validator->errors(),
-                    'type' => 'error',
-                ]);
-            } else {
-
-                $user->firstname = $request->firstname ? $request->firstname : $user->firstname;
-                $user->lastname = $request->lastname ? $request->lastname : $user->lastname;
-                $user->phone = $request->phone ? $request->phone : $user->phone;
-                $user->email = $request->email ? $request->email : $user->email;
-                $result = $user->save();
-                if ($result){
-                    return response()->json([
-                        'message' => "Votre profil a été mis à jours.",
-                        'type'=> "success",
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'message' => "Un problème est survenu lors de la mise à jours.",
-                        'type'=> "error",
-                    ], 500);
-                }
-            }
+        if ($user_id == $id){
+            return response()->json([
+                'message' => 'ok !',
+                'type'=> "success",
+                'request' => $request->user()
+            ], 200);
         } else {
             return response()->json([
-                'message' => "Seul le propriétaire peut modifier son profil.",
+                'message' => 'pas ok !',
                 'type'=> "error",
-            ], 422);
+            ], 403);            
         }
 
     }
