@@ -1,13 +1,13 @@
 <template>
     <Carousel>
-        <Slide v-for="meal in meals" :key="meal.id">
+        <Slide v-for="slide in meals" :key="slide">
             <div
                 class="mt-12 mb-12 px-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-4 lg:max-w-none"
             >
                 <div
                     class="flex flex-col rounded-lg shadow-lg overflow-hidden"
-                    v-for="slide in 4"
-                    :key="slide"
+                    v-for="meal in slide"
+                    :key="meal.id"
                 >
                     <div class="carousel__item">
                         <div class="flex-shrink-0">
@@ -73,9 +73,19 @@ export default defineComponent({
             axios
                 .get("/api/meals/all")
                 .then(({ data }) => {
-                    (this.charged = true), (this.meals = data);
+                    (this.charged = true),
+                        (this.meals = this.spliceIntoChunks(data, 4)),
+                        console.log(this.meals);
                 })
                 .catch((error) => console.log("error", error));
+        },
+        spliceIntoChunks(arr, chunkSize) {
+            const res = [];
+            while (arr.length > 0 && arr.length > chunkSize - 1) {
+                const chunk = arr.splice(0, chunkSize);
+                res.push(chunk);
+            }
+            return res;
         },
     },
     created() {

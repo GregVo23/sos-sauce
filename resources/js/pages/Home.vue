@@ -10,7 +10,7 @@
             :mode="this.dark"
         ></Notification>
         <Slider :mode="this.dark"></Slider>
-        <Title></Title>
+        <Title :mode="this.dark"></Title>
         <Statistic></Statistic>
 
         <div
