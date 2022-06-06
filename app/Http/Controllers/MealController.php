@@ -181,6 +181,17 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getAllMeals()
+    {
+        $meals = Meal::all();
+        return response()->json($meals);
+    }
+    
+    /**
+     * Show the number of meals.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function nbMeals()
     {
         $meals = Meal::all()->count();

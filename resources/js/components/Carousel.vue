@@ -1,6 +1,6 @@
 <template>
     <Carousel class="mb-12">
-        <Slide v-for="slide in 10" :key="slide">
+        <Slide v-for="meal in meals" :key="meal.id">
             <div
                 class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-4 lg:max-w-none"
             >
@@ -22,7 +22,7 @@
                                         href="post.category.href"
                                         class="hover:underline"
                                     >
-                                        { post.category.name }
+                                        {{ meal.name }}
                                     </a>
                                 </p>
                                 <a href="post.href" class="block mt-2">
@@ -309,6 +309,26 @@ export default defineComponent({
         Carousel,
         Slide,
         Navigation,
+    },
+    data() {
+        return {
+            meals: null,
+            dark: false,
+            charged: false,
+        };
+    },
+    methods: {
+        loadData() {
+            axios
+                .get("/api/meals/all")
+                .then(({ data }) => {
+                    (this.charged = true), (this.meals = data);
+                })
+                .catch((error) => console.log("error", error));
+        },
+    },
+    created() {
+        this.loadData();
     },
 });
 </script>

@@ -31,7 +31,8 @@ Route::get('/user', [AuthenticationController::class, 'user'])->middleware('App\
 
 Route::get('/ingredients', [IngredientController::class, 'index']);
 //Meals
-Route::get('/meals', [MealController::class, 'index'])->middleware('App\Http\Middleware\ConnectedVerify');
+Route::get('/meals', [MealController::class, 'index']);
+Route::get('/meals/all', [MealController::class, 'getAllMeals']);
 Route::get('/meals/count', [MealController::class, 'nbMeals']);
 Route::get('/meal/{slug}', [MealController::class, 'show'])->middleware('App\Http\Middleware\ConnectedVerify');
 Route::post('/meal', [MealController::class, 'store'])->middleware('App\Http\Middleware\TokenVerify');
