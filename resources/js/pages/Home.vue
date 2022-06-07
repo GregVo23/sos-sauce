@@ -25,16 +25,16 @@
                     <h2
                         class="text-base font-semibold text-red-600 tracking-wide uppercase"
                     >
-                        Pricing
+                        En cuisine !
                     </h2>
                     <p
                         class="mt-1 text-4xl font-extrabold text-gray-100 sm:text-5xl sm:tracking-tight lg:text-6xl"
                     >
-                        Take control of your team.
+                        A la recherche d'une recette ?
                     </p>
                     <p class="max-w-xl mt-5 mx-auto text-xl text-gray-300">
-                        Start building for free, then add a site plan to go
-                        live. Account plans unlock additional features.
+                        Partager vos recettes avec vos amis, familles, collègues
+                        ...
                     </p>
                     <div class="mt-8 flex justify-center">
                         <div class="inline-flex rounded-md shadow">
@@ -42,7 +42,7 @@
                                 href="#"
                                 class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
                             >
-                                Get started
+                                Je m'inscris
                             </a>
                         </div>
                         <div class="ml-3 inline-flex">
@@ -50,7 +50,7 @@
                                 href="#"
                                 class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200"
                             >
-                                Learn more
+                                Les recettes
                             </a>
                         </div>
                     </div>

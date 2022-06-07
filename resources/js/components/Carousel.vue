@@ -1,11 +1,11 @@
 <template>
-    <Carousel>
+    <Carousel :autoplay="4000" :wrap-around="true">
         <Slide v-for="slide in meals" :key="slide">
             <div
                 class="mt-12 mb-12 px-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-4 lg:max-w-none"
             >
                 <div
-                    class="flex flex-col rounded-lg shadow-lg overflow-hidden"
+                    class="bg-white flex flex-col rounded-lg shadow-lg overflow-hidden"
                     v-for="meal in slide"
                     :key="meal.id"
                 >
@@ -45,12 +45,17 @@
                 </div>
             </div>
         </Slide>
+
+        <!--<template #addons>
+            <Navigation />
+            <Pagination />
+        </template>-->
     </Carousel>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import { Carousel, Navigation, Slide } from "vue3-carousel";
+import { Carousel, Navigation, Slide, Pagination } from "vue3-carousel";
 
 import "vue3-carousel/dist/carousel.css";
 
@@ -60,6 +65,7 @@ export default defineComponent({
         Carousel,
         Slide,
         Navigation,
+        Pagination,
     },
     data() {
         return {

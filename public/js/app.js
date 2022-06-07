@@ -23651,7 +23651,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Carousel: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel,
     Slide: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Slide,
-    Navigation: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Navigation
+    Navigation: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Navigation,
+    Pagination: vue3_carousel__WEBPACK_IMPORTED_MODULE_1__.Pagination
   },
   data: function data() {
     return {
@@ -25571,7 +25572,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Carousel", true);
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Carousel, null, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Carousel, {
+    autoplay: 4000,
+    "wrap-around": true
+  }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.meals, function (slide) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Slide, {
@@ -25580,7 +25584,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slide, function (meal) {
               return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-                "class": "flex flex-col rounded-lg shadow-lg overflow-hidden",
+                "class": "bg-white flex flex-col rounded-lg shadow-lg overflow-hidden",
                 key: meal.id
               }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
                 "class": "h-48 w-full object-cover",
@@ -25607,7 +25611,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      ))];
+      )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<template #addons>\n            <Navigation />\n            <Pagination />\n        </template>")];
     }),
     _: 1
     /* STABLE */
@@ -27003,7 +27007,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"bg-cover bg-center py-56\" style=\"background-image:url(&#39;http://localhost:8000/images/sauce.jpeg&#39;);\"></div><div class=\"bg-gray-600\"><div class=\"max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8\"><div class=\"text-center\"><h2 class=\"text-base font-semibold text-red-600 tracking-wide uppercase\"> Pricing </h2><p class=\"mt-1 text-4xl font-extrabold text-gray-100 sm:text-5xl sm:tracking-tight lg:text-6xl\"> Take control of your team. </p><p class=\"max-w-xl mt-5 mx-auto text-xl text-gray-300\"> Start building for free, then add a site plan to go live. Account plans unlock additional features. </p><div class=\"mt-8 flex justify-center\"><div class=\"inline-flex rounded-md shadow\"><a href=\"#\" class=\"inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700\"> Get started </a></div><div class=\"ml-3 inline-flex\"><a href=\"#\" class=\"inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200\"> Learn more </a></div></div></div></div></div>", 2);
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"bg-cover bg-center py-56\" style=\"background-image:url(&#39;http://localhost:8000/images/sauce.jpeg&#39;);\"></div><div class=\"bg-gray-600\"><div class=\"max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8\"><div class=\"text-center\"><h2 class=\"text-base font-semibold text-red-600 tracking-wide uppercase\"> En cuisine ! </h2><p class=\"mt-1 text-4xl font-extrabold text-gray-100 sm:text-5xl sm:tracking-tight lg:text-6xl\"> A la recherche d&#39;une recette ? </p><p class=\"max-w-xl mt-5 mx-auto text-xl text-gray-300\"> Partager vos recettes avec vos amis, familles, collègues ... </p><div class=\"mt-8 flex justify-center\"><div class=\"inline-flex rounded-md shadow\"><a href=\"#\" class=\"inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700\"> Je m&#39;inscris </a></div><div class=\"ml-3 inline-flex\"><a href=\"#\" class=\"inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200\"> Les recettes </a></div></div></div></div></div>", 2);
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "bg-cover bg-center py-56",
