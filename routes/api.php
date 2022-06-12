@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::get('/logout', [AuthenticationController::class, 'logout']);
-Route::get('/users/count', [AuthenticationController::class, 'nbUsers']);
 Route::get('/user', [AuthenticationController::class, 'user'])->middleware('App\Http\Middleware\ConnectedVerify');
 
 Route::get('/ingredients', [IngredientController::class, 'index']);
@@ -34,6 +33,7 @@ Route::get('/ingredients', [IngredientController::class, 'index']);
 Route::get('/meals', [MealController::class, 'index']);
 Route::get('/meals/all', [MealController::class, 'getAllMeals']);
 Route::get('/meals/count', [MealController::class, 'nbMeals']);
+Route::get('/user/meals', [UserController::class, 'getUserMeals'])->middleware('App\Http\Middleware\ConnectedVerify');
 Route::get('/meal/{slug}', [MealController::class, 'show'])->middleware('App\Http\Middleware\ConnectedVerify');
 Route::post('/meal', [MealController::class, 'store'])->middleware('App\Http\Middleware\TokenVerify');
 Route::delete('/meal/{slug}', [MealController::class, 'destroy'])->middleware('App\Http\Middleware\TokenVerify');
@@ -51,3 +51,4 @@ Route::post('/recipe', [MealController::class, 'storeRecipe'])->middleware('App\
 //User
 Route::post('/avatar/{id}', [UserController::class, 'saveAvatar'])->middleware('App\Http\Middleware\TokenVerify');
 Route::post('/profile/{id}', [UserController::class, 'saveProfil'])->middleware('App\Http\Middleware\TokenVerify');
+Route::get('/users/count', [UserController::class, 'nbUsers']);

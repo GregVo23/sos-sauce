@@ -106,7 +106,6 @@ class MealController extends Controller
                     return dump($request->picture);
                 } else {
                     $meal->save();
-                    //Il faut une image
                     return "Il faut une image";
                 }
             }
@@ -121,7 +120,7 @@ class MealController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  str  $slug
      * @return \Illuminate\Http\Response
      */
     public function show(string $slug)
@@ -144,15 +143,10 @@ class MealController extends Controller
                 $like = ["like" => true];
             }
         }
-
-
         if (!$meals) {
-
             $mealIngredients = false;
         } elseif (count($meals) < 2) {
-
             $meals = Meal::where('slug', $slug)->first()->recipes->first()->ingredient;
-
             $mealIngredients[] =
                 [
                     "id" => $meals->id,
@@ -185,6 +179,26 @@ class MealController extends Controller
     {
         $meals = Meal::all();
         return response()->json($meals);
+    }
+
+    /**
+     * Show user's meals.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserMeals()
+    {
+        //$user = auth()->user();
+        if (true) {
+            //$meals = $user->meals;
+            //return MealResource::collection($user->meals);
+            return response()->json(['data' => 'helllloooooo']);
+        } else {
+            return response()->json([
+                'message' => 'Seul un membre connecté peut consulter ses plats !',
+                'type' => 'error',
+            ], 401);
+        }
     }
     
     /**

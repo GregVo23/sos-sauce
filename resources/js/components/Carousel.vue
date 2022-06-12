@@ -29,7 +29,7 @@
                                         {{ meal.name }}
                                     </a>
                                 </p>
-                                <a href="post.href" class="block mt-2">
+                                <router-link :to="`/meal/${meal.slug}`">
                                     <p
                                         class="text-xl font-semibold text-gray-900"
                                     >
@@ -38,7 +38,7 @@
                                     <p class="mt-3 text-base text-gray-500">
                                         {{ meal.description }}
                                     </p>
-                                </a>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
 <script>
 import { defineComponent } from "vue";
 import { Carousel, Navigation, Slide, Pagination } from "vue3-carousel";
-
+import { URL } from "../env.js";
 import "vue3-carousel/dist/carousel.css";
 
 export default defineComponent({
@@ -69,6 +69,7 @@ export default defineComponent({
     },
     data() {
         return {
+            URL: URL,
             meals: null,
             dark: false,
             charged: false,

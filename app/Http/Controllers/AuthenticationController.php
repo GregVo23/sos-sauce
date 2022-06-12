@@ -90,15 +90,4 @@ class AuthenticationController extends Controller
 
         return response()->json(['user' => $user]);
     }
-
-    /**
-     * Show the number of users.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function nbUsers()
-    {
-        $users = User::all()->count();
-        return response()->json($users);
-    }
 }

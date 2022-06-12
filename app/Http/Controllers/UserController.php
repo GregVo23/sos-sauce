@@ -16,7 +16,30 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class UserController extends Controller
 {
-    
+    /**
+     * Show all user's meals
+     * 
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserMeals()
+    {
+        $id = auth()->user()->id;
+        $meals = User::where('id',$id)->first()->meals;
+        return response()->json($meals);
+    }
+
+    /**
+     * Show the number of users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function nbUsers()
+    {
+        $users = User::all()->count();
+        return response()->json($users);
+    }
+
     /**
      * Upload a new avatar.
      *

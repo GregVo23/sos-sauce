@@ -355,37 +355,17 @@
                                             >Mes recettes</span
                                         >
                                     </div>
-                                    <ul class="list-inside space-y-2">
+                                    <ul
+                                        class="list-inside space-y-2"
+                                        v-for="meal in meals"
+                                        :id="meal.id"
+                                    >
                                         <li>
                                             <div class="text-teal-600">
-                                                Owner at Her Company Inc.
+                                                {{ meal.name }}
                                             </div>
                                             <div class="text-gray-500 text-xs">
-                                                March 2020 - Now
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="text-teal-600">
-                                                Owner at Her Company Inc.
-                                            </div>
-                                            <div class="text-gray-500 text-xs">
-                                                March 2020 - Now
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="text-teal-600">
-                                                Owner at Her Company Inc.
-                                            </div>
-                                            <div class="text-gray-500 text-xs">
-                                                March 2020 - Now
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="text-teal-600">
-                                                Owner at Her Company Inc.
-                                            </div>
-                                            <div class="text-gray-500 text-xs">
-                                                March 2020 - Now
+                                                {{ meal.description }}
                                             </div>
                                         </li>
                                     </ul>
@@ -472,7 +452,8 @@ export default {
                     "USER-TOKEN": "",
                 },
             },
-            user: [],
+            user: "",
+            meals: [],
             avatar: "",
             updateProfil: true,
             profile: {
@@ -525,6 +506,14 @@ export default {
                 })
                 .catch((error) => console.error("error", error));
         },
+        getUserMeals() {
+            axios
+                .get("/api/user/meals", this.CONFIG)
+                .then((data) => {
+                    this.meals = data.data;
+                })
+                .catch((error) => console.error("error", error));
+        },
         onChange(e) {
             this.avatar = e.target.files[0];
             this.avatarName = e.target.files[0].name;
@@ -554,6 +543,7 @@ export default {
     mounted() {
         this.changeMode();
         this.connectedUser();
+        this.getUserMeals();
     },
 };
 </script>

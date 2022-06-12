@@ -55,7 +55,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Meal::class);
     }
 
-    public function Meals()
+    public function meals()
     {
         return $this->hasMany(Meal::class);
     }
@@ -65,7 +65,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Sauce::class);
     }
 
-    public function Sauces()
+    public function sauces()
     {
         return $this->hasMany(Sauce::class);
     }
