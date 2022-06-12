@@ -1,5 +1,5 @@
 <template>
-    <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
+    <div :class="[dark ? 'bg-gray-700' : 'bg-gray-100']">
         <Header @ChangeMode="changeMode($event)"></Header>
         <div :class="[dark ? 'bg-gray-700' : 'bg-gray-100']">
             <div class="container mx-auto my-5 p-5 min-h-screen">
@@ -73,9 +73,9 @@
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Member since</span>
-                                    <span class="ml-auto">{{
-                                        profile.createdAt
-                                    }}</span>
+                                    <span class="ml-auto">
+                                        {{ memberSince }}
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -356,19 +356,29 @@
                                         >
                                     </div>
                                     <ul
+                                        v-if="meals.length > 0"
                                         class="list-inside space-y-2"
                                         v-for="meal in meals"
                                         :id="meal.id"
                                     >
                                         <li>
-                                            <div class="text-teal-600">
-                                                {{ meal.name }}
-                                            </div>
-                                            <div class="text-gray-500 text-xs">
-                                                {{ meal.description }}
-                                            </div>
+                                            <router-link
+                                                :to="`/meal/${meal.slug}`"
+                                            >
+                                                <div
+                                                    class="text-red-600 hover:text-red-800"
+                                                >
+                                                    {{ meal.name }}
+                                                </div>
+                                                <div
+                                                    class="text-gray-500 text-xs"
+                                                >
+                                                    {{ meal.description }}
+                                                </div>
+                                            </router-link>
                                         </li>
                                     </ul>
+                                    <p v-else>Pas de recettes</p>
                                 </div>
                                 <div>
                                     <div
@@ -403,22 +413,18 @@
                                         >
                                     </div>
                                     <ul class="list-inside space-y-2">
+                                        <!-- les sauces -->
                                         <li>
-                                            <div class="text-teal-600">
-                                                Masters Degree in Oxford
+                                            <div
+                                                class="text-red-600 hover:text-red-700"
+                                            >
+                                                Sauce mayonnaise
                                             </div>
                                             <div class="text-gray-500 text-xs">
-                                                March 2020 - Now
+                                                Une sauce à base d'oeufs ...
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="text-teal-600">
-                                                Bachelors Degreen in LPU
-                                            </div>
-                                            <div class="text-gray-500 text-xs">
-                                                March 2020 - Now
-                                            </div>
-                                        </li>
+                                        <!-- fin des sauces -->
                                     </ul>
                                 </div>
                             </div>
@@ -455,6 +461,7 @@ export default {
             user: "",
             meals: [],
             avatar: "",
+            memberSince: "",
             updateProfil: true,
             profile: {
                 lastName: "",
@@ -511,6 +518,7 @@ export default {
                 .get("/api/user/meals", this.CONFIG)
                 .then((data) => {
                     this.meals = data.data;
+                    this.memberSince = this.profile.createdAt.slice(0, 10);
                 })
                 .catch((error) => console.error("error", error));
         },

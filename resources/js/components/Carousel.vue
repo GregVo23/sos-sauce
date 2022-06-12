@@ -9,27 +9,28 @@
                     v-for="meal in slide"
                     :key="meal.id"
                 >
-                    <div class="carousel__item">
-                        <div class="flex-shrink-0">
-                            <img
-                                class="h-48 w-full object-cover"
-                                :style="`background-image:url(http://localhost:8000/storage/meals/${meal.picture}); background-size: cover;`"
-                                alt=""
-                            />
-                        </div>
-                        <div
-                            class="flex-1 bg-white p-6 flex flex-col justify-between"
-                        >
-                            <div class="flex-1">
-                                <p class="text-sm font-medium text-red-600">
-                                    <a
-                                        href="post.category.href"
-                                        class="hover:underline"
-                                    >
-                                        {{ meal.name }}
-                                    </a>
-                                </p>
-                                <router-link :to="`/meal/${meal.slug}`">
+                    <router-link :to="`/meal/${meal.slug}`">
+                        <div class="carousel__item">
+                            <div class="flex-shrink-0">
+                                <img
+                                    class="h-48 w-full object-cover"
+                                    :style="`background-image:url(http://localhost:8000/storage/meals/${meal.picture}); background-size: cover;`"
+                                    alt=""
+                                />
+                            </div>
+                            <div
+                                class="flex-1 bg-white p-6 flex flex-col justify-between"
+                            >
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-red-600">
+                                        <a
+                                            href="post.category.href"
+                                            class="hover:underline"
+                                        >
+                                            {{ meal.name }}
+                                        </a>
+                                    </p>
+
                                     <p
                                         class="text-xl font-semibold text-gray-900"
                                     >
@@ -38,10 +39,10 @@
                                     <p class="mt-3 text-base text-gray-500">
                                         {{ meal.description }}
                                     </p>
-                                </router-link>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </Slide>
