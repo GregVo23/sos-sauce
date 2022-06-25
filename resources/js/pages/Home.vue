@@ -1,5 +1,6 @@
 <template>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white', 'overflow-hidden']">
+        <GoToTopButton></GoToTopButton>
         <Header @ChangeMode="ChangeMode($event)" :profil="this.user"></Header>
         <Notification
             @Cancel="Cancel($event)"
@@ -77,6 +78,7 @@ import Title from "../components/Title.vue";
 import Statistic from "../components/Statistic.vue";
 import Carousel from "../components/Carousel.vue";
 import Notification from "../components/Notification.vue";
+import GoToTopButton from "../components/GoToTopButton.vue";
 import { URL } from "../env.js";
 
 export default {
@@ -88,6 +90,7 @@ export default {
         Title,
         Statistic,
         Carousel,
+        GoToTopButton,
     },
     data() {
         return {

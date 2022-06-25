@@ -1,14 +1,13 @@
-require('./bootstrap');
+require("./bootstrap");
 
 import { createApp } from "vue";
 import router from "./router";
-import IngredientIndex from "./pages/Ingredients/IngredientIndex.vue";
-
+//import IngredientIndex from "./pages/Ingredients/IngredientIndex.vue";
 
 createApp({
-    components: {
+    /*components: {
         IngredientIndex,
-    }
+    }*/
 })
-.use(router)
-.mount('#app');
+    .use(router)
+    .mount("#app");
