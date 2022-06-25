@@ -2119,6 +2119,375 @@ var PortalGroup = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.defineCompone
 
 /***/ }),
 
+/***/ "./node_modules/@headlessui/vue/dist/components/radio-group/radio-group.esm.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@headlessui/vue/dist/components/radio-group/radio-group.esm.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "RadioGroup": () => (/* binding */ RadioGroup),
+/* harmony export */   "RadioGroupDescription": () => (/* binding */ RadioGroupDescription),
+/* harmony export */   "RadioGroupLabel": () => (/* binding */ RadioGroupLabel),
+/* harmony export */   "RadioGroupOption": () => (/* binding */ RadioGroupOption)
+/* harmony export */ });
+/* harmony import */ var _virtual_rollupPluginBabelHelpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../_virtual/_rollupPluginBabelHelpers.js */ "./node_modules/@headlessui/vue/dist/_virtual/_rollupPluginBabelHelpers.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _utils_render_esm_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/render.esm.js */ "./node_modules/@headlessui/vue/dist/utils/render.esm.js");
+/* harmony import */ var _keyboard_esm_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../keyboard.esm.js */ "./node_modules/@headlessui/vue/dist/keyboard.esm.js");
+/* harmony import */ var _hooks_use_id_esm_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../hooks/use-id.esm.js */ "./node_modules/@headlessui/vue/dist/hooks/use-id.esm.js");
+/* harmony import */ var _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/focus-management.esm.js */ "./node_modules/@headlessui/vue/dist/utils/focus-management.esm.js");
+/* harmony import */ var _description_description_esm_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../description/description.esm.js */ "./node_modules/@headlessui/vue/dist/components/description/description.esm.js");
+/* harmony import */ var _utils_dom_esm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/dom.esm.js */ "./node_modules/@headlessui/vue/dist/utils/dom.esm.js");
+/* harmony import */ var _hooks_use_tree_walker_esm_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../hooks/use-tree-walker.esm.js */ "./node_modules/@headlessui/vue/dist/hooks/use-tree-walker.esm.js");
+/* harmony import */ var _label_label_esm_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../label/label.esm.js */ "./node_modules/@headlessui/vue/dist/components/label/label.esm.js");
+
+
+
+
+
+
+
+
+
+
+
+var RadioGroupContext = /*#__PURE__*/Symbol('RadioGroupContext');
+
+function useRadioGroupContext(component) {
+  var context = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)(RadioGroupContext, null);
+
+  if (context === null) {
+    var err = new Error("<" + component + " /> is missing a parent <RadioGroup /> component.");
+    if (Error.captureStackTrace) Error.captureStackTrace(err, useRadioGroupContext);
+    throw err;
+  }
+
+  return context;
+} // ---
+
+
+var RadioGroup = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  name: 'RadioGroup',
+  emits: {
+    'update:modelValue': function updateModelValue(_value) {
+      return true;
+    }
+  },
+  props: {
+    as: {
+      type: [Object, String],
+      "default": 'div'
+    },
+    disabled: {
+      type: [Boolean],
+      "default": false
+    },
+    modelValue: {
+      type: [Object, String, Number, Boolean]
+    }
+  },
+  render: function render$1() {
+    var _this$$props = this.$props,
+        passThroughProps = (0,_virtual_rollupPluginBabelHelpers_js__WEBPACK_IMPORTED_MODULE_1__.objectWithoutPropertiesLoose)(_this$$props, ["modelValue", "disabled"]);
+
+    var propsWeControl = {
+      ref: 'el',
+      id: this.id,
+      role: 'radiogroup',
+      'aria-labelledby': this.labelledby,
+      'aria-describedby': this.describedby,
+      onKeydown: this.handleKeyDown
+    };
+    return (0,_utils_render_esm_js__WEBPACK_IMPORTED_MODULE_2__.render)({
+      props: (0,_virtual_rollupPluginBabelHelpers_js__WEBPACK_IMPORTED_MODULE_1__["extends"])({}, passThroughProps, propsWeControl),
+      slot: {},
+      attrs: this.$attrs,
+      slots: this.$slots,
+      name: 'RadioGroup'
+    });
+  },
+  setup: function setup(props, _ref) {
+    var emit = _ref.emit;
+    var radioGroupRef = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var options = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+    var labelledby = (0,_label_label_esm_js__WEBPACK_IMPORTED_MODULE_3__.useLabels)({
+      name: 'RadioGroupLabel'
+    });
+    var describedby = (0,_description_description_esm_js__WEBPACK_IMPORTED_MODULE_4__.useDescriptions)({
+      name: 'RadioGroupDescription'
+    });
+    var value = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return props.modelValue;
+    });
+    var api = {
+      options: options,
+      value: value,
+      disabled: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return props.disabled;
+      }),
+      firstOption: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return options.value.find(function (option) {
+          if (option.propsRef.disabled) return false;
+          return true;
+        });
+      }),
+      containsCheckedOption: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return options.value.some(function (option) {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.toRaw)(option.propsRef.value) === (0,vue__WEBPACK_IMPORTED_MODULE_0__.toRaw)(props.modelValue);
+        });
+      }),
+      change: function change(nextValue) {
+        var _options$value$find;
+
+        if (props.disabled) return false;
+        if (value.value === nextValue) return false;
+        var nextOption = (_options$value$find = options.value.find(function (option) {
+          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.toRaw)(option.propsRef.value) === (0,vue__WEBPACK_IMPORTED_MODULE_0__.toRaw)(nextValue);
+        })) == null ? void 0 : _options$value$find.propsRef;
+        if (nextOption == null ? void 0 : nextOption.disabled) return false;
+        emit('update:modelValue', nextValue);
+        return true;
+      },
+      registerOption: function registerOption(action) {
+        var _radioGroupRef$value;
+
+        var orderMap = Array.from((_radioGroupRef$value = radioGroupRef.value) == null ? void 0 : _radioGroupRef$value.querySelectorAll('[id^="headlessui-radiogroup-option-"]')).reduce(function (lookup, element, index) {
+          var _Object$assign;
+
+          return Object.assign(lookup, (_Object$assign = {}, _Object$assign[element.id] = index, _Object$assign));
+        }, {});
+        options.value.push(action);
+        options.value.sort(function (a, z) {
+          return orderMap[a.id] - orderMap[z.id];
+        });
+      },
+      unregisterOption: function unregisterOption(id) {
+        var idx = options.value.findIndex(function (radio) {
+          return radio.id === id;
+        });
+        if (idx === -1) return;
+        options.value.splice(idx, 1);
+      }
+    }; // @ts-expect-error ...
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)(RadioGroupContext, api);
+    (0,_hooks_use_tree_walker_esm_js__WEBPACK_IMPORTED_MODULE_5__.useTreeWalker)({
+      container: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return (0,_utils_dom_esm_js__WEBPACK_IMPORTED_MODULE_6__.dom)(radioGroupRef);
+      }),
+      accept: function accept(node) {
+        if (node.getAttribute('role') === 'radio') return NodeFilter.FILTER_REJECT;
+        if (node.hasAttribute('role')) return NodeFilter.FILTER_SKIP;
+        return NodeFilter.FILTER_ACCEPT;
+      },
+      walk: function walk(node) {
+        node.setAttribute('role', 'none');
+      }
+    });
+
+    function handleKeyDown(event) {
+      if (!radioGroupRef.value) return;
+      if (!radioGroupRef.value.contains(event.target)) return;
+      var all = options.value.filter(function (option) {
+        return option.propsRef.disabled === false;
+      }).map(function (radio) {
+        return radio.element;
+      });
+
+      switch (event.key) {
+        case _keyboard_esm_js__WEBPACK_IMPORTED_MODULE_7__.Keys.ArrowLeft:
+        case _keyboard_esm_js__WEBPACK_IMPORTED_MODULE_7__.Keys.ArrowUp:
+          {
+            event.preventDefault();
+            event.stopPropagation();
+            var result = (0,_utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.focusIn)(all, _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.Focus.Previous | _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.Focus.WrapAround);
+
+            if (result === _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.FocusResult.Success) {
+              var activeOption = options.value.find(function (option) {
+                return option.element === document.activeElement;
+              });
+              if (activeOption) api.change(activeOption.propsRef.value);
+            }
+          }
+          break;
+
+        case _keyboard_esm_js__WEBPACK_IMPORTED_MODULE_7__.Keys.ArrowRight:
+        case _keyboard_esm_js__WEBPACK_IMPORTED_MODULE_7__.Keys.ArrowDown:
+          {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var _result = (0,_utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.focusIn)(all, _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.Focus.Next | _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.Focus.WrapAround);
+
+            if (_result === _utils_focus_management_esm_js__WEBPACK_IMPORTED_MODULE_8__.FocusResult.Success) {
+              var _activeOption = options.value.find(function (option) {
+                return option.element === document.activeElement;
+              });
+
+              if (_activeOption) api.change(_activeOption.propsRef.value);
+            }
+          }
+          break;
+
+        case _keyboard_esm_js__WEBPACK_IMPORTED_MODULE_7__.Keys.Space:
+          {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var _activeOption2 = options.value.find(function (option) {
+              return option.element === document.activeElement;
+            });
+
+            if (_activeOption2) api.change(_activeOption2.propsRef.value);
+          }
+          break;
+      }
+    }
+
+    var id = "headlessui-radiogroup-" + (0,_hooks_use_id_esm_js__WEBPACK_IMPORTED_MODULE_9__.useId)();
+    return {
+      id: id,
+      labelledby: labelledby,
+      describedby: describedby,
+      el: radioGroupRef,
+      handleKeyDown: handleKeyDown
+    };
+  }
+}); // ---
+
+var OptionState;
+
+(function (OptionState) {
+  OptionState[OptionState["Empty"] = 1] = "Empty";
+  OptionState[OptionState["Active"] = 2] = "Active";
+})(OptionState || (OptionState = {}));
+
+var RadioGroupOption = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  name: 'RadioGroupOption',
+  props: {
+    as: {
+      type: [Object, String],
+      "default": 'div'
+    },
+    value: {
+      type: [Object, String, Number, Boolean]
+    },
+    disabled: {
+      type: Boolean,
+      "default": false
+    }
+  },
+  render: function render$1() {
+    var _this$$props2 = this.$props,
+        passThroughProps = (0,_virtual_rollupPluginBabelHelpers_js__WEBPACK_IMPORTED_MODULE_1__.objectWithoutPropertiesLoose)(_this$$props2, ["value", "disabled"]);
+
+    var slot = {
+      checked: this.checked,
+      disabled: this.disabled,
+      active: Boolean(this.state & OptionState.Active)
+    };
+    var propsWeControl = {
+      id: this.id,
+      ref: 'el',
+      role: 'radio',
+      'aria-checked': this.checked ? 'true' : 'false',
+      'aria-labelledby': this.labelledby,
+      'aria-describedby': this.describedby,
+      'aria-disabled': this.disabled ? true : undefined,
+      tabIndex: this.tabIndex,
+      onClick: this.disabled ? undefined : this.handleClick,
+      onFocus: this.disabled ? undefined : this.handleFocus,
+      onBlur: this.disabled ? undefined : this.handleBlur
+    };
+    return (0,_utils_render_esm_js__WEBPACK_IMPORTED_MODULE_2__.render)({
+      props: (0,_virtual_rollupPluginBabelHelpers_js__WEBPACK_IMPORTED_MODULE_1__["extends"])({}, passThroughProps, propsWeControl),
+      slot: slot,
+      attrs: this.$attrs,
+      slots: this.$slots,
+      name: 'RadioGroupOption'
+    });
+  },
+  setup: function setup(props) {
+    var api = useRadioGroupContext('RadioGroupOption');
+    var id = "headlessui-radiogroup-option-" + (0,_hooks_use_id_esm_js__WEBPACK_IMPORTED_MODULE_9__.useId)();
+    var labelledby = (0,_label_label_esm_js__WEBPACK_IMPORTED_MODULE_3__.useLabels)({
+      name: 'RadioGroupLabel'
+    });
+    var describedby = (0,_description_description_esm_js__WEBPACK_IMPORTED_MODULE_4__.useDescriptions)({
+      name: 'RadioGroupDescription'
+    });
+    var optionRef = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+    var propsRef = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return {
+        value: props.value,
+        disabled: props.disabled
+      };
+    });
+    var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(OptionState.Empty);
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
+      return api.registerOption({
+        id: id,
+        element: optionRef,
+        propsRef: propsRef
+      });
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onUnmounted)(function () {
+      return api.unregisterOption(id);
+    });
+    var isFirstOption = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      var _api$firstOption$valu;
+
+      return ((_api$firstOption$valu = api.firstOption.value) == null ? void 0 : _api$firstOption$valu.id) === id;
+    });
+    var disabled = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return api.disabled.value || props.disabled;
+    });
+    var checked = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.toRaw)(api.value.value) === (0,vue__WEBPACK_IMPORTED_MODULE_0__.toRaw)(props.value);
+    });
+    return {
+      id: id,
+      el: optionRef,
+      labelledby: labelledby,
+      describedby: describedby,
+      state: state,
+      disabled: disabled,
+      checked: checked,
+      tabIndex: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        if (disabled.value) return -1;
+        if (checked.value) return 0;
+        if (!api.containsCheckedOption.value && isFirstOption.value) return 0;
+        return -1;
+      }),
+      handleClick: function handleClick() {
+        var _optionRef$value;
+
+        if (!api.change(props.value)) return;
+        state.value |= OptionState.Active;
+        (_optionRef$value = optionRef.value) == null ? void 0 : _optionRef$value.focus();
+      },
+      handleFocus: function handleFocus() {
+        state.value |= OptionState.Active;
+      },
+      handleBlur: function handleBlur() {
+        state.value &= ~OptionState.Active;
+      }
+    };
+  }
+}); // ---
+
+var RadioGroupLabel = _label_label_esm_js__WEBPACK_IMPORTED_MODULE_3__.Label;
+var RadioGroupDescription = _description_description_esm_js__WEBPACK_IMPORTED_MODULE_4__.Description;
+
+
+//# sourceMappingURL=radio-group.esm.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@headlessui/vue/dist/components/switch/switch.esm.js":
 /*!***************************************************************************!*\
   !*** ./node_modules/@headlessui/vue/dist/components/switch/switch.esm.js ***!
@@ -24790,6 +25159,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Footer_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Footer.vue */ "./resources/js/components/Footer.vue");
 /* harmony import */ var _components_Modal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Modal.vue */ "./resources/js/components/Modal.vue");
 /* harmony import */ var _env_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../env.js */ "./resources/js/env.js");
+/* harmony import */ var _headlessui_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @headlessui/vue */ "./node_modules/@headlessui/vue/dist/components/radio-group/radio-group.esm.js");
+
 
 
 
@@ -24799,10 +25170,15 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Header: _components_Header_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     Footer: _components_Footer_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Modal: _components_Modal_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Modal: _components_Modal_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    RadioGroup: _headlessui_vue__WEBPACK_IMPORTED_MODULE_5__.RadioGroup,
+    RadioGroupLabel: _headlessui_vue__WEBPACK_IMPORTED_MODULE_5__.RadioGroupLabel,
+    RadioGroupOption: _headlessui_vue__WEBPACK_IMPORTED_MODULE_5__.RadioGroupOption
   },
   data: function data() {
     return {
+      howMany: 1,
+      nbPerson: [1, 2, 3, 4, 5, 6],
       URL: _env_js__WEBPACK_IMPORTED_MODULE_4__.URL,
       meal: {},
       ingredients: {},
@@ -24905,6 +25281,27 @@ __webpack_require__.r(__webpack_exports__);
         this.CONFIG.headers["USER-TOKEN"] = localStorage.getItem("user_token");
         this.connected = true;
       }
+    },
+    increaseNbPerson: function increaseNbPerson() {
+      this.howMany++;
+      console.log("+");
+    },
+    decreaseNbPerson: function decreaseNbPerson() {
+      this.howMany--;
+      console.log("-");
+    },
+    adaptPerson: function adaptPerson(person) {
+      console.log(person);
+
+      while (person > this.howMany) {
+        this.increaseNbPerson();
+      }
+
+      while (person < this.howMany) {
+        this.decreaseNbPerson();
+      }
+
+      console.log(this.howMany);
     }
   },
   created: function created() {
@@ -27717,14 +28114,20 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_13 = [_hoisted_12];
-var _hoisted_14 = {
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Choose a size ");
+
+var _hoisted_15 = {
+  "class": "grid grid-cols-3 gap-3 sm:grid-cols-6"
+};
+var _hoisted_16 = {
   "class": "mt-16 space-y-16"
 };
-var _hoisted_15 = {
+var _hoisted_17 = {
   "class": "flex my-2"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
   "stroke-linecap": "round",
   "stroke-linejoin": "round",
   "stroke-width": "2",
@@ -27733,15 +28136,21 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_17 = [_hoisted_16];
-var _hoisted_18 = {
+var _hoisted_19 = [_hoisted_18];
+var _hoisted_20 = {
   "class": "aspect-w-5 aspect-h-2 rounded-3xl bg-gray-500 overflow-hidden"
 };
-var _hoisted_19 = ["src", "alt"];
+var _hoisted_21 = ["src", "alt"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Header");
 
   var _component_Modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Modal");
+
+  var _component_RadioGroupLabel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RadioGroupLabel");
+
+  var _component_RadioGroupOption = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RadioGroupOption");
+
+  var _component_RadioGroup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RadioGroup");
 
   var _component_Footer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Footer");
 
@@ -27864,10 +28273,67 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800'])
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meal.description), 3
   /* TEXT, CLASS */
-  ), $data.meal.number ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RadioGroup, {
+    "class": "mt-10"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RadioGroupLabel, {
+        "class": "sr-only"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_14];
+        }),
+        _: 1
+        /* STABLE */
+
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.nbPerson, function (person) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RadioGroupOption, {
+          as: "template",
+          key: _ctx.$data.nbPerson,
+          value: person,
+          onClick: function onClick($event) {
+            return $options.adaptPerson(person);
+          }
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
+            var active = _ref.active,
+                checked = _ref.checked;
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([active ? 'ring-2 ring-offset-2 ring-red-500' : '', checked ? 'bg-red-600 border-transparent text-white hover:bg-red-700' : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50', 'border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1'])
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RadioGroupLabel, {
+              as: "span"
+            }, {
+              "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+                return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(person), 1
+                /* TEXT */
+                )];
+              }),
+              _: 2
+              /* DYNAMIC */
+
+            }, 1024
+            /* DYNAMIC_SLOTS */
+            )], 2
+            /* CLASS */
+            )];
+          }),
+          _: 2
+          /* DYNAMIC */
+
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["value", "onClick"]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }), $data.meal.number ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
     key: 0,
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'mt-10'])
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meal.number) + " personne" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meal.number > 1 ? "s" : ""), 3
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.howMany) + " personne" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.howMany > 1 ? "s" : ""), 3
   /* TEXT, CLASS */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'mt-4 mb-4 text-3xl font-bold underline'])
@@ -27878,7 +28344,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: ingredient.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-gray-200' : 'text-gray-800'])
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(ingredient.name) + " : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(ingredient.quantity) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(ingredient.unit) + ". ", 3
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(ingredient.name) + " : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(ingredient.quantity / $data.meal.number * $data.howMany * 10) / 10) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(ingredient.unit) + ". ", 3
     /* TEXT, CLASS */
     )]);
   }), 128
@@ -27887,7 +28353,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'bg-gray-600' : 'bg-white', 'xl:flex justify-around p-8 lg:px-24 xl:px-48'])
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-800', 'text-center mt-10 mb-4 text-3xl font-bold underline'])
   }, " Préparation: ", 2
   /* CLASS */
@@ -27901,13 +28367,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-900', 'text-2xl font-medium'])
     }, " Etape " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(step.step) + ". ", 3
     /* TEXT, CLASS */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-900', 'h-6 w-6']),
       fill: "none",
       viewBox: "0 0 24 24",
       stroke: "currentColor"
-    }, _hoisted_17, 2
+    }, _hoisted_19, 2
     /* CLASS */
     )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'text-white' : 'text-gray-900', 'pl-1'])
@@ -27921,13 +28387,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* CLASS */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([featureIdx % 2 === 0 ? 'lg:col-start-6 xl:col-start-5' : 'lg:col-start-1', 'flex-auto lg:row-start-1 lg:col-span-7 xl:col-span-8'])
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       src: $data.URL + 'storage/meals/' + $data.meal.picture,
       alt: $data.meal.name,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.dark ? 'opacity-80' : 'opacity-100', 'object-center object-cover'])
     }, null, 10
     /* CLASS, PROPS */
-    , _hoisted_19)])], 2
+    , _hoisted_21)])], 2
     /* CLASS */
     )]);
   }), 128
@@ -29479,7 +29945,16 @@ var routes = [{
 }];
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_10__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_10__.createWebHistory)(),
-  routes: routes
+  routes: routes,
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return {
+        top: 0
+      };
+    }
+  }
 });
 var isAuthenticated = false;
 router.beforeEach(function (to, from, next) {

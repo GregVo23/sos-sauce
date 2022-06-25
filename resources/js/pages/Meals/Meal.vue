@@ -134,12 +134,42 @@
                 <p :class="[dark ? 'text-white' : 'text-gray-800']">
                     {{ meal.description }}
                 </p>
-
+                <RadioGroup class="mt-10">
+                    <RadioGroupLabel class="sr-only">
+                        Choose a size
+                    </RadioGroupLabel>
+                    <div class="grid grid-cols-3 gap-3 sm:grid-cols-6">
+                        <RadioGroupOption
+                            as="template"
+                            v-for="person in nbPerson"
+                            :key="nbPerson"
+                            :value="person"
+                            v-slot="{ active, checked }"
+                            @click="adaptPerson(person)"
+                        >
+                            <div
+                                :class="[
+                                    active
+                                        ? 'ring-2 ring-offset-2 ring-red-500'
+                                        : '',
+                                    checked
+                                        ? 'bg-red-600 border-transparent text-white hover:bg-red-700'
+                                        : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50',
+                                    'border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1',
+                                ]"
+                            >
+                                <RadioGroupLabel as="span">
+                                    {{ person }}
+                                </RadioGroupLabel>
+                            </div>
+                        </RadioGroupOption>
+                    </div>
+                </RadioGroup>
                 <p
                     v-if="meal.number"
                     :class="[dark ? 'text-white' : 'text-gray-800', 'mt-10']"
                 >
-                    {{ meal.number }} personne{{ meal.number > 1 ? "s" : "" }}
+                    {{ howMany }} personne{{ howMany > 1 ? "s" : "" }}
                 </p>
                 <h2
                     :class="[
@@ -151,7 +181,14 @@
                 </h2>
                 <ul v-for="ingredient in ingredients" :key="ingredient.id">
                     <li :class="[dark ? 'text-gray-200' : 'text-gray-800']">
-                        {{ ingredient.name }} : {{ ingredient.quantity }}
+                        {{ ingredient.name }} :
+                        {{
+                            Math.round(
+                                (ingredient.quantity / meal.number) *
+                                    howMany *
+                                    10
+                            ) / 10
+                        }}
                         {{ ingredient.unit }}.
                     </li>
                 </ul>
@@ -265,11 +302,21 @@ import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import Modal from "../../components/Modal.vue";
 import { URL } from "../../env.js";
+import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 
 export default {
-    components: { Header, Footer, Modal },
+    components: {
+        Header,
+        Footer,
+        Modal,
+        RadioGroup,
+        RadioGroupLabel,
+        RadioGroupOption,
+    },
     data() {
         return {
+            howMany: 1,
+            nbPerson: [1, 2, 3, 4, 5, 6],
             URL: URL,
             meal: {},
             ingredients: {},
@@ -401,6 +448,24 @@ export default {
                     localStorage.getItem("user_token");
                 this.connected = true;
             }
+        },
+        increaseNbPerson() {
+            this.howMany++;
+            console.log("+");
+        },
+        decreaseNbPerson() {
+            this.howMany--;
+            console.log("-");
+        },
+        adaptPerson(person) {
+            console.log(person);
+            while (person > this.howMany) {
+                this.increaseNbPerson();
+            }
+            while (person < this.howMany) {
+                this.decreaseNbPerson();
+            }
+            console.log(this.howMany);
         },
     },
     created() {
