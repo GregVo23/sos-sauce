@@ -26476,14 +26476,28 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_2 = [_hoisted_1];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    "x-data": "topBtn",
-    onClick: _cache[0] || (_cache[0] = function () {
-      return $options.scrolltoTop && $options.scrolltoTop.apply($options, arguments);
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    to: "",
+    onClick: _ctx.moveUp
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        "x-data": "topBtn",
+        onClick: _cache[0] || (_cache[0] = function () {
+          return $options.scrolltoTop && $options.scrolltoTop.apply($options, arguments);
+        }),
+        id: "topButton",
+        "class": "fixed z-10 hidden p-3 bg-gray-100 hover:bg-red-600 hover:text-white rounded-full shadow-md bottom-10 right-10 animate-bounce"
+      }, _hoisted_2)];
     }),
-    id: "topButton",
-    "class": "fixed z-10 hidden p-3 bg-gray-100 hover:bg-red-600 hover:text-white rounded-full shadow-md bottom-10 right-10 animate-bounce"
-  }, _hoisted_2);
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["onClick"]);
 }
 
 /***/ }),
@@ -27652,9 +27666,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"bg-cover bg-center py-56\" style=\"background-image:url(&#39;http://localhost:8000/images/sauce.jpeg&#39;);\"></div><div class=\"bg-gray-600\"><div class=\"max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8\"><div class=\"text-center\"><h2 class=\"text-base font-semibold text-red-600 tracking-wide uppercase\"> En cuisine ! </h2><p class=\"mt-1 text-4xl font-extrabold text-gray-100 sm:text-5xl sm:tracking-tight lg:text-6xl\"> A la recherche d&#39;une recette ? </p><p class=\"max-w-xl mt-5 mx-auto text-xl text-gray-300\"> Partager vos recettes avec vos amis, familles, collègues ... </p><div class=\"mt-8 flex justify-center\"><div class=\"inline-flex rounded-md shadow\"><a href=\"#\" class=\"inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700\"> Je m&#39;inscris </a></div><div class=\"ml-3 inline-flex\"><a href=\"#\" class=\"inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200\"> Les recettes </a></div></div></div></div></div>", 2);
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "bg-cover bg-center py-56",
+  style: {
+    "background-image": "url('http://localhost:8000/images/sauce.jpeg')"
+  }
+}, null, -1
+/* HOISTED */
+);
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_2 = {
+  "class": "bg-gray-600"
+};
+var _hoisted_3 = {
+  "class": "max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8"
+};
+var _hoisted_4 = {
+  "class": "text-center"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "text-base font-semibold text-red-600 tracking-wide uppercase"
+}, " En cuisine ! ", -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "mt-1 text-4xl font-extrabold text-gray-100 sm:text-5xl sm:tracking-tight lg:text-6xl"
+}, " A la recherche d'une recette ? ", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "max-w-xl mt-5 mx-auto text-xl text-gray-300"
+}, " Partager vos recettes avec vos amis, familles, collègues ... ", -1
+/* HOISTED */
+);
+
+var _hoisted_8 = {
+  "class": "mt-8 flex justify-center"
+};
+var _hoisted_9 = {
+  "class": "inline-flex rounded-md shadow"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Je m'inscris ");
+
+var _hoisted_11 = {
+  "class": "ml-3 inline-flex"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Les recettes ");
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "bg-cover bg-center py-56",
   style: {
     "background-image": "url('http://localhost:8000/images/meals/intro.jpg')"
@@ -27675,6 +27739,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Title = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Title");
 
   var _component_Statistic = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Statistic");
+
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
   var _component_Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Carousel");
 
@@ -27708,7 +27774,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     mode: this.dark
   }, null, 8
   /* PROPS */
-  , ["mode"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Statistic), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Carousel), _hoisted_3], 2
+  , ["mode"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Statistic), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/register",
+    "class": "inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_10];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/meals",
+    "class": "inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_12];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Carousel), _hoisted_13], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer, {
     mode: this.dark
@@ -29953,6 +30039,11 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_10__.createRouter)({
       return {
         top: 0
       };
+    }
+  },
+  methods: {
+    moveUp: function moveUp() {
+      window.scrollTo(0, 0);
     }
   }
 });

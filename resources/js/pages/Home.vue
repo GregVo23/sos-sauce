@@ -39,20 +39,20 @@
                     </p>
                     <div class="mt-8 flex justify-center">
                         <div class="inline-flex rounded-md shadow">
-                            <a
-                                href="#"
+                            <router-link
+                                to="/register"
                                 class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700"
                             >
                                 Je m'inscris
-                            </a>
+                            </router-link>
                         </div>
                         <div class="ml-3 inline-flex">
-                            <a
-                                href="#"
+                            <router-link
+                                to="/meals"
                                 class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200"
                             >
                                 Les recettes
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>

@@ -87,6 +87,11 @@ const router = createRouter({
             return { top: 0 };
         }
     },
+    methods: {
+        moveUp() {
+            window.scrollTo(0, 0);
+        },
+    },
 });
 
 let isAuthenticated = false;
