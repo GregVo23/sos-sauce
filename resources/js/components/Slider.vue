@@ -94,7 +94,7 @@ export default {
         slider() {
             setInterval(() => {
                 this.next();
-            }, 5000);
+            }, 6000);
         },
         ChangeMode() {
             this.dark =

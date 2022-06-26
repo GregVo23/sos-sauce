@@ -5,7 +5,7 @@
                 class="mt-12 mb-12 px-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-4 lg:max-w-none"
             >
                 <div
-                    class="bg-white flex flex-col rounded-lg shadow-lg overflow-hidden"
+                    class="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white hover:bg-gray-100"
                     v-for="meal in slide"
                     :key="meal.id"
                 >
@@ -19,7 +19,7 @@
                                 />
                             </div>
                             <div
-                                class="flex-1 bg-white p-6 flex flex-col justify-between"
+                                class="flex-1 p-6 flex flex-col justify-between"
                             >
                                 <div class="flex-1">
                                     <p class="text-sm font-medium text-red-600">

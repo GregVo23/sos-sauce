@@ -58,6 +58,7 @@ export default {
     props: {
         meal: Object,
         URL: String,
+        charged: Boolean,
     },
 };
 </script>
