@@ -1,6 +1,7 @@
 <template>
     <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
         <Header @ChangeMode="ChangeMode($event)"></Header>
+        <GoToTopButton></GoToTopButton>
         <Modal
             v-if="showModalDelete"
             @refuse="Cancel($event)"
@@ -202,6 +203,7 @@
         ></StepRecipe>
         <div class="flex justify-center pt-2 pb-10">
             <button
+                @click="getRecipes()"
                 class="z-10 p-3 bg-gray-100 hover:bg-red-600 text-gray-900 hover:text-white rounded-full shadow-md"
             >
                 <svg
@@ -220,6 +222,7 @@
                 </svg>
             </button>
         </div>
+        <button @click="addStepRecipe()">add</button>
         <Footer :mode="this.dark"></Footer>
     </div>
 </template>
@@ -231,6 +234,7 @@ import Footer from "../../components/Footer.vue";
 import Modal from "../../components/Modal.vue";
 import { URL } from "../../env.js";
 import StepRecipe from "../../components/StepRecipe.vue";
+import GoToTopButton from "../../components/GoToTopButton.vue";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 
 export default {
@@ -242,6 +246,7 @@ export default {
         RadioGroupLabel,
         RadioGroupOption,
         StepRecipe,
+        GoToTopButton,
     },
     data() {
         return {
@@ -260,6 +265,17 @@ export default {
             showModalDelete: false,
             showModalLike: false,
             connected: false,
+            current: {
+                recipe: {
+                    ingredient_id: 2,
+                    quantity: 1,
+                    picture: "picture",
+                    meal_id: "",
+                    step: 1,
+                    description: "super plat",
+                    time: 10000,
+                },
+            },
             CONFIG: {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -278,6 +294,7 @@ export default {
                 .then(({ data }) => {
                     (this.charged = true),
                         (this.meal = data[0]),
+                        (this.current.recipe.meal_id = data[0].id),
                         (this.ingredients = data[1]),
                         (this.like = data[2].like);
                 })
@@ -396,6 +413,41 @@ export default {
                 this.decreaseNbPerson();
             }
             console.log(this.howMany);
+        },
+        addStepRecipe() {
+            let formData = new FormData();
+            formData.append("ingredient_id", this.current.recipe.ingredient_id);
+            formData.append("quantity", this.current.recipe.quantity);
+            formData.append("picture", this.current.recipe.picture);
+            formData.append("meal_id", this.current.recipe.meal_id);
+            formData.append("step", this.current.recipe.step);
+            formData.append("description", this.current.recipe.description);
+            formData.append("time", this.current.recipe.time);
+
+            axios
+                .post(
+                    "/api/recipe/" + this.$route.params.slug,
+                    formData,
+                    this.CONFIG
+                )
+                .then((res) => this.loadData())
+                //.catch((error) => console.log("error", error))
+                .catch(function (error) {
+                    if (error.response.status == 403) {
+                        router.push("/login?msg=notconnected");
+                    } else {
+                        console.log(error.response.status);
+                        console.log(error.response.data);
+                    }
+                });
+        },
+        getRecipes() {
+            axios
+                .get("/api/recipes/" + this.$route.params.slug, this.CONFIG)
+                .then(({ data }) => {
+                    console.log(data);
+                })
+                .catch((error) => console.log("error", error));
         },
     },
     created() {

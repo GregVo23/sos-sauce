@@ -4,6 +4,7 @@
             @ChangeMode="ChangeMode($event)"
             @Filter="Search($event)"
         ></Header>
+        <GoToTopButton></GoToTopButton>
         <main :class="[dark ? 'bg-gray-600' : 'bg-white']">
             <Notification
                 @Cancel="Cancel($event)"
@@ -197,6 +198,7 @@
 import axios from "axios";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
+import GoToTopButton from "../../components/GoToTopButton.vue";
 import MealList from "../../components/MealList.vue";
 import Loading from "../../components/Loading.vue";
 import Notification from "../../components/Notification.vue";
@@ -212,7 +214,15 @@ const AsyncMeals = defineAsyncComponent({
 });
 
 export default {
-    components: { Header, Footer, Notification, MealList, AsyncMeals, Loading },
+    components: {
+        Header,
+        Footer,
+        Notification,
+        MealList,
+        AsyncMeals,
+        Loading,
+        GoToTopButton,
+    },
     data() {
         return {
             URL: URL,

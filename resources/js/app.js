@@ -1,13 +1,7 @@
 require("./bootstrap");
-
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import router from "./router";
-//import IngredientIndex from "./pages/Ingredients/IngredientIndex.vue";
+const pinia = createPinia();
 
-createApp({
-    /*components: {
-        IngredientIndex,
-    }*/
-})
-    .use(router)
-    .mount("#app");
+createApp({}).use(router).use(pinia).mount("#app");

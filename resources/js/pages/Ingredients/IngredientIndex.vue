@@ -4,23 +4,21 @@
     <div v-for="ingredient in ingredients" :key="ingredient.name">
         <p>{{ ingredient.name }}</p>
     </div>
-    <router-link
-        to="/login"
-    >Test</router-link>
+    <router-link to="/login">Test</router-link>
     <Footer></Footer>
 </template>
 
 <script>
 import axios from "axios";
-import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
+import Header from "../../components/Header.vue";
+import Footer from "../../components/Footer.vue";
 
 export default {
-  components: { Header, Footer },
+    components: { Header, Footer },
     data() {
         return {
-            ingredients: {}
-        }
+            ingredients: {},
+        };
     },
     /*
     setup() {
@@ -35,19 +33,15 @@ export default {
     },
     */
     methods: {
-        loadData(){
+        loadData() {
             axios
-            .get('/api/ingredients')
-            .then(
-                ({ data }) => (
-                    (this.ingredients = data.data)
-                )
-            )
-            .catch((error) => console.log("error", error));
+                .get("/api/ingredients")
+                .then(({ data }) => (this.ingredients = data.data))
+                .catch((error) => console.log("error", error));
         },
     },
     created() {
         this.loadData();
-  },
-}
+    },
+};
 </script>

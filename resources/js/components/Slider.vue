@@ -26,6 +26,7 @@
             }"
         >
             <div
+                v-if="meals.length !== 0"
                 v-for="meal in meals"
                 :key="meal.id"
                 :class="[mode ? 'opacity-80' : '', 'div-slider']"
@@ -117,7 +118,7 @@ export default {
                 //console.log("h " + x);
                 //console.log("i " + this.meals.length);
             }
-            console.log(this.index);
+            //console.log(this.index);
         },
         previous() {
             if (Math.abs(this.index / window.screen.availWidth) + 1 === 1) {

@@ -6,6 +6,7 @@
             >
                 <div
                     class="flex flex-col rounded-lg shadow-lg overflow-hidden bg-white hover:bg-gray-100"
+                    v-if="slide.length !== 0"
                     v-for="meal in slide"
                     :key="meal.id"
                 >
@@ -82,13 +83,14 @@ export default defineComponent({
                 .get("/api/meals/all")
                 .then(({ data }) => {
                     (this.charged = true),
-                        (this.meals = this.spliceIntoChunks(data, 4)),
-                        console.log(this.meals);
+                        (this.meals = this.spliceIntoChunks(data, 4));
+                    //console.log(this.meals);
                 })
                 .catch((error) => console.log("error", error));
         },
         spliceIntoChunks(arr, chunkSize) {
             const res = [];
+
             while (arr.length > 0 && arr.length > chunkSize - 1) {
                 const chunk = arr.splice(0, chunkSize);
                 res.push(chunk);

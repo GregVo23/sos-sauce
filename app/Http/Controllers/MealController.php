@@ -175,7 +175,7 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAllMeals()
+    public function getAllMeals()       
     {
         $meals = Meal::all();
         return response()->json($meals);
@@ -186,7 +186,7 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUserMeals()
+    public function getUserMeals()      //TODO
     {
         //$user = auth()->user();
         if (true) {
@@ -238,7 +238,7 @@ class MealController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
     public function destroy(string $slug)
@@ -253,5 +253,31 @@ class MealController extends Controller
         if ($meal->delete()) {
             return true;
         }
+    }
+
+    /**
+     * Show all recipes from a meal.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function showRecipes(string $slug)
+    {
+        $recipes = Meal::where('slug', $slug)->first()->recipes;
+        return response()->json($recipes);
+    }
+
+    /**
+     * Add a recipe to a meal.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function addRecipe(string $slug, request $request)
+    {
+        $meal = Meal::where('slug', $slug)->first();
+        $recipe = Recipe::create(request()->all());
+
+        return $recipe;
     }
 }

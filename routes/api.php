@@ -45,8 +45,8 @@ Route::get('/favorite', [FavoriteController::class, 'index'])->middleware('App\H
 Route::get('/favorite/{id}', [FavoriteController::class, 'handle'])->middleware('App\Http\Middleware\TokenVerify');
 
 //Recipe
-Route::get('/recipe/{slug}', [MealController::class, 'showRecipe']); //TODO
-Route::post('/recipe', [MealController::class, 'storeRecipe'])->middleware('App\Http\Middleware\TokenVerify'); //TODO
+Route::get('/recipes/{slug}', [MealController::class, 'showRecipes']); //TODO
+Route::post('/recipe/{slug}', [MealController::class, 'addRecipe'])->middleware('App\Http\Middleware\TokenVerify'); //TODO
 
 //User
 Route::post('/avatar/{id}', [UserController::class, 'saveAvatar'])->middleware('App\Http\Middleware\TokenVerify');

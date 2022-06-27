@@ -30,14 +30,15 @@ export default {
         scrolltoTop() {
             const topBtn = document.getElementById("topButton");
 
-            document.body.scrollTop > 20 ||
-            document.documentElement.scrollTop > 20
-                ? topBtn.classList.remove("hidden")
-                : topBtn.classList.add("hidden");
+            if (topBtn !== null) {
+                document.body.scrollTop > 20 ||
+                document.documentElement.scrollTop > 20
+                    ? topBtn.classList.remove("hidden")
+                    : topBtn.classList.add("hidden");
+            }
         },
         handleScroll(event) {
             this.scrolltoTop();
-            console.log("test");
         },
     },
     created() {
