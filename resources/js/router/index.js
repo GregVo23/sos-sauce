@@ -8,6 +8,7 @@ import MealsIndex from "../pages/Meals/MealsIndex.vue";
 import Meal from "../pages/Meals/Meal.vue";
 import NewMeal from "../pages/Meals/NewMeal.vue";
 import Lost from "../pages/Lost.vue";
+import Contact from "../pages/Contact.vue";
 import Profil from "../pages/User/Profil.vue";
 
 const routes = [
@@ -67,6 +68,11 @@ const routes = [
         component: Profil,
     },
     {
+        path: "/contact",
+        name: "contact",
+        component: Contact,
+    },
+    {
         path: "/404",
         name: "404",
         component: Lost,
@@ -116,6 +122,9 @@ router.beforeEach((to, from, next) => {
             next();
             break;
         case "meal":
+            next();
+            break;
+        case "contact":
             next();
             break;
         case "profil":
