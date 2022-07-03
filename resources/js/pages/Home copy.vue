@@ -69,7 +69,7 @@
     <Footer :mode="this.dark"></Footer>
 </template>
 
-<script setup>
+<script>
 import axios from "axios";
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
@@ -79,88 +79,84 @@ import Statistic from "../components/Statistic.vue";
 import Carousel from "../components/Carousel.vue";
 import Notification from "../components/Notification.vue";
 import GoToTopButton from "../components/GoToTopButton.vue";
-//import { URL, CONFIG } from "../env.js";
-import { onMounted, onBeforeMount, ref } from "vue";
+import { URL, CONFIG } from "../env.js";
 
-//const CONFIG = ref(process.env.CONFIG);
-//const URL = ref(URL);
-
-const URL = ref("http://localhost:8000/");
-let CONFIG = ref({
-    headers: {
-        "Content-Type": "multipart/form-data",
-        "API-TOKEN": "",
-        "USER-TOKEN": "",
+export default {
+    components: {
+        Header,
+        Footer,
+        Notification,
+        Slider,
+        Title,
+        Statistic,
+        Carousel,
+        GoToTopButton,
     },
-});
-
-let dark = ref(false);
-const message = ref("");
-const title = ref("");
-const type = ref("");
-const show = ref(false);
-let user = ref({});
-const props = defineProps({
-    mode: {
-        type: String,
-        required: true,
+    data() {
+        return {
+            URL: URL,
+            dark: false,
+            message: "",
+            title: "",
+            type: "",
+            show: false,
+            user: {},
+            CONFIG: CONFIG,
+        };
     },
-});
+    props: ["mode"],
+    methods: {
+        ChangeMode() {
+            this.dark =
+                window.sessionStorage.getItem("dark") == "true" ? true : false;
+        },
+        notification(message, title, type) {
+            this.message = message;
+            this.title = title;
+            this.type = type;
+            this.show == true ? (this.show = false) : (this.show = true);
+        },
+        notify() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            const params = Object.fromEntries(urlSearchParams.entries());
 
-const ChangeMode = () => {
-    dark = window.sessionStorage.getItem("dark") == "true" ? true : false;
+            switch (params.msg) {
+                case "welcome":
+                    this.notification(
+                        "Bienvenue dans l'application de gestion de recettes SOS-Sauce !",
+                        "Bienvenue " + params.name + " !",
+                        "success"
+                    );
+                    break;
+                case "hello":
+                    this.notification(
+                        "vous nous aviez manqué ! Qu'est ce qu'on mange aujourd'hui ?",
+                        "Bonjour",
+                        "success"
+                    );
+                    break;
+            }
+        },
+        Cancel() {
+            this.show = false;
+        },
+        connectedUser() {
+            axios
+                .get("/api/user", this.CONFIG)
+                .then(({ data }) => {
+                    this.user = data.user;
+                })
+                .catch((error) => console.error("error", error));
+        },
+    },
+    created() {
+        this.CONFIG.headers["API-TOKEN"] = localStorage.getItem("api_token");
+        this.CONFIG.headers["USER-TOKEN"] = localStorage.getItem("user_token");
+    },
+    mounted() {
+        this.ChangeMode();
+        this.notify();
+        this.connectedUser();
+    },
 };
-
-const notification = (message, title, type) => {
-    message = message;
-    title = title;
-    type = type;
-    show == true ? (show = false) : (show = true);
-};
-
-const notify = () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-
-    switch (params.msg) {
-        case "welcome":
-            notification(
-                "Bienvenue dans l'application de gestion de recettes SOS-Sauce !",
-                "Bienvenue " + params.name + " !",
-                "success"
-            );
-            break;
-        case "hello":
-            notification(
-                "vous nous aviez manqué ! Qu'est ce qu'on mange aujourd'hui ?",
-                "Bonjour",
-                "success"
-            );
-            break;
-    }
-};
-
-const Cancel = () => {
-    show = false;
-};
-
-const connectedUser = () => {
-    axios
-        .get("/api/user", CONFIG)
-        .then(({ data }) => {
-            user = data.user;
-        })
-        .catch((error) => console.error("error", error));
-};
-/*
-onBeforeMount(() => {
-    //CONFIG.headers["API-TOKEN"] = localStorage.getItem("api_token");
-    //CONFIG.headers["USER-TOKEN"] = localStorage.getItem("user_token");
-}),
-*/
-onMounted(() => {
-    ChangeMode();
-    notify();
-    connectedUser();
-});
 </script>

@@ -1,4 +1,5 @@
 <template>
+    <Header></Header>
     <div class="hello">
         <h1>{{ msg }}</h1>
         <h1>Made By Getters</h1>
@@ -7,12 +8,16 @@
             {{ gettersMeal.description }}
         </div>
     </div>
+    <Footer></Footer>
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-//import users store
+//import meals store
 import { useMealStore } from "../stores/meals";
+import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
+
 // declare store variable
 const store = useMealStore();
 

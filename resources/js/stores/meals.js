@@ -1,20 +1,15 @@
 import { defineStore } from "pinia";
+import { CONFIG } from "../env.js";
 
 export const useMealStore = defineStore({
     id: "meal",
+    CONFIG: CONFIG,
     state: () => ({
         meals: [],
         meal: null,
         loading: false,
         error: null,
     }),
-    CONFIG: {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            "API-TOKEN": "",
-            "USER-TOKEN": "",
-        },
-    },
     getters: {
         getmeals(state) {
             return state.meals;
@@ -38,7 +33,7 @@ export const useMealStore = defineStore({
             this.meal = null;
             this.loading = true;
             try {
-                this.meal = await fetch(`/api/meals/${id}`).then((response) =>
+                this.meal = await fetch(`/api/meal/${id}`).then((response) =>
                     response.json()
                 );
             } catch (error) {
