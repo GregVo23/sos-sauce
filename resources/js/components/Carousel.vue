@@ -15,8 +15,9 @@
                             <div class="flex-shrink-0">
                                 <img
                                     class="h-48 w-full object-cover"
-                                    :style="`background-image:url(http://localhost:8000/storage/meals/${meal.picture}); background-size: cover;`"
-                                    alt=""
+                                    :src="URL + 'storage/meals/card/' + meal.picture"
+                                    :alt="meal.name"
+                                    loading="lazy"
                                 />
                             </div>
                             <div

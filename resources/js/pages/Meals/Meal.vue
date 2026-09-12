@@ -35,7 +35,7 @@
                 >
                     <img
                         v-if="charged"
-                        :src="URL + 'storage/meals/' + meal.picture"
+                        :src="URL + 'storage/meals/detail/' + meal.picture"
                         :alt="meal.name"
                         :class="[
                             dark ? 'opacity-80' : 'opacity-100',

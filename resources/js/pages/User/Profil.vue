@@ -8,7 +8,7 @@
                     <div class="w-full md:w-3/12 md:mx-2">
                         <!-- Profile Card -->
 
-                        <div class="hover:bg-red-700 cursor-pointer">
+                        <div class="flex justify-center">
                             <form
                                 @submit="changeAvatar"
                                 name="frmAvatar"
@@ -19,15 +19,13 @@
                             >
                                 <label>
                                     <span
-                                        className="relative"
                                         title="changer l'avatar"
-                                        class="image overflow-hidden cursor-pointer"
+                                        class="relative block w-36 h-36 rounded-full overflow-hidden cursor-pointer"
                                     >
                                         <img
                                             :src="user.avatar"
                                             alt=""
-                                            className="hover:opacity-25 transition-opacity duration-1000 ease-out"
-                                            style="object-fit: cover"
+                                            class="w-full h-full object-cover hover:opacity-25 transition-opacity duration-1000 ease-out"
                                         />
                                     </span>
                                     <input
@@ -444,6 +442,7 @@ import axios from "axios";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import { useField, useForm } from "vee-validate";
+import { useUserStore } from "../../stores/user";
 
 export default {
     components: { Header, Footer },
@@ -453,7 +452,6 @@ export default {
             filter: "test",
             CONFIG: {
                 headers: {
-                    "Content-Type": "multipart/form-data",
                     "API-TOKEN": "",
                     "USER-TOKEN": "",
                 },
@@ -501,6 +499,7 @@ export default {
                 .get("/api/user", this.CONFIG)
                 .then(({ data }) => {
                     this.user = data.user;
+                    useUserStore().setUser(data.user);
                     this.profile.lastName = this.user.last_name;
                     this.profile.firstName = this.user.first_name;
                     this.profile.email = this.user.email;

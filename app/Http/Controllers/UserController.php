@@ -7,8 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\AvatarImageProcessor;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -73,13 +75,20 @@ class UserController extends Controller
                     $user = User::find($id);
 
                     if ($request->file()) {
-                        $file_name = time() . '_' . $request->file->getClientOriginalName();
-                        $file_path = $request->file('file')->storeAs('avatar/' . $user->id, $file_name, 'public');
-                        
-                        if (File::exists($user->avatar)) {
-                            File::delete($user->avatar);
+                        $file = $request->file('file');
+                        $file_name = time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.jpg';
+
+                        AvatarImageProcessor::process(
+                            $file->getRealPath(),
+                            storage_path('app/public/avatar/' . $user->id . '/' . $file_name)
+                        );
+
+                        $previousAvatarPath = 'avatar/' . $user->id . '/' . basename($user->avatar);
+                        if (str_starts_with($user->avatar, '/storage/avatar/') && Storage::disk('public')->exists($previousAvatarPath)) {
+                            Storage::disk('public')->delete($previousAvatarPath);
                         }
-                        $user->avatar = '/storage/' . $file_path;
+
+                        $user->avatar = '/storage/avatar/' . $user->id . '/' . $file_name;
                         $result = $user->save();
                         if ($result){
                             return response()->json([

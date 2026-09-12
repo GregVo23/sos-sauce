@@ -2,7 +2,7 @@
     <section
         class="h-screen flex justify-center items-center"
         style="
-            background-image: url('http://www.localhost:8000/storage/meals/intro.jpg');
+            background-image: url('http://www.localhost:8000/storage/meals/detail/intro.jpg');
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -379,21 +379,13 @@ export default {
         register(event) {
             event.preventDefault();
 
-            const config = {
-                headers: {
-                    "content-type": "multipart/form-data",
-                    //"X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
-                    //  .content,
-                },
-            };
-
-            this.canSubmit.push(
+            this.canSubmit = [
                 this.checkUser(),
                 this.checkEmail(),
                 this.checkPassword(),
                 this.checkConfirm(),
-                this.checkAgreed()
-            );
+                this.checkAgreed(),
+            ];
 
             if (this.canSubmit.every((condition) => condition === true)) {
                 let data = new FormData();
@@ -404,8 +396,28 @@ export default {
                 data.set("agreed", this.agreed);
 
                 axios
-                    .post("/api/register", data, config)
+                    .post("/api/register", data)
                     .then((res) => {
+                        if (res.data.errors) {
+                            let errors = res.data.errors;
+                            this.errors[0].name = errors.name
+                                ? errors.name[0]
+                                : "";
+                            this.errors[0].email = errors.email
+                                ? errors.email[0]
+                                : "";
+                            this.errors[0].password = errors.password
+                                ? errors.password[0]
+                                : "";
+                            this.errors[0].confirm = errors.confirm_password
+                                ? errors.confirm_password[0]
+                                : "";
+                            this.errors[0].agreed = errors.agreed
+                                ? errors.agreed[0]
+                                : "";
+                            return;
+                        }
+
                         window.localStorage.setItem(
                             "api_token",
                             res.data.api_token

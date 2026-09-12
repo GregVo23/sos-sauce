@@ -19,8 +19,9 @@
                 />
             </svg>
             <img
-                :src="URL + 'storage/meals/' + meal.picture"
+                :src="URL + 'storage/meals/card/' + meal.picture"
                 :alt="meal.name"
+                loading="lazy"
                 :class="[
                     dark
                         ? 'opacity-90 group-hover:opacity-75'

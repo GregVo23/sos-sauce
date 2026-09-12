@@ -1,66 +1,98 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# SOS Sauce
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application web de cuisine : parcourir des plats, suivre leurs recettes étape par étape (ingrédients, quantités, temps de préparation), gérer ses favoris, s'enregistrer/se connecter, et publier ses propres plats.
 
-## About Laravel
+Le backend expose une API REST en Laravel, consommée par une SPA Vue 3 servie par une unique vue Blade (`resources/views/layout.blade.php`).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Stack technique
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Backend**
+- PHP 8.x / Laravel 8
+- MySQL
+- Laravel Sanctum (jetons d'API) + middlewares maison (`TokenVerify`, `ConnectedVerify`) pour l'authentification
+- `fruitcake/laravel-cors` pour le CORS
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Frontend**
+- Vue 3 + Vue Router 4
+- Pinia (state management)
+- Tailwind CSS
+- vee-validate, @headlessui/vue, vue3-carousel
+- Build via Laravel Mix (Webpack)
 
-## Learning Laravel
+## Modèle de données
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Meal** (plat) : nom, description, image, difficulté, temps, propriétaire (`user`)
+- **Recipe** (étape de recette) : liée à un `Meal`, un `Ingredient` et une quantité, avec un numéro d'étape et une image
+- **Ingredient**
+- **Sauce**
+- **User** : inscription/connexion, favoris (plats et sauces), avatar, profil
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Prérequis
 
-## Laravel Sponsors
+- PHP 8.0+ et Composer
+- MySQL (ou MariaDB)
+- Node.js 18+ / npm
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Installation
 
-### Premium Partners
+```bash
+# 1. Dépendances PHP
+composer install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+# 2. Fichier d'environnement
+cp .env.example .env
+php artisan key:generate
 
-## Contributing
+# 3. Configurer la base de données dans .env
+# DB_DATABASE, DB_USERNAME, DB_PASSWORD selon votre installation MySQL
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 4. Créer la base (si elle n'existe pas)
+mysql -u root -e "CREATE DATABASE sos_sauce CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-## Code of Conduct
+# 5. Migrations + données de démo
+php artisan migrate --seed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 6. Lien de stockage public (obligatoire pour afficher les images des plats)
+php artisan storage:link
 
-## Security Vulnerabilities
+# 7. Dépendances JS puis build des assets
+npm install
+npm run dev
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 8. Lancer le serveur
+php artisan serve
+```
 
-## License
+L'application est alors accessible sur http://127.0.0.1:8000.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# sos-sauce" 
+> Les images des plats sont servies depuis `storage/app/public/meals`, exposé publiquement via le lien créé par `storage:link` (`public/storage`). Sans cette étape, les images ne s'affichent pas.
+
+## Commandes Artisan essentielles
+
+| Commande | Description |
+|---|---|
+| `php artisan serve` | Démarre le serveur de développement (http://127.0.0.1:8000) |
+| `php artisan migrate` | Applique les migrations en attente |
+| `php artisan migrate:fresh --seed` | Recrée toutes les tables et réinjecte les données de démo (⚠️ efface les données existantes) |
+| `php artisan migrate:rollback` | Annule le dernier lot de migrations |
+| `php artisan db:seed` | Réinjecte les seeders sans toucher au schéma |
+| `php artisan key:generate` | Génère la clé d'application (`APP_KEY`) |
+| `php artisan storage:link` | Crée le lien symbolique `public/storage` → `storage/app/public` (images) |
+| `php artisan route:list` | Liste toutes les routes déclarées (web + API) |
+| `php artisan tinker` | Ouvre une console REPL avec le contexte de l'application |
+| `php artisan config:clear` | Vide le cache de configuration (utile après modification du `.env`) |
+| `php artisan cache:clear` | Vide le cache applicatif |
+| `php artisan test` | Lance la suite de tests PHPUnit |
+
+## Commandes npm
+
+| Commande | Description |
+|---|---|
+| `npm run dev` | Build de développement (une fois) |
+| `npm run watch` | Build de développement avec rechargement à chaque modification |
+| `npm run hot` | Build avec hot module replacement |
+| `npm run prod` | Build de production (minifié) |
+
+## Structure des routes API
+
+Les routes API se trouvent dans `routes/api.php` (préfixe `/api`) : authentification (`/register`, `/login`, `/logout`), plats (`/meals`, `/meal/{slug}`), recettes (`/recipes/{slug}`), ingrédients, favoris et profil utilisateur. Le routage front (SPA) est géré côté Vue dans `resources/js/router/index.js`, toutes les routes web renvoyant vers la même vue (`routes/web.php`).

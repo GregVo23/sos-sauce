@@ -5,7 +5,7 @@
         <section
             class="h-screen flex justify-center items-center"
             style="
-                background-image: url('http://www.localhost:8000/storage/meals/intro.jpeg');
+                background-image: url('http://www.localhost:8000/storage/meals/detail/intro.jpg');
                 background-position: center;
                 background-size: cover;
                 background-repeat: no-repeat;

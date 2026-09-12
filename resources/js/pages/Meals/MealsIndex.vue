@@ -31,7 +31,7 @@
                     "
                     class="min-h-full h-screen bg-cover bg-top sm:bg-top"
                     style="
-                        background-image: url('http://www.localhost:8000/storage/meals/intro.jpg');
+                        background-image: url('http://www.localhost:8000/storage/meals/detail/intro.jpg');
                         background-position: center;
                         background-size: cover;
                         background-repeat: no-repeat;
@@ -74,7 +74,7 @@
                     "
                     class="min-h-full h-screen bg-cover bg-top sm:bg-top"
                     style="
-                        background-image: url('http://www.localhost:8000/storage/meals/intro.jpg');
+                        background-image: url('http://www.localhost:8000/storage/meals/detail/intro.jpg');
                         background-position: center;
                         background-size: cover;
                         background-repeat: no-repeat;
@@ -118,7 +118,7 @@
                     "
                     class="min-h-full h-screen bg-cover bg-top sm:bg-top"
                     style="
-                        background-image: url('http://www.localhost:8000/storage/meals/intro.jpg');
+                        background-image: url('http://www.localhost:8000/storage/meals/detail/intro.jpg');
                         background-position: center;
                         background-size: cover;
                         background-repeat: no-repeat;

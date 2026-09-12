@@ -83,8 +83,9 @@
                         class="aspect-w-5 aspect-h-2 rounded-3xl bg-gray-500 overflow-hidden"
                     >
                         <img
-                            :src="URL + 'storage/meals/' + meal.picture"
+                            :src="URL + 'storage/meals/detail/' + meal.picture"
                             :alt="meal.name"
+                            loading="lazy"
                             :class="[
                                 dark ? 'opacity-80' : 'opacity-100',
                                 'object-center object-cover',

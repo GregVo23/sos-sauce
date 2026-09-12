@@ -190,9 +190,9 @@
                                     <span class="sr-only">Open user menu</span>
 
                                     <img
-                                        v-if="user.imageUrl"
+                                        v-if="userStore.avatarUrl"
                                         class="h-8 w-8 rounded-full"
-                                        :src="user.imageUrl"
+                                        :src="userStore.avatarUrl"
                                         alt=""
                                     />
 
@@ -293,7 +293,7 @@
                         <div class="flex-shrink-0">
                             <img
                                 class="h-10 w-10 rounded-full"
-                                :src="user.imageUrl"
+                                :src="userStore.avatarUrl"
                                 alt=""
                             />
                         </div>
@@ -345,11 +345,11 @@ import { Switch } from "@headlessui/vue";
 import { URL } from "../env.js";
 import { CONFIG } from "../env.js";
 import axios from "axios";
+import { useUserStore } from "../stores/user";
 
 let user = {
     name: "Chelsea Hagon",
     email: "chelseahagon@example.com",
-    imageUrl: "./images/profil.png",
 };
 const navigation = [
     { name: "Dashboard", href: "#", current: true },
@@ -391,8 +391,10 @@ export default {
     },
     setup() {
         const dark = ref(false);
+        const userStore = useUserStore();
         return {
             user,
+            userStore,
             navigation,
             userNavigation,
             dark,
@@ -457,6 +459,7 @@ export default {
                 localStorage.getItem("api_token")
             ) {
                 this.connected = true;
+                this.userStore.fetchUser();
             }
         },
         addRecipe() {

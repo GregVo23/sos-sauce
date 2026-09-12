@@ -7,6 +7,7 @@ use App\Models\Recipe;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\MealImageProcessor;
 use App\Http\Resources\MealResource;
 use Illuminate\Support\Facades\Validator;
 
@@ -97,10 +98,15 @@ class MealController extends Controller
                     $time = date("d-m-Y") . "-" . time();
                     // Filename to store
                     $fileNameToStore = $filename . '_' . $time . '.' . $extension;
-                    // Upload Image
+                    // Upload Image (archivée telle quelle, servie uniquement sous forme
+                    // des variantes optimisées générées par MealImageProcessor)
+                    $file->storeAs('public/meals/original', $fileNameToStore);
 
-                    $path = 'public/meals/' . $meal->id;
-                    $file->storeAs($path, $fileNameToStore);
+                    MealImageProcessor::process(
+                        storage_path('app/public/meals/original/' . $fileNameToStore),
+                        $fileNameToStore
+                    );
+
                     $meal->picture = $fileNameToStore;
                     $meal->save();
                     return dump($request->picture);
