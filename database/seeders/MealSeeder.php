@@ -27,6 +27,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 4,
+                'categories' => ['plat-principal', 'accompagnement'],
             ],
             [
                 'name' => 'Spaghetti ketchup',
@@ -39,6 +40,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Lasagne',
@@ -51,6 +53,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 4,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Chicons',
@@ -63,6 +66,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 2,
+                'categories' => ['accompagnement'],
             ],
             [
                 'name' => 'Raviolis',
@@ -75,6 +79,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Frittes',
@@ -87,6 +92,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 1,
+                'categories' => ['accompagnement'],
             ],
             [
                 'name' => 'Ris de veau aux morilles',
@@ -99,6 +105,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Boulettes sauce tomate',
@@ -111,6 +118,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Arancini',
@@ -123,30 +131,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
-            ],
-            [
-                'name' => 'Cerf sauce papa', 
-                'description' => 'Un plat digne des plus grands noms de la cuisine française !',
-                'picture' => 'cerf.jpeg',
-                'difficulty' => '2',
-                'time' => '12000000',
-                'review' => '1',
-                'taste' => 'salé',
-                'temperature' => 'chaud',
-                'user_id' => 1,
-                'number' => 3,
-            ],
-            [
-                'name' => 'Le gratin',
-                'description' => 'Le meilleur des gratins, au poulet ...',
-                'picture' => 'gratin.JPG',
-                'difficulty' => '2',
-                'time' => '12000000',
-                'review' => '1',
-                'taste' => 'salé',
-                'temperature' => 'chaud',
-                'user_id' => 1,
-                'number' => 3,
+                'categories' => ['entree', 'aperitif'],
             ],
             [
                 'name' => 'Cerf sauce papa',
@@ -159,6 +144,33 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
+            ],
+            [
+                'name' => 'Le gratin',
+                'description' => 'Le meilleur des gratins, au poulet ...',
+                'picture' => 'gratin.JPG',
+                'difficulty' => '2',
+                'time' => '12000000',
+                'review' => '1',
+                'taste' => 'salé',
+                'temperature' => 'chaud',
+                'user_id' => 1,
+                'number' => 3,
+                'categories' => ['accompagnement'],
+            ],
+            [
+                'name' => 'Cerf sauce papa',
+                'description' => 'Un plat digne des plus grands noms de la cuisine française !',
+                'picture' => 'cerf.jpeg',
+                'difficulty' => '2',
+                'time' => '12000000',
+                'review' => '1',
+                'taste' => 'salé',
+                'temperature' => 'chaud',
+                'user_id' => 1,
+                'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Une bonne pièce de viande',
@@ -171,6 +183,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Du poisson',
@@ -183,6 +196,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Les boulettes du chef',
@@ -195,6 +209,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Stoemp',
@@ -207,6 +222,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 4,
+                'categories' => ['plat-principal', 'accompagnement'],
             ],
             [
                 'name' => 'Spaghetti ketchup',
@@ -219,6 +235,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Lasagne',
@@ -231,6 +248,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 4,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Chicons',
@@ -243,6 +261,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 2,
+                'categories' => ['accompagnement'],
             ],
             [
                 'name' => 'Raviolis',
@@ -255,6 +274,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Frittes',
@@ -267,6 +287,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 1,
+                'categories' => ['accompagnement'],
             ],
             [
                 'name' => 'Ris de veau aux morilles',
@@ -279,6 +300,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Boulettes sauce tomate',
@@ -291,6 +313,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Arancini',
@@ -303,30 +326,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
-            ],
-            [
-                'name' => 'Cerf sauce papa', 
-                'description' => 'Un plat digne des plus grands noms de la cuisine française !',
-                'picture' => 'cerf.jpeg',
-                'difficulty' => '2',
-                'time' => '12000000',
-                'review' => '1',
-                'taste' => 'salé',
-                'temperature' => 'chaud',
-                'user_id' => 1,
-                'number' => 3,
-            ],
-            [
-                'name' => 'Le gratin',
-                'description' => 'Le meilleur des gratins, au poulet ...',
-                'picture' => 'gratin.JPG',
-                'difficulty' => '2',
-                'time' => '12000000',
-                'review' => '1',
-                'taste' => 'salé',
-                'temperature' => 'chaud',
-                'user_id' => 1,
-                'number' => 3,
+                'categories' => ['entree', 'aperitif'],
             ],
             [
                 'name' => 'Cerf sauce papa',
@@ -339,6 +339,33 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
+            ],
+            [
+                'name' => 'Le gratin',
+                'description' => 'Le meilleur des gratins, au poulet ...',
+                'picture' => 'gratin.JPG',
+                'difficulty' => '2',
+                'time' => '12000000',
+                'review' => '1',
+                'taste' => 'salé',
+                'temperature' => 'chaud',
+                'user_id' => 1,
+                'number' => 3,
+                'categories' => ['accompagnement'],
+            ],
+            [
+                'name' => 'Cerf sauce papa',
+                'description' => 'Un plat digne des plus grands noms de la cuisine française !',
+                'picture' => 'cerf.jpeg',
+                'difficulty' => '2',
+                'time' => '12000000',
+                'review' => '1',
+                'taste' => 'salé',
+                'temperature' => 'chaud',
+                'user_id' => 1,
+                'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Une bonne pièce de viande',
@@ -351,6 +378,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Du poisson',
@@ -363,6 +391,7 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
             [
                 'name' => 'Les boulettes du chef',
@@ -375,11 +404,14 @@ class MealSeeder extends Seeder
                 'temperature' => 'chaud',
                 'user_id' => 1,
                 'number' => 3,
+                'categories' => ['plat-principal'],
             ],
         ];
 
+        $categoryIds = DB::table('categories')->pluck('id', 'slug');
+
         foreach ($meals as $meal) {
-            DB::table('meals')->insert([
+            $mealId = DB::table('meals')->insertGetId([
                 'name' => $meal['name'],
                 'description' => $meal['description'],
                 'slug' =>  Str::slug($meal['name'], '-'),
@@ -392,6 +424,15 @@ class MealSeeder extends Seeder
                 'user_id' => $meal['user_id'],
                 'number' => $meal['number'],
             ]);
+
+            foreach ($meal['categories'] as $slug) {
+                if (isset($categoryIds[$slug])) {
+                    DB::table('category_meal')->insert([
+                        'meal_id' => $mealId,
+                        'category_id' => $categoryIds[$slug],
+                    ]);
+                }
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
                     ? 'bg-gray-600 shadow-sm lg:static lg:overflow-y-visible'
                     : 'bg-white shadow-sm lg:static lg:overflow-y-visible',
                 showFilter ? 'mb-6' : '',
-                'h-32 py-2',
+                'min-h-32 py-2',
             ]"
         >
             <div
@@ -17,7 +17,7 @@
                 ]"
             >
                 <div
-                    class="relative flex justify-between xl:grid xl:grid-cols-12 lg:gap-8"
+                    class="relative flex justify-between items-start xl:grid xl:grid-cols-12 lg:gap-8"
                 >
                     <div
                         class="flex md:absolute md:left-0 md:inset-y-0 lg:static xl:col-span-2"
@@ -75,7 +75,7 @@
                                     leave-from-class="transform opacity-100 scale-100"
                                     leave-to-class="transform opacity-0 scale-95"
                                 >
-                                    <div v-if="showFilter" class="mt-2">
+                                    <div v-if="showFilter || alwaysShowFilter" class="mt-2">
                                         <label
                                             :class="[
                                                 dark
@@ -123,6 +123,38 @@
                                                 </div>
                                             </div>
                                         </fieldset>
+                                        <div
+                                            v-if="categories.length"
+                                            class="mt-4"
+                                        >
+                                            <label
+                                                :class="[
+                                                    dark
+                                                        ? 'text-white'
+                                                        : 'text-gray-900',
+                                                    'text-base font-medium',
+                                                ]"
+                                                >Catégories</label
+                                            >
+                                            <div class="mt-2 flex flex-wrap gap-2">
+                                                <button
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    type="button"
+                                                    @click="goToCategory(category)"
+                                                    :class="[
+                                                        activeCategorySlugs.includes(category.slug)
+                                                            ? 'bg-red-600 border-red-600 text-white'
+                                                            : dark
+                                                            ? 'border-gray-400 text-white'
+                                                            : 'border-gray-300 text-gray-700',
+                                                        'px-3 py-1.5 rounded-full border text-sm font-medium hover:bg-red-600 hover:border-red-600 hover:text-white transition-colors',
+                                                    ]"
+                                                >
+                                                    {{ category.name }}
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </transition>
                             </div>
@@ -150,7 +182,7 @@
                         </PopoverButton>
                     </div>
                     <div
-                        class="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4"
+                        class="hidden lg:flex lg:items-start lg:justify-end lg:pt-8 xl:col-span-4"
                     >
                         <div class="flex-shrink-0">
                             <Switch
@@ -346,6 +378,7 @@ import { URL } from "../env.js";
 import { CONFIG } from "../env.js";
 import axios from "axios";
 import { useUserStore } from "../stores/user";
+import { useCategoryStore } from "../stores/category";
 
 let user = {
     name: "Chelsea Hagon",
@@ -389,12 +422,27 @@ export default {
             filterChoice: "name",
         };
     },
+    computed: {
+        alwaysShowFilter() {
+            return ["meals", "mine", "favorite"].includes(this.$route.name);
+        },
+        categories() {
+            return this.categoryStore.categories;
+        },
+        activeCategorySlugs() {
+            return this.$route.query.category
+                ? this.$route.query.category.split(",")
+                : [];
+        },
+    },
     setup() {
         const dark = ref(false);
         const userStore = useUserStore();
+        const categoryStore = useCategoryStore();
         return {
             user,
             userStore,
+            categoryStore,
             navigation,
             userNavigation,
             dark,
@@ -448,6 +496,18 @@ export default {
         showFilterSearch() {
             this.showFilter = true;
         },
+        goToCategory(category) {
+            const active = this.activeCategorySlugs;
+            const updated = active.includes(category.slug)
+                ? active.filter((slug) => slug !== category.slug)
+                : [...active, category.slug];
+
+            if (updated.length === 0) {
+                this.$router.push("/meals");
+            } else {
+                this.$router.push("/meals?category=" + updated.join(","));
+            }
+        },
         closeFilterSearch() {
             if (this.showFilter == true) {
                 this.showFilter = false;
@@ -487,6 +547,7 @@ export default {
     mounted() {
         this.changeMode();
         this.isConnected();
+        this.categoryStore.fetchCategories();
 
         if (
             window.sessionStorage.getItem("search") != null &&

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\UserController;
@@ -29,8 +30,9 @@ Route::get('/logout', [AuthenticationController::class, 'logout']);
 Route::get('/user', [AuthenticationController::class, 'user'])->middleware('App\Http\Middleware\ConnectedVerify');
 
 Route::get('/ingredients', [IngredientController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index']);
 //Meals
-Route::get('/meals', [MealController::class, 'index']);
+Route::get('/meals', [MealController::class, 'index'])->middleware('App\Http\Middleware\ConnectedVerify');
 Route::get('/meals/all', [MealController::class, 'getAllMeals']);
 Route::get('/meals/count', [MealController::class, 'nbMeals']);
 Route::get('/user/meals', [UserController::class, 'getUserMeals'])->middleware('App\Http\Middleware\ConnectedVerify');
@@ -38,7 +40,7 @@ Route::get('/meal/{slug}', [MealController::class, 'show'])->middleware('App\Htt
 Route::post('/meal', [MealController::class, 'store'])->middleware('App\Http\Middleware\TokenVerify');
 Route::delete('/meal/{slug}', [MealController::class, 'destroy'])->middleware('App\Http\Middleware\TokenVerify');
 
-Route::put('/meal', [MealController::class, 'update'])->middleware('App\Http\Middleware\TokenVerify'); //TODO
+Route::put('/meal/{slug}', [MealController::class, 'update'])->middleware('App\Http\Middleware\TokenVerify');
 
 //Favorite
 Route::get('/favorite', [FavoriteController::class, 'index'])->middleware('App\Http\Middleware\TokenVerify');

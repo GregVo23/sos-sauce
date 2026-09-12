@@ -160,16 +160,24 @@
                 >
                     <h2 class="sr-only text-red">Meals</h2>
 
+                    <p
+                        v-if="selectedCategoryIds.length && filteredMeals.length === 0"
+                        :class="[dark ? 'text-white' : 'text-gray-700']"
+                    >
+                        Aucun plat dans cette catégorie.
+                    </p>
+
                     <div
                         class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
                     >
                         <Suspense>
                             <template #default>
                                 <AsyncMeals
-                                    v-for="meal in meals"
+                                    v-for="meal in filteredMeals"
                                     :key="meal.id"
                                     :meal="meal"
                                     :URL="URL"
+                                    :dark="dark"
                                 ></AsyncMeals>
                             </template>
                             <template #fallback>
@@ -204,6 +212,7 @@ import Loading from "../../components/Loading.vue";
 import Notification from "../../components/Notification.vue";
 import { URL } from "../../env.js";
 import { defineAsyncComponent } from "vue";
+import { useCategoryStore } from "../../stores/category";
 
 const AsyncMeals = defineAsyncComponent({
     loader: () =>
@@ -252,6 +261,36 @@ export default {
     },
     props: ["mode", "letters"],
 
+    setup() {
+        return {
+            categoryStore: useCategoryStore(),
+        };
+    },
+
+    computed: {
+        categories() {
+            return this.categoryStore.categories;
+        },
+        selectedCategoryIds() {
+            const slugs = this.$route.query.category
+                ? this.$route.query.category.split(",")
+                : [];
+            return this.categories
+                .filter((c) => slugs.includes(c.slug))
+                .map((c) => c.id);
+        },
+        filteredMeals() {
+            if (!this.selectedCategoryIds.length) {
+                return this.meals;
+            }
+            return (this.meals || []).filter((meal) =>
+                (meal.categories || []).some((category) =>
+                    this.selectedCategoryIds.includes(category.id)
+                )
+            );
+        },
+    },
+
     methods: {
         async loadData() {
             try {
@@ -267,7 +306,6 @@ export default {
                         }
                     }),
                     this.connectedUser(this.allMeals);
-                this.charged = true;
             } catch (error) {
                 console.log(error);
             }
@@ -367,8 +405,12 @@ export default {
                         }),
                         this.choicePage();
                     this.Search();
+                    this.charged = true;
                 })
-                .catch((error) => console.log("error", error));
+                .catch((error) => {
+                    console.log("error", error);
+                    this.charged = true;
+                });
         },
         choicePage() {
             if (
@@ -404,6 +446,7 @@ export default {
         this.CONFIG.headers["API-TOKEN"] = localStorage.getItem("api_token");
         this.CONFIG.headers["USER-TOKEN"] = localStorage.getItem("user_token");
         this.loadData();
+        this.categoryStore.fetchCategories();
     },
     mounted() {
         this.ChangeMode();

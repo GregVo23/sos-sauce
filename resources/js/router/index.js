@@ -53,6 +53,11 @@ const routes = [
         component: NewMeal,
     },
     {
+        path: "/meal/:slug/edit",
+        name: "editMeal",
+        component: NewMeal,
+    },
+    {
         path: "/favorite",
         name: "favorite",
         component: MealsIndex,

@@ -24,7 +24,7 @@ class MealController extends Controller
         if ($user) {
             $meals = [];
             $user_id = $user->id;
-            $listOfMeals = Meal::all();
+            $listOfMeals = Meal::with('categories')->get();
             foreach ($listOfMeals as $meal) {
 
                 $liked = DB::table('meal_user')->where('user_id', $user_id)
@@ -41,7 +41,7 @@ class MealController extends Controller
             }
             return response()->json(['data' => $meals]);
         } else {
-            return MealResource::collection(Meal::all());
+            return MealResource::collection(Meal::with('categories')->get());
         }
     }
 
@@ -108,12 +108,17 @@ class MealController extends Controller
                     );
 
                     $meal->picture = $fileNameToStore;
-                    $meal->save();
-                    return dump($request->picture);
-                } else {
-                    $meal->save();
-                    return "Il faut une image";
                 }
+
+                $meal->save();
+                $meal->categories()->sync($request->input('category_ids', []));
+                $meal->load('categories');
+
+                return response()->json([
+                    'message' => 'Le plat a été ajouté.',
+                    'type' => 'success',
+                    'meal' => $meal,
+                ], 200);
             }
         } else {
             return response()->json([
@@ -131,7 +136,7 @@ class MealController extends Controller
      */
     public function show(string $slug)
     {
-        $meal = Meal::where('slug', $slug)->first();
+        $meal = Meal::with('categories')->where('slug', $slug)->first();
         $meals = $meal->recipes->all();
         $mealIngredients = [];
         $like = ["like" => false];
@@ -181,32 +186,12 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getAllMeals()       
+    public function getAllMeals()
     {
-        $meals = Meal::all();
+        $meals = Meal::with('categories')->get();
         return response()->json($meals);
     }
 
-    /**
-     * Show user's meals.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getUserMeals()      //TODO
-    {
-        //$user = auth()->user();
-        if (true) {
-            //$meals = $user->meals;
-            //return MealResource::collection($user->meals);
-            return response()->json(['data' => 'helllloooooo']);
-        } else {
-            return response()->json([
-                'message' => 'Seul un membre connecté peut consulter ses plats !',
-                'type' => 'error',
-            ], 401);
-        }
-    }
-    
     /**
      * Show the number of meals.
      *
@@ -233,12 +218,72 @@ class MealController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $slug)
     {
-        //
+        $meal = Meal::where('slug', $slug)->first();
+
+        if (!$meal) {
+            return response()->json([
+                'message' => 'Ce plat est introuvable.',
+                'type' => 'error',
+            ], 404);
+        }
+
+        $user = auth()->user();
+        if (!$user || $user->id !== $meal->user_id) {
+            return response()->json([
+                'message' => 'Seul le propriétaire peut modifier ce plat !',
+                'type' => 'error',
+            ], 403);
+        }
+
+        $rules = array(
+            'name' => 'required|string|min:3|max:100',
+            'description' => 'required|min:20|max:2000',
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors(),
+                'type' => 'error',
+            ]);
+        }
+
+        $meal->name = $request->name;
+        $meal->description = $request->description;
+        $meal->slug = Str::slug($request->name, '-');
+
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $filenameWithExt = str_replace(" ", "_", $file->getClientOriginalName());
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $file->extension();
+            $time = date("d-m-Y") . "-" . time();
+            $fileNameToStore = $filename . '_' . $time . '.' . $extension;
+
+            $file->storeAs('public/meals/original', $fileNameToStore);
+
+            MealImageProcessor::process(
+                storage_path('app/public/meals/original/' . $fileNameToStore),
+                $fileNameToStore
+            );
+
+            $meal->picture = $fileNameToStore;
+        }
+
+        $meal->save();
+        $meal->categories()->sync($request->input('category_ids', []));
+        $meal->load('categories');
+
+        return response()->json([
+            'message' => 'Le plat a été mis à jour.',
+            'type' => 'success',
+            'meal' => $meal,
+        ], 200);
     }
 
     /**
@@ -250,6 +295,22 @@ class MealController extends Controller
     public function destroy(string $slug)
     {
         $meal = Meal::where("slug", $slug)->first();
+
+        if (!$meal) {
+            return response()->json([
+                'message' => 'Ce plat est introuvable.',
+                'type' => 'error',
+            ], 404);
+        }
+
+        $user = auth()->user();
+        if (!$user || $user->id !== $meal->user_id) {
+            return response()->json([
+                'message' => 'Seul le propriétaire peut supprimer ce plat !',
+                'type' => 'error',
+            ], 403);
+        }
+
         DB::table('meal_user')->where('meal_id', $meal->id)->delete();
         $recipeId = Recipe::where('meal_id', $meal->id)->get();
         foreach ($recipeId as $step) {

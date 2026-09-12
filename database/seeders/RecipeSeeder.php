@@ -21,7 +21,7 @@ class RecipeSeeder extends Seeder
                 'step' => 1,
                 'quantity' => 2,
                 'description' => "Il faut commencer par faire bouillir de l'eau et ajouter les pâtes.",
-                'picture' => "morceau.jpg",
+                'picture' => "ketchup.jpg",
                 'time' => "6000000",
 
             ],
@@ -40,7 +40,7 @@ class RecipeSeeder extends Seeder
                 'step' => 1,
                 'quantity' => 1,
                 'description' => "Cuire des pommes de terre dans de l'eau bouillante, puis les écraser avec du beurre.",
-                'picture' => "pommes.jpg",
+                'picture' => "stoemp.JPG",
                 'time' => "5000000",
             ],
         ];
@@ -52,6 +52,7 @@ class RecipeSeeder extends Seeder
                 'step' => $recipe['step'],
                 'quantity' => $recipe['quantity'],
                 'description' => $recipe['description'],
+                'picture' => $recipe['picture'],
                 'time' => $recipe['time'],
             ]);
         }

@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <Carousel></Carousel>
+        <Carousel :mode="this.dark"></Carousel>
         <div
             class="bg-cover bg-center py-56"
             style="
@@ -108,14 +108,14 @@ const props = defineProps({
 });
 
 const ChangeMode = () => {
-    dark = window.sessionStorage.getItem("dark") == "true" ? true : false;
+    dark.value = window.sessionStorage.getItem("dark") == "true" ? true : false;
 };
 
-const notification = (message, title, type) => {
-    message = message;
-    title = title;
-    type = type;
-    show == true ? (show = false) : (show = true);
+const notification = (msg, ttl, typ) => {
+    message.value = msg;
+    title.value = ttl;
+    type.value = typ;
+    show.value = true;
 };
 
 const notify = () => {
@@ -141,14 +141,14 @@ const notify = () => {
 };
 
 const Cancel = () => {
-    show = false;
+    show.value = false;
 };
 
 const connectedUser = () => {
     axios
         .get("/api/user", CONFIG)
         .then(({ data }) => {
-            user = data.user;
+            user.value = data.user;
         })
         .catch((error) => console.error("error", error));
 };

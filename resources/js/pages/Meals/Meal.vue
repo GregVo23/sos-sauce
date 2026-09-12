@@ -22,6 +22,14 @@
             :type="this.type"
             :mode="this.dark"
         ></Modal>
+        <Notification
+            @Cancel="showToast = false"
+            :message="toastMessage"
+            :title="toastTitle"
+            :type="toastType"
+            :show="showToast"
+            :mode="this.dark"
+        ></Notification>
         <div :class="[dark ? 'bg-gray-600' : 'bg-white', 'xl:flex pt-6']">
             <div class="xl:w-1/2">
                 <transition
@@ -46,93 +54,146 @@
             </div>
 
             <div class="xl:w-1/2 p-8">
-                <div class="flex justify-between">
-                    <a @click="goBack">
+                <div class="flex items-center justify-between mb-6">
+                    <button
+                        type="button"
+                        @click="goBack"
+                        title="Retour"
+                        :class="[
+                            dark
+                                ? 'text-gray-200 hover:bg-gray-700 hover:text-white'
+                                : 'text-gray-600 hover:bg-red-50 hover:text-red-600',
+                            'h-12 w-12 rounded-full flex items-center justify-center transition-colors',
+                        ]"
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            :class="[
-                                dark ? 'text-white' : 'text-gray-800',
-                                'h-20 w-20 hover:text-red-600',
-                            ]"
+                            class="h-6 w-6"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
+                            stroke-width="2.2"
                         >
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"
+                                d="M15 19l-7-7 7-7"
                             />
                         </svg>
-                    </a>
-                    <a v-if="connected" @click="updateMeal(meal)">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
+                    </button>
+                    <div class="flex items-center gap-1">
+                        <button
+                            v-if="isOwner"
+                            type="button"
+                            @click="updateMeal(meal)"
+                            title="Modifier"
                             :class="[
-                                dark ? 'text-white' : 'text-gray-800',
-                                'h-20 w-20 hover:animate-spin hover:text-red-600',
+                                dark
+                                    ? 'text-gray-200 hover:bg-gray-700 hover:text-white'
+                                    : 'text-gray-600 hover:bg-red-50 hover:text-red-600',
+                                'h-12 w-12 rounded-full flex items-center justify-center transition-colors',
                             ]"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
                                 stroke-width="2"
-                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                            />
-                        </svg>
-                    </a>
-                    <a v-if="connected" @click="likeMeal(meal)">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            v-if="connected"
+                            type="button"
+                            @click="likeMeal(meal)"
+                            title="Favoris"
                             :class="[
-                                dark ? 'text-white' : 'text-gray-800',
-                                'h-20 w-20 hover:text-red-600',
+                                like
+                                    ? 'text-red-600 hover:bg-red-50'
+                                    : dark
+                                    ? 'text-gray-200 hover:bg-gray-700 hover:text-white'
+                                    : 'text-gray-600 hover:bg-red-50 hover:text-red-600',
+                                'h-12 w-12 rounded-full flex items-center justify-center transition-colors',
                             ]"
-                            :fill="like ? 'currentColor' : 'none'"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                            />
-                        </svg>
-                    </a>
-                    <a v-if="connected" @click="deleteMeal(meal)">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6"
+                                :fill="like ? 'currentColor' : 'none'"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            v-if="isOwner"
+                            type="button"
+                            @click="deleteMeal(meal)"
+                            title="Supprimer"
                             :class="[
-                                dark ? 'text-white' : 'text-gray-800',
-                                'h-20 w-20 hover:text-red-600',
+                                dark
+                                    ? 'text-gray-200 hover:bg-gray-700 hover:text-white'
+                                    : 'text-gray-600 hover:bg-red-50 hover:text-red-600',
+                                'h-12 w-12 rounded-full flex items-center justify-center transition-colors',
                             ]"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
                                 stroke-width="2"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                        </svg>
-                    </a>
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <h1
                     :class="[
-                        dark ? 'text-white' : 'text-gray-800',
-                        'text-4xl font-bold pt-16 pb-10',
+                        dark ? 'text-white' : 'text-gray-900',
+                        'text-4xl font-extrabold',
                     ]"
                 >
                     {{ meal.name }}
                 </h1>
-                <p :class="[dark ? 'text-white' : 'text-gray-800']">
+                <div
+                    v-if="meal.categories && meal.categories.length"
+                    class="flex flex-wrap gap-2 pt-4 pb-2"
+                >
+                    <span
+                        v-for="category in meal.categories"
+                        :key="category.id"
+                        class="px-3 py-1 rounded-full text-sm font-medium bg-red-600 text-white"
+                    >
+                        {{ category.name }}
+                    </span>
+                </div>
+                <p
+                    :class="[
+                        dark ? 'text-gray-300' : 'text-gray-500',
+                        meal.categories && meal.categories.length ? 'mt-2' : 'mt-6',
+                        'leading-relaxed',
+                    ]"
+                >
                     {{ meal.description }}
                 </p>
                 <RadioGroup class="mt-10">
@@ -172,25 +233,25 @@
                 >
                     {{ howMany }} personne{{ howMany > 1 ? "s" : "" }}
                 </p>
-                <h2
-                    :class="[
-                        dark ? 'text-white' : 'text-gray-800',
-                        'mt-4 mb-4 text-3xl font-bold underline',
-                    ]"
-                >
-                    Ingrédients:
-                </h2>
-                <ul v-for="ingredient in ingredients" :key="ingredient.id">
-                    <li :class="[dark ? 'text-gray-200' : 'text-gray-800']">
-                        {{ ingredient.name }} :
-                        {{
-                            Math.round(
-                                (ingredient.quantity / meal.number) *
-                                    howMany *
-                                    10
-                            ) / 10
-                        }}
-                        {{ ingredient.unit }}.
+                <p class="mt-8 mb-1 text-sm font-semibold text-red-600 uppercase tracking-wide">
+                    Ingrédients
+                </p>
+                <ul v-for="ingredient in ingredients" :key="ingredient.id" class="space-y-2">
+                    <li
+                        :class="[dark ? 'text-gray-100' : 'text-gray-800', 'flex items-baseline gap-2.5']"
+                    >
+                        <span class="h-1.5 w-1.5 rounded-full bg-red-600 flex-shrink-0"></span>
+                        <span>
+                            {{ ingredient.name }} :
+                            {{
+                                Math.round(
+                                    (ingredient.quantity / meal.number) *
+                                        howMany *
+                                        10
+                                ) / 10
+                            }}
+                            {{ ingredient.unit }}.
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -232,21 +293,38 @@ import axios from "axios";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import Modal from "../../components/Modal.vue";
+import Notification from "../../components/Notification.vue";
 import { URL } from "../../env.js";
 import StepRecipe from "../../components/StepRecipe.vue";
 import GoToTopButton from "../../components/GoToTopButton.vue";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import { useUserStore } from "../../stores/user";
 
 export default {
     components: {
         Header,
         Footer,
         Modal,
+        Notification,
         RadioGroup,
         RadioGroupLabel,
         RadioGroupOption,
         StepRecipe,
         GoToTopButton,
+    },
+    setup() {
+        return {
+            userStore: useUserStore(),
+        };
+    },
+    computed: {
+        isOwner() {
+            return (
+                !!this.userStore.user &&
+                !!this.meal &&
+                this.userStore.user.id === this.meal.user_id
+            );
+        },
     },
     data() {
         return {
@@ -264,6 +342,10 @@ export default {
             charged: false,
             showModalDelete: false,
             showModalLike: false,
+            showToast: false,
+            toastMessage: "",
+            toastTitle: "",
+            toastType: "",
             connected: false,
             current: {
                 recipe: {
@@ -310,8 +392,24 @@ export default {
             this.type = type;
             this.open == true ? (this.open = false) : (this.open = true);
         },
+        notify() {
+            switch (this.$route.query.msg) {
+                case "mealsuccess":
+                    this.toastMessage = "Votre nouveau plat a été ajouté !";
+                    this.toastTitle = "Plat ajouté";
+                    this.toastType = "success";
+                    this.showToast = true;
+                    break;
+                case "mealupdated":
+                    this.toastMessage = "Votre plat a été mis à jour.";
+                    this.toastTitle = "Modifications enregistrées";
+                    this.toastType = "success";
+                    this.showToast = true;
+                    break;
+            }
+        },
         updateMeal(meal) {
-            this.notification("le message est", "le titre est ", "le type est");
+            this.$router.push("/meal/" + meal.slug + "/edit");
         },
         likeMeal(meal) {
             this.showModalDelete = false;
@@ -456,6 +554,8 @@ export default {
     },
     mounted() {
         this.ChangeMode();
+        this.userStore.fetchUser();
+        this.notify();
     },
 };
 </script>

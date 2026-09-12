@@ -102,15 +102,21 @@
                     >
                         {{ meal.description }}
                     </p>
+                    <div class="flex justify-center mt-8">
+                        <router-link to="/meals" class="hero-cta">
+                            Découvrir les recettes
+                        </router-link>
+                    </div>
                 </template>
+                <div class="absolute bottom-28 inset-x-0 flex justify-center">
                 <svg
                     @click="scrollToDiscover"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="absolute bottom-28 left-1/2 -translate-x-1/2 h-16 w-16 animate-bounce text-white cursor-pointer"
+                    class="h-16 w-16 p-2 rounded-full animate-bounce text-white cursor-pointer transition-colors duration-200 hover:bg-red-600"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="4"
+                    stroke-width="3"
                 >
                     <path
                         stroke-linecap="round"
@@ -118,6 +124,7 @@
                         d="M19 9l-7 7-7-7"
                     />
                 </svg>
+                </div>
             </div>
         </div>
     </div>
@@ -140,6 +147,7 @@ export default {
             dark: false,
             meals: [{ id: "welcome", isWelcome: true }],
             transition: "transform 0.4s ease",
+            viewportWidth: window.innerWidth,
         };
     },
     computed: {
@@ -181,17 +189,25 @@ export default {
             this.dark =
                 window.sessionStorage.getItem("dark") == "true" ? true : false;
         },
+        handleResize() {
+            const currentSlide = Math.round(
+                Math.abs(this.index) / this.viewportWidth
+            );
+            this.viewportWidth = window.innerWidth;
+            this.transition = "";
+            this.index = -(currentSlide * this.viewportWidth);
+        },
         next() {
             if (
-                Math.abs(this.index / window.screen.availWidth) + 1 ===
+                Math.abs(this.index / this.viewportWidth) + 1 ===
                 this.meals.length
             ) {
                 this.transition = "";
                 this.index = 0;
             } else {
                 this.transition = "transform 0.4s ease";
-                this.index -= window.screen.availWidth;
-                let x = Math.abs(this.index / window.screen.availWidth) + 1;
+                this.index -= this.viewportWidth;
+                let x = Math.abs(this.index / this.viewportWidth) + 1;
                 let image = document.querySelector(
                     "#app > section > div > div > img:nth-child(" + x + ")"
                 );
@@ -201,14 +217,14 @@ export default {
             //console.log(this.index);
         },
         previous() {
-            if (Math.abs(this.index / window.screen.availWidth) + 1 === 1) {
+            if (Math.abs(this.index / this.viewportWidth) + 1 === 1) {
                 this.transition = "";
                 this.index = 0;
             } else {
                 this.transition = "transform 0.4s ease";
-                this.index += window.screen.availWidth;
+                this.index += this.viewportWidth;
             }
-            //console.log(Math.abs(this.index / window.screen.availWidth) + 1);
+            //console.log(Math.abs(this.index / this.viewportWidth) + 1);
             //console.log("i " + this.meals.length);
         },
     },
@@ -219,6 +235,10 @@ export default {
         this.slider();
         this.ChangeMode();
         document.body.style.overflowX = "hidden";
+        window.addEventListener("resize", this.handleResize);
+    },
+    unmounted() {
+        window.removeEventListener("resize", this.handleResize);
     },
 };
 </script>
@@ -269,7 +289,7 @@ export default {
     font-size: 1rem;
     letter-spacing: 0.38em;
     text-transform: uppercase;
-    color: #fbf3e7;
+    color: #ffffff;
     opacity: 0.85;
 }
 
@@ -282,7 +302,7 @@ export default {
 }
 
 .hero-tagline {
-    color: #cdbfa9;
+    color: #ffffff;
     line-height: 1.55;
 }
 
@@ -291,7 +311,7 @@ export default {
     align-items: center;
     padding: 0.9rem 1.9rem;
     border-radius: 999px;
-    background: #fbf3e7;
+    background: #fffefd;
     color: #1c1a17;
     font-weight: 700;
     font-size: 1rem;
@@ -303,6 +323,7 @@ export default {
 
 .hero-cta:hover {
     transform: translateY(-2px);
-    background: #e8a33d;
+    background: #dc2626;
+    color: #ffffff;
 }
 </style>

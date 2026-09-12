@@ -32,9 +32,8 @@ class CreateRecipesTable extends Migration
                 ->references('id')->on('meals')
                 ->onDelete('restrict')->onUpdate('cascade');
 
-            $table->foreign('sauce_id')
-                ->references('id')->on('meals')
-                ->onDelete('restrict')->onUpdate('cascade');
+            // The foreign key for sauce_id is added in a later migration,
+            // once the sauces table (created after this one) exists.
         });
     }
 

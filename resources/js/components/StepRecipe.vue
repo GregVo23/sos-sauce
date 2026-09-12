@@ -6,14 +6,19 @@
         ]"
     >
         <div class="mt-16 space-y-16">
-            <h2
-                :class="[
-                    dark ? 'text-white' : 'text-gray-800',
-                    'text-center mt-10 mb-4 text-3xl font-bold underline',
-                ]"
-            >
-                Préparation:
-            </h2>
+            <div class="text-center mt-10 mb-4">
+                <p class="text-sm font-semibold text-red-600 uppercase tracking-wide mb-1">
+                    Étapes
+                </p>
+                <h2
+                    :class="[
+                        dark ? 'text-white' : 'text-gray-900',
+                        'text-3xl font-extrabold',
+                    ]"
+                >
+                    Préparation
+                </h2>
+            </div>
             <div
                 v-for="(step, featureIdx) in meal.recipes"
                 :key="step.id"
@@ -27,20 +32,25 @@
                         'mt-6 lg:mt-0 lg:row-start-1 lg:col-span-5 xl:col-span-4',
                     ]"
                 >
+                    <span
+                        class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-red-600 text-white text-sm font-bold mb-2"
+                    >
+                        {{ step.step }}
+                    </span>
                     <h3
                         :class="[
                             dark ? 'text-white' : 'text-gray-900',
-                            'text-2xl font-medium',
+                            'text-2xl font-bold',
                         ]"
                     >
-                        Etape {{ step.step }}.
+                        Étape {{ step.step }}
                     </h3>
-                    <div class="flex my-2">
+                    <div class="flex items-center my-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             :class="[
-                                dark ? 'text-white' : 'text-gray-900',
-                                'h-6 w-6',
+                                dark ? 'text-gray-300' : 'text-gray-500',
+                                'h-5 w-5',
                             ]"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -54,8 +64,8 @@
                             /></svg
                         ><span
                             :class="[
-                                dark ? 'text-white' : 'text-gray-900',
-                                'pl-1',
+                                dark ? 'text-gray-300' : 'text-gray-500',
+                                'pl-1.5 text-sm font-medium',
                             ]"
                         >
                             {{ new Date(meal.time).getMinutes() }}
@@ -64,8 +74,8 @@
                     </div>
                     <p
                         :class="[
-                            dark ? 'text-gray-300' : 'text-gray-900',
-                            'mt-2 text-lg',
+                            dark ? 'text-gray-300' : 'text-gray-600',
+                            'mt-2 text-lg leading-relaxed',
                         ]"
                     >
                         {{ step.description }}

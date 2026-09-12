@@ -2,374 +2,310 @@
     <div :class="[dark ? 'bg-gray-600' : 'bg-white']">
         <Header @ChangeMode="changeMode($event)"></Header>
 
-        <section
-            class="h-screen flex justify-center items-center"
-            style="
-                background-image: url('http://www.localhost:8000/storage/meals/detail/intro.jpg');
-                background-position: center;
-                background-size: cover;
-                background-repeat: no-repeat;
-            "
-        >
-            <div class="lg:w-2/5 md:w-1/2 sm:w-2/3 w-full">
-                <div
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 min-h-[70vh]">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <router-link
+                    :to="cancelLink"
                     :class="[
-                        dark ? 'bg-gray-600' : 'bg-white',
-                        'rounded-lg shadow-lg p-10 overflow-hidden',
+                        dark
+                            ? 'text-gray-300 hover:text-white'
+                            : 'text-gray-500 hover:text-gray-800',
+                        'inline-flex items-center gap-2 font-medium text-sm',
                     ]"
                 >
-                    <div class="relative max-w-xl mx-auto">
-                        <div class="text-center">
-                            <h2
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 19l-7-7 7-7"
+                        />
+                    </svg>
+                    {{ isEditMode ? "Retour à la recette" : "Retour aux recettes" }}
+                </router-link>
+
+                <p class="text-sm font-semibold text-red-600 tracking-wide uppercase">
+                    {{ isEditMode ? "Modification" : "Nouvelle recette" }}
+                </p>
+            </div>
+            <h1
+                :class="[
+                    dark ? 'text-white' : 'text-gray-900',
+                    'text-3xl font-extrabold tracking-tight sm:text-4xl mb-8',
+                ]"
+            >
+                {{ isEditMode ? (name || "Modifier le plat") : "Ajouter un plat" }}
+            </h1>
+
+            <form
+                @submit="formSubmit"
+                enctype="multipart/form-data"
+                class="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 items-start"
+            >
+                <!-- Photo -->
+                <div
+                    :class="[
+                        dark
+                            ? 'bg-gray-700 border-gray-500'
+                            : 'bg-white border-gray-200',
+                        'rounded-lg shadow-lg border overflow-hidden lg:sticky lg:top-6',
+                    ]"
+                >
+                    <div v-if="previewSrc" class="relative aspect-[4/3] group">
+                        <img
+                            :src="previewSrc"
+                            alt=""
+                            class="w-full h-full object-cover"
+                        />
+                        <label
+                            for="picture"
+                            class="absolute inset-0 flex items-center justify-center text-white font-semibold text-sm bg-black/0 group-hover:bg-black/45 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                        >
+                            Changer la photo
+                        </label>
+                        <button
+                            type="button"
+                            @click="removeImage"
+                            title="Retirer la photo"
+                            class="absolute top-2.5 right-2.5 h-8 w-8 rounded-full bg-black/55 text-white flex items-center justify-center hover:bg-black/70"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2.6"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 6l12 12M18 6L6 18"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                    <label
+                        v-else
+                        for="picture"
+                        :class="[
+                            dragging ? 'bg-red-50' : '',
+                            'aspect-[4/3] flex flex-col items-center justify-center gap-2 text-center px-6 cursor-pointer',
+                        ]"
+                        @dragover.prevent="dragging = true"
+                        @dragleave.prevent="dragging = false"
+                        @drop.prevent="onDrop"
+                    >
+                        <svg
+                            :class="[
+                                dark ? 'text-gray-300' : 'text-gray-400',
+                                'h-10 w-10',
+                            ]"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5 5 5M12 5v11"
+                            />
+                        </svg>
+                        <div :class="[dark ? 'text-white' : 'text-gray-600', 'text-sm']">
+                            <span class="text-red-600 font-semibold hover:text-red-500">Choisir une photo</span>
+                            ou glisser-déposer
+                        </div>
+                        <p :class="[dark ? 'text-gray-300' : 'text-gray-400', 'text-xs']">
+                            PNG, JPG — 20 Mo max
+                        </p>
+                    </label>
+                    <input
+                        id="picture"
+                        type="file"
+                        accept="image/*"
+                        class="sr-only"
+                        @change="updatePhoto"
+                    />
+                    <p
+                        :class="[
+                            dark
+                                ? 'text-gray-300 border-gray-500'
+                                : 'text-gray-500 border-gray-100',
+                            'flex items-center gap-2 text-xs px-4 py-3 border-t',
+                        ]"
+                    >
+                        <svg
+                            class="h-4 w-4 text-red-600 flex-shrink-0"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"
+                            />
+                        </svg>
+                        Optimisée et redimensionnée automatiquement à l'enregistrement.
+                    </p>
+                </div>
+
+                <!-- Fields -->
+                <div>
+                    <div class="mb-5">
+                        <label
+                            for="name"
+                            :class="[
+                                dark ? 'text-white' : 'text-gray-700',
+                                'block text-sm font-medium mb-1.5',
+                            ]"
+                            >Nom du plat</label
+                        >
+                        <input
+                            v-model="name"
+                            @keydown="checkName()"
+                            type="text"
+                            name="name"
+                            id="name"
+                            :class="[
+                                messageName != null
+                                    ? 'border-red-600 ring-1 ring-red-600'
+                                    : dark
+                                    ? 'border-gray-500'
+                                    : 'border-gray-300',
+                                dark ? 'bg-gray-600 text-white' : 'bg-white',
+                                'py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600 border rounded-md',
+                            ]"
+                        />
+                        <p v-if="messageName != null" class="text-red-600 text-sm mt-1">
+                            {{ messageName }}
+                        </p>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="flex items-baseline justify-between mb-1.5">
+                            <label
+                                for="description"
                                 :class="[
-                                    dark ? 'text-white' : 'text-gray-900',
-                                    'text-3xl font-extrabold tracking-tight  sm:text-4xl',
+                                    dark ? 'text-white' : 'text-gray-700',
+                                    'block text-sm font-medium',
+                                ]"
+                                >Description</label
+                            >
+                            <span :class="[dark ? 'text-gray-300' : 'text-gray-400', 'text-xs font-medium']">
+                                {{ (description || "").length }} / 2000
+                            </span>
+                        </div>
+                        <textarea
+                            v-model="description"
+                            @keydown="checkDescription()"
+                            id="description"
+                            name="description"
+                            rows="5"
+                            :class="[
+                                messageDescription != null
+                                    ? 'border-red-600 ring-1 ring-red-600'
+                                    : dark
+                                    ? 'border-gray-500'
+                                    : 'border-gray-300',
+                                dark ? 'bg-gray-600 text-white' : 'bg-white',
+                                'py-3 px-4 block w-full shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600 border rounded-md',
+                            ]"
+                        />
+                        <p
+                            v-if="messageDescription != null"
+                            class="text-red-600 text-sm mt-1"
+                        >
+                            {{ messageDescription }}
+                        </p>
+                    </div>
+
+                    <div class="mb-5">
+                        <label
+                            :class="[
+                                dark ? 'text-white' : 'text-gray-700',
+                                'block text-sm font-medium mb-1.5',
+                            ]"
+                            >Catégories</label
+                        >
+                        <div class="flex flex-wrap gap-2">
+                            <label
+                                v-for="category in categories"
+                                :key="category.id"
+                                :class="[
+                                    selectedCategories.includes(category.id)
+                                        ? 'bg-red-600 border-red-600 text-white'
+                                        : dark
+                                        ? 'border-gray-400 text-white'
+                                        : 'border-gray-300 text-gray-700',
+                                    'cursor-pointer select-none px-3.5 py-1.5 rounded-full border text-sm font-medium transition-colors',
                                 ]"
                             >
-                                Ajouter un plat
-                            </h2>
-                        </div>
-                        <div class="mt-6">
-                            <form
-                                @submit="formSubmit"
-                                enctype="multipart/form-data"
-                                action="./meal"
-                                method="POST"
-                                class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
-                            >
-                                <div class="sm:col-span-2">
-                                    <label
-                                        for="name"
-                                        :class="[
-                                            dark
-                                                ? 'text-white'
-                                                : 'text-gray-700',
-                                            'block text-sm font-medium',
-                                        ]"
-                                        >Nom du plat</label
-                                    >
-                                    <div class="mt-1">
-                                        <input
-                                            v-model="name"
-                                            @keydown="checkName()"
-                                            type="text"
-                                            name="name"
-                                            id="name"
-                                            :class="[
-                                                messageName != null
-                                                    ? 'ring-red-600 border-red-600 border'
-                                                    : '',
-                                                dark
-                                                    ? 'bg-gray-600 text-white'
-                                                    : 'bg-white',
-                                                'py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md',
-                                            ]"
-                                        />
-                                        <p
-                                            v-if="messageName != null"
-                                            class="text-red-600"
-                                        >
-                                            {{ messageName }}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="sm:col-span-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
-                                >
-                                    <div
-                                        v-if="!pictureName"
-                                        class="space-y-1 text-center"
-                                    >
-                                        <svg
-                                            :class="[
-                                                dark
-                                                    ? 'text-gray-200'
-                                                    : 'text-gray-400',
-                                                'mx-auto h-12 w-12',
-                                            ]"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 48 48"
-                                            aria-hidden="true"
-                                        >
-                                            <path
-                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            />
-                                        </svg>
-                                        <div
-                                            :class="[
-                                                dark
-                                                    ? 'text-white'
-                                                    : 'text-gray-600',
-                                                'flex text-sm',
-                                            ]"
-                                        >
-                                            <label
-                                                for="picture"
-                                                :class="[
-                                                    dark
-                                                        ? 'bg-gray-600'
-                                                        : 'bg-white',
-                                                    'relative cursor-pointer  rounded-md font-medium text-red-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500',
-                                                ]"
-                                            >
-                                                <span>Charger une photo</span>
-                                                <input
-                                                    @change="updatePhoto"
-                                                    id="picture"
-                                                    name="picture"
-                                                    type="file"
-                                                    accept="image/*"
-                                                    class="sr-only"
-                                                />
-                                            </label>
-                                            <p
-                                                :class="[
-                                                    dark
-                                                        ? 'text-white'
-                                                        : 'text-gray-500',
-                                                    'pl-1',
-                                                ]"
-                                            >
-                                                ou glisser / déposer
-                                            </p>
-                                        </div>
-                                        <p
-                                            :class="[
-                                                dark
-                                                    ? 'text-white'
-                                                    : 'text-gray-500',
-                                                'text-xs',
-                                            ]"
-                                        >
-                                            PNG, JPG, GIF jusqu'à 20MB
-                                        </p>
-                                    </div>
-                                    <div v-else class="space-y-1 text-center">
-                                        <svg
-                                            :class="[
-                                                dark
-                                                    ? 'text-gray-200'
-                                                    : 'text-gray-400',
-                                                'mx-auto h-12 w-12',
-                                            ]"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 48 48"
-                                            aria-hidden="true"
-                                        >
-                                            <path
-                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                stroke-width="2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            />
-                                        </svg>
-                                        <div
-                                            :class="[
-                                                dark
-                                                    ? 'text-white'
-                                                    : 'text-gray-600',
-                                                'flex text-sm',
-                                            ]"
-                                        >
-                                            <label
-                                                for="picture"
-                                                :class="[
-                                                    dark
-                                                        ? 'bg-gray-600'
-                                                        : 'bg-white',
-                                                    'relative cursor-pointer  rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-red-500',
-                                                ]"
-                                            >
-                                                <span>{{ pictureName }}</span>
-                                                <input
-                                                    @change="updatePhoto"
-                                                    id="picture"
-                                                    name="picture"
-                                                    type="file"
-                                                    accept="image/*"
-                                                    class="sr-only"
-                                                />
-                                            </label>
-                                            <p
-                                                :class="[
-                                                    dark
-                                                        ? 'text-white'
-                                                        : 'text-gray-500',
-                                                    'pl-1',
-                                                ]"
-                                            >
-                                                ou glisser / déposer
-                                            </p>
-                                        </div>
-                                        <p
-                                            @click="removeImage"
-                                            :class="[
-                                                dark
-                                                    ? 'text-white'
-                                                    : 'text-red-600',
-                                                'text-xs hover:text-red-800',
-                                            ]"
-                                        >
-                                            Supprimer l'image
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="sm:col-span-2">
-                                    <label
-                                        for="description"
-                                        :class="[
-                                            dark
-                                                ? 'text-white'
-                                                : 'text-gray-700',
-                                            'block text-sm font-medium',
-                                        ]"
-                                        >Description</label
-                                    >
-                                    <div class="mt-1">
-                                        <textarea
-                                            v-model="description"
-                                            @keydown="checkDescription()"
-                                            id="description"
-                                            name="description"
-                                            rows="4"
-                                            :class="[
-                                                messageDescription != null
-                                                    ? 'ring-red-600 border-red-600 border'
-                                                    : '',
-                                                dark
-                                                    ? 'bg-gray-600 text-white'
-                                                    : 'bg-white',
-                                                'py-3 px-4 block w-full shadow-sm focus:ring-red-600 focus:border-red-600 border border-gray-300 rounded-md',
-                                            ]"
-                                        />
-                                        <p
-                                            v-if="messageDescription != null"
-                                            class="text-red-600"
-                                        >
-                                            {{ messageDescription }}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <div class="flex items-start">
-                                        <div class="flex-shrink-0">
-                                            <Switch
-                                                @click="checkRules()"
-                                                v-model="agreed"
-                                                :class="[
-                                                    agreed
-                                                        ? 'bg-red-700'
-                                                        : 'bg-gray-200',
-                                                    messageRule != null
-                                                        ? 'ring-2 ring-offset-2 ring-red-700'
-                                                        : '',
-                                                    'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-700',
-                                                ]"
-                                            >
-                                                <span class="sr-only"
-                                                    >Agree to policies</span
-                                                >
-                                                <span
-                                                    aria-hidden="true"
-                                                    :class="[
-                                                        agreed
-                                                            ? 'translate-x-5'
-                                                            : 'translate-x-0',
-                                                        'inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200',
-                                                    ]"
-                                                />
-                                            </Switch>
-                                        </div>
-                                        <div class="ml-3">
-                                            <p
-                                                :class="[
-                                                    dark
-                                                        ? 'text-white'
-                                                        : 'text-gray-500',
-                                                    'text-base',
-                                                ]"
-                                            >
-                                                En cliquant ce bouton, j'adhère
-                                                au
-                                                {{ " " }}
-                                                <a
-                                                    href="#"
-                                                    :class="[
-                                                        dark
-                                                            ? 'text-gray-100'
-                                                            : 'text-gray-700',
-                                                        'font-medium underline',
-                                                    ]"
-                                                    >Réglement d'usage</a
-                                                >
-                                                {{ " " }}
-                                                et la
-                                                {{ " " }}
-                                                <a
-                                                    href="#"
-                                                    :class="[
-                                                        dark
-                                                            ? 'text-gray-100'
-                                                            : 'text-gray-700',
-                                                        'font-medium underline',
-                                                    ]"
-                                                    >Politique de Cookies</a
-                                                >.
-                                            </p>
-                                            <p
-                                                v-if="messageRule != null"
-                                                class="text-red-600"
-                                            >
-                                                {{ messageRule }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <button
-                                        type="submit"
-                                        class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
-                                    >
-                                        Ajouter
-                                    </button>
-                                </div>
-                            </form>
+                                <input
+                                    type="checkbox"
+                                    :value="category.id"
+                                    v-model="selectedCategories"
+                                    class="sr-only"
+                                />
+                                {{ category.name }}
+                            </label>
                         </div>
                     </div>
+
+                    <div
+                        :class="[
+                            dark ? 'border-gray-500' : 'border-gray-200',
+                            'flex justify-end gap-3 pt-5 border-t',
+                        ]"
+                    >
+                        <router-link
+                            :to="cancelLink"
+                            :class="[
+                                dark
+                                    ? 'border-gray-400 text-gray-200 hover:border-gray-200'
+                                    : 'border-gray-300 text-gray-600 hover:border-gray-500 hover:text-gray-800',
+                                'inline-flex items-center px-6 py-3 rounded-full border font-medium text-sm',
+                            ]"
+                        >
+                            Annuler
+                        </router-link>
+                        <button
+                            type="submit"
+                            class="inline-flex items-center px-6 py-3 rounded-full font-medium text-sm text-white bg-red-600 hover:bg-red-700 shadow-sm shadow-red-600/25"
+                        >
+                            {{ isEditMode ? "Enregistrer les modifications" : "Publier la recette" }}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </form>
+        </div>
         <Footer :mode="this.dark"></Footer>
     </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import { Switch } from "@headlessui/vue";
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
 import { URL } from "../../env.js";
 import router from "../../router";
+import { useCategoryStore } from "../../stores/category";
 
 export default {
     components: {
-        Switch,
         Header,
         Footer,
     },
     data() {
-        const URL = URL;
         let messageName = null;
         let messageDescription = null;
-        let messageRule = null;
-        let dark = "false";
         let name = null;
         let description = null;
         let pictureName = null;
@@ -388,25 +324,46 @@ export default {
         ];
         return {
             URL,
-            dark,
+            dark: false,
             name,
             description,
             picture,
             pictureName,
+            previewUrl: null,
+            dragging: false,
             messageName,
             messageDescription,
-            messageRule,
             injuries,
+            currentPicture: null,
+            selectedCategories: [],
         };
     },
     setup() {
-        const agreed = ref(false);
-
         return {
-            agreed,
+            categoryStore: useCategoryStore(),
         };
     },
     props: ["mode"],
+    computed: {
+        isEditMode() {
+            return !!this.$route.params.slug;
+        },
+        categories() {
+            return this.categoryStore.categories;
+        },
+        previewSrc() {
+            if (this.previewUrl) {
+                return this.previewUrl;
+            }
+            if (this.currentPicture) {
+                return this.URL + "storage/meals/detail/" + this.currentPicture;
+            }
+            return null;
+        },
+        cancelLink() {
+            return this.isEditMode ? "/meal/" + this.$route.params.slug : "/meals";
+        },
+    },
     methods: {
         changeMode() {
             this.dark =
@@ -424,16 +381,7 @@ export default {
             return true;
         },
         checkForm() {
-            if (
-                this.checkName() &&
-                this.checkDescription() &&
-                this.checkPicture() &&
-                this.checkRules()
-            ) {
-                return true;
-            } else {
-                return false;
-            }
+            return this.checkName() && this.checkDescription();
         },
         checkName() {
             if (this.name == "" || this.name == null) {
@@ -463,26 +411,48 @@ export default {
             }
             return this.messageDescription == null ? true : false;
         },
-        checkPicture() {
-            //picture
-            return true;
-        },
-        checkRules() {
-            if (this.agreed == false) {
-                this.messageRule =
-                    "Pour utiliser ce site, il faut accepter le réglement d'usage";
-            } else {
-                this.messageRule = null;
+        setPreview(file) {
+            if (this.previewUrl) {
+                URL.revokeObjectURL(this.previewUrl);
             }
-            return this.messageRule == null ? true : false;
-        },
-        removeImage() {
-            this.picture = "";
-            this.pictureName = "";
+            this.picture = file;
+            this.pictureName = file.name;
+            this.previewUrl = URL.createObjectURL(file);
         },
         updatePhoto(e) {
-            this.picture = e.target.files[0];
-            this.pictureName = e.target.files[0].name;
+            if (e.target.files[0]) {
+                this.setPreview(e.target.files[0]);
+            }
+        },
+        onDrop(e) {
+            this.dragging = false;
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                this.setPreview(file);
+            }
+        },
+        removeImage() {
+            if (this.previewUrl) {
+                URL.revokeObjectURL(this.previewUrl);
+            }
+            this.picture = "";
+            this.pictureName = "";
+            this.previewUrl = null;
+            this.currentPicture = null;
+        },
+        loadMeal() {
+            axios
+                .get("/api/meal/" + this.$route.params.slug)
+                .then(({ data }) => {
+                    const meal = data[0];
+                    this.name = meal.name;
+                    this.description = meal.description;
+                    this.currentPicture = meal.picture;
+                    this.selectedCategories = (meal.categories || []).map(
+                        (category) => category.id
+                    );
+                })
+                .catch((error) => console.log("error", error));
         },
         formSubmit(e) {
             e.preventDefault();
@@ -494,30 +464,41 @@ export default {
                     "description",
                     this.description ? this.description.trim() : null
                 );
-                formData.append("agreed", this.agreed ? this.agreed : null);
                 formData.append("picture", this.picture ? this.picture : null);
                 formData.append(
                     "pictureName",
                     this.pictureName ? this.pictureName : null
                 );
+                this.selectedCategories.forEach((id) => {
+                    formData.append("category_ids[]", id);
+                });
 
                 const config = {
                     headers: {
-                        "Content-Type": "multipart/form-data",
                         "API-TOKEN": localStorage.getItem("api_token"),
                         "USER-TOKEN": localStorage.getItem("user_token"),
                     },
                 };
 
+                if (this.isEditMode) {
+                    formData.append("_method", "PUT");
+                }
+
+                const url = this.isEditMode
+                    ? "/api/meal/" + this.$route.params.slug
+                    : "/api/meal";
+
                 axios
-                    .post("/api/meal", formData, config)
+                    .post(url, formData, config)
                     .then((res) =>
-                        //window.location.assign(this.URL + "meals?message=success")
                         this.$router.push(
-                            "/meals?msg=mealsuccess&name=" + this.name
+                            "/meal/" +
+                                res.data.meal.slug +
+                                (this.isEditMode
+                                    ? "?msg=mealupdated"
+                                    : "?msg=mealsuccess")
                         )
                     )
-                    //.catch((error) => console.log("error", error))
                     .catch(function (error) {
                         if (error.response.status == 403) {
                             router.push("/login?msg=notconnected");
@@ -533,6 +514,15 @@ export default {
     },
     mounted() {
         this.changeMode();
+        this.categoryStore.fetchCategories();
+        if (this.isEditMode) {
+            this.loadMeal();
+        }
+    },
+    beforeUnmount() {
+        if (this.previewUrl) {
+            URL.revokeObjectURL(this.previewUrl);
+        }
     },
 };
 </script>

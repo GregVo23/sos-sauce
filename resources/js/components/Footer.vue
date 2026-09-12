@@ -98,8 +98,8 @@
           </div>
         </div>
       </div>
-      <div class="mt-12 border-t border-gray-200 pt-8">
-        <p class="text-base text-gray-400 xl:text-center">
+      <div :class="[this.mode ? 'border-gray-500' : 'border-gray-200', 'mt-12 border-t pt-8']">
+        <p :class="[this.mode ? 'text-gray-300' : 'text-gray-400', 'text-base xl:text-center']">
           &copy; {{ year }} SOS-SAUCE, Inc. All rights reserved.
         </p>
       </div>
