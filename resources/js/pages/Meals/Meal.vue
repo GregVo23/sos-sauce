@@ -30,7 +30,7 @@
             :show="showToast"
             :mode="this.dark"
         ></Notification>
-        <div :class="[dark ? 'bg-gray-600' : 'bg-white', 'xl:flex pt-6']">
+        <div :class="[dark ? 'bg-gray-600' : 'bg-white', 'xl:flex px-4 sm:px-6 lg:px-8 pt-6']">
             <div class="xl:w-1/2">
                 <transition
                     name="filterSearch"
@@ -47,7 +47,7 @@
                         :alt="meal.name"
                         :class="[
                             dark ? 'opacity-80' : 'opacity-100',
-                            'xl:rounded-tr-3xl w-full h-full object-center object-cover',
+                            'rounded-3xl w-full h-full object-center object-cover',
                         ]"
                     />
                 </transition>
@@ -258,7 +258,7 @@
         </div>
 
         <StepRecipe
-            :mode="this.dark"
+            :dark="this.dark"
             :URL="this.URL"
             :meal="this.meal"
         ></StepRecipe>

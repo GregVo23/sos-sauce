@@ -126,25 +126,46 @@ class UserController extends Controller
      */
     public function saveProfil(Request $request, $id)
     {
-        
         $user_id = Auth()->user()->id;
+
+        if ($user_id != $id) {
+            return response()->json([
+                'message' => 'Seul le propriétaire peut modifier ce profil !',
+                'type' => 'error',
+            ], 403);
+        }
+
+        $rules = array(
+            'last_name' => 'required|string|max:150',
+            'first_name' => 'nullable|string|max:150',
+            'email' => 'required|email|max:150|unique:users,email,' . $id,
+            'gender' => 'nullable|in:man,woman,other',
+            'birthday' => 'nullable|date',
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors(),
+                'type' => 'error',
+            ]);
+        }
+
         $user = User::findOrFail($id);
-    
-        $user->last_name = $request->user()->last_name;
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        $user->email = $request->email;
+        $user->gender = $request->gender ?: null;
+        if ($request->birthday) {
+            $user->birthday = $request->birthday;
+        }
         $user->save();
 
-        if ($user_id == $id){
-            return response()->json([
-                'message' => 'ok !',
-                'type'=> "success",
-                'request' => $request->user()
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'pas ok !',
-                'type'=> "error",
-            ], 403);            
-        }
+        return response()->json([
+            'message' => 'Votre profil a été mis à jour.',
+            'type' => 'success',
+            'user' => $user,
+        ], 200);
 
     }
     

@@ -100,7 +100,7 @@
       </div>
       <div :class="[this.mode ? 'border-gray-500' : 'border-gray-200', 'mt-12 border-t pt-8']">
         <p :class="[this.mode ? 'text-gray-300' : 'text-gray-400', 'text-base xl:text-center']">
-          &copy; {{ year }} SOS-SAUCE, Inc. All rights reserved.
+          &copy; {{ year }} SOS-SAUCE. Tous droits réservés.
         </p>
       </div>
     </div>
@@ -113,8 +113,7 @@ import { URL } from '../env.js';
 
 const navigation = {
   recettes: [
-    { name: 'Recettes', href: '/recettes' },
-    { name: 'Recettes de plat', href: '#' },
+    { name: 'Recettes de plat', href: '/meals' },
     { name: 'Recettes de sauce', href: '#' },
   ],
   ingredients: [
